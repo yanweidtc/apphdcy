@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">好多车友</string>
+    <!--基本数据-->
+    <string name="sf_progress_dialog_image_loading">数据加载中…</string>
+    <string name="title_net_error">无网络</string>
+    <string name="content_net_error">糟糕，网络不见了</string>
+    <string name="title_null_data">空结果</string>
+    <string name="content_null_data">抱歉，还没有内容</string>
+    <string name="loading_error">加载失败</string>
+</resources>

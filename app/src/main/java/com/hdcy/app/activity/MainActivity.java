@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.hdcy.app.R;
+import com.hdcy.base.activity.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

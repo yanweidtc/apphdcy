@@ -12,7 +12,7 @@ import com.hdcy.app.fragment.second.child.childpager.OtherPagerFragment;
  */
 
 public class PageFragmentAdapter extends FragmentPagerAdapter {
-    private String[] mTab = new String[]{"推荐", "热门", "收藏"};
+    private String[] mTab = new String[]{"推荐", "热门", "收藏","哈哈"};
 
     public PageFragmentAdapter(FragmentManager fm) {
         super(fm);

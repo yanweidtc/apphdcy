@@ -36,7 +36,7 @@ public interface BaseData {
     /**
      * 域名
      */
-    String URL_BASE = "http://" + URl_HEADER + ".haoduocheyou.com/weixin2";
+    String URL_BASE = "http://" + URl_HEADER + ".haoduocheyou.com/app2";
     /**
      * 请求地址
      */

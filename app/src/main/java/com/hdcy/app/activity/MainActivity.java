@@ -2,15 +2,25 @@ package com.hdcy.app.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 
 import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.fragment.second.SecondFragment;
+import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.view.BottomBar;
 import com.hdcy.app.view.BottomBarTab;
+import com.hdcy.base.utils.net.NetHelper;
+import com.hdcy.base.utils.net.NetRequestCallBack;
+import com.hdcy.base.utils.net.NetRequestInfo;
+import com.hdcy.base.utils.net.NetResponseInfo;
 
 import org.xutils.common.util.LogUtil;
+import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -23,7 +33,6 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
     public static final int FOURTH = 3;
 
     private SupportFragment[] mFragments = new SupportFragment[4];
-
     private BottomBar mBottomBar;
 
     @Override
@@ -31,9 +40,13 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         if(savedInstanceState == null){
             mFragments[FIRST] = SecondFragment.newInstance();
-            loadMultipleRootFragment(R.id.fl_container, FIRST,mFragments[FIRST]);
+            mFragments[SECOND] = SecondFragment.newInstance();
+            loadMultipleRootFragment(R.id.fl_container, FIRST,mFragments[FIRST],
+                    mFragments[SECOND]);
         }else {
             mFragments[FIRST] = findFragment(SecondFragment.class);
         }
@@ -49,7 +62,8 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
         private void initView(){
             mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
-            mBottomBar.addItem(new BottomBarTab(this, R.mipmap.ic_home_white_24dp));
+            mBottomBar.addItem(new BottomBarTab(this, R.mipmap.ic_home_white_24dp))
+                    .addItem(new BottomBarTab(this,R.mipmap.ic_format_list_numbered_white_24dp));
 
             mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
                 @Override

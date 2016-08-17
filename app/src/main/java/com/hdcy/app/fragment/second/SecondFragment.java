@@ -18,6 +18,7 @@ import com.hdcy.app.fragment.second.child.childpager.OtherPagerFragment;
  */
 
 public class SecondFragment extends BaseLazyMainFragment{
+
     public static SecondFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -37,7 +38,7 @@ public class SecondFragment extends BaseLazyMainFragment{
 
     private void initView(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            loadRootFragment(R.id.fl_second_container, OtherPagerFragment.newInstance(0));
+            loadRootFragment(R.id.fl_second_container, ViewPagerFragment.newInstance());
         }
     }
 

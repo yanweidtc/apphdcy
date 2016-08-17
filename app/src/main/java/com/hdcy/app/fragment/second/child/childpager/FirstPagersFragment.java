@@ -5,18 +5,25 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
 import com.hdcy.app.activity.MainActivity;
+import com.hdcy.app.adapter.FirsPagersFragmentAdapter;
 import com.hdcy.app.adapter.HomeAdapter;
 import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.model.Article;
+import com.hdcy.app.model.Content;
+import com.hdcy.app.model.NewsArticleInfo;
+import com.hdcy.base.utils.net.NetHelper;
+import com.hdcy.base.utils.net.NetRequestCallBack;
+import com.hdcy.base.utils.net.NetRequestInfo;
+import com.hdcy.base.utils.net.NetResponseInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,37 +31,32 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.yokeyword.fragmentation.SupportFragment;
 /**
- * Created by yanweiGeorge on 16/6/3.
+ * Created by WeiYanGeorge on 2016-08-17.
  */
-public class FirstPagerFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+
+public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
     private RecyclerView mRecy;
     private SwipeRefreshLayout mRefreshLayout;
 
-    private HomeAdapter mAdapter;
+    private FirsPagersFragmentAdapter mAdapter;
 
     private boolean mAtTop = true;
 
     private int mScrollTotal;
 
-    private String[] mTitles = new String[]{
-            "航拍“摩托大军”返乡高峰 如蚂蚁搬家（组图）",
-            "苹果因漏电召回部分电源插头",
-            "IS宣称对叙利亚爆炸案负责"
-    };
+    private List<Content> contentList = new ArrayList<>();
 
-    private String[] mContents = new String[]{
-            "1月30日，距离春节还有不到十天，“摩托大军”返乡高峰到来。航拍广西梧州市东出口服务站附近的骑行返乡人员，如同蚂蚁搬家一般。",
-            "昨天记者了解到，苹果公司在其官网发出交流电源插头转换器更换计划，召回部分可能存在漏电风险的电源插头。",
-            "极端组织“伊斯兰国”31日在社交媒体上宣称，该组织制造了当天在叙利亚首都大马士革发生的连环爆炸案。"
-    };
+    private int tagId;
 
-    public static FirstPagerFragment newInstance() {
+    //加载更多页数,默认第一页为0
+    private int pagecount = 0;
+
+    public static FirstPagersFragment newInstance(int tagId) {
 
         Bundle args = new Bundle();
-
-        FirstPagerFragment fragment = new FirstPagerFragment();
+        args.putInt("param",tagId);
+        FirstPagersFragment fragment = new FirstPagersFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,9 +65,11 @@ public class FirstPagerFragment extends BaseFragment implements SwipeRefreshLayo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second_pager_first, container, false);
-
+        tagId = getArguments().getInt("param");
         EventBus.getDefault().register(this);
         initView(view);
+
+        initData();
         return view;
     }
 
@@ -76,28 +80,20 @@ public class FirstPagerFragment extends BaseFragment implements SwipeRefreshLayo
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mRefreshLayout.setOnRefreshListener(this);
 
-        mAdapter = new HomeAdapter(_mActivity);
+        mAdapter = new FirsPagersFragmentAdapter(_mActivity);
+
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
-        mRecy.setAdapter(mAdapter);
-
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+/*        mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
                 // 这里的DetailFragment在flow包里
                 // 这里是父Fragment启动,要注意 栈层级
                 //((SupportFragment) getParentFragment()).start(DetailFragment.newInstance(mAdapter.getItem(position).getTitle()));
             }
-        });
+        });*/
 
-        // Init Datas
-        List<Article> articleList = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            int index = (int) (Math.random() * 3);
-            Article article = new Article(mTitles[index], mContents[index]);
-            articleList.add(article);
-        }
-        mAdapter.setDatas(articleList);
+
 
         mRecy.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -113,7 +109,14 @@ public class FirstPagerFragment extends BaseFragment implements SwipeRefreshLayo
         });
     }
 
-    private void initData(String id){
+    private void initData(){
+        getNewsArticleInfo();
+
+    }
+
+    private void setData(){
+        mAdapter.setDatas(contentList);
+        mRecy.setAdapter(mAdapter);
 
     }
 
@@ -153,4 +156,26 @@ public class FirstPagerFragment extends BaseFragment implements SwipeRefreshLayo
         EventBus.getDefault().unregister(this);
     }
 
+    private void getNewsArticleInfo(){
+        NetHelper.getInstance().GetNewsArticleContent(0,"1011",new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                List<Content> contentListtemp = responseInfo.getContentList();
+                contentList.addAll(contentListtemp);
+                Log.e("Articlesize",contentList.size()+"");
+                setData();
+
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
 }

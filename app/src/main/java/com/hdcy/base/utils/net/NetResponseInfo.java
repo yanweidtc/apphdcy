@@ -1,6 +1,8 @@
 package com.hdcy.base.utils.net;
 
 
+import com.hdcy.app.model.Content;
+import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
 
 import org.json.JSONArray;
@@ -20,6 +22,19 @@ public class NetResponseInfo {
     private JSONObject dataObj;
     private JSONArray dataArr;
     private List<NewsCategory> newsCategoryList;
+    private List<Content> contentList;
+
+    public List<NewsArticleInfo> getNewsArticleInfoList() {
+        return newsArticleInfoList;
+    }
+
+    public void setNewsArticleInfoList(List<NewsArticleInfo> newsArticleInfoList) {
+        this.newsArticleInfoList = newsArticleInfoList;
+    }
+
+    private List<NewsArticleInfo> newsArticleInfoList;
+
+
 
     public String getCode() {
         return code;
@@ -68,5 +83,13 @@ public class NetResponseInfo {
     public void setNewsCategoryList(List<NewsCategory> newsCategoryList){
         this.newsCategoryList = newsCategoryList;
     }
+    public List<Content> getContentList() {
+        return contentList;
+    }
+
+    public void setContentList(List<Content> contentList) {
+        this.contentList = contentList;
+    }
+
 
 }

@@ -52,7 +52,7 @@ public class BaseApplication extends MultiDexApplication {
         //百度地图
 ///*        SDKInitializer.initialize(getApplicationContext());
 //
-//        x.Ext.setDebug(true); // 是否输出debug日志, 开启debug会影响性能.
+        x.Ext.setDebug(true); // 是否输出debug日志, 开启debug会影响性能.
 //
 //        // 友盟统计
 //        MobclickAgent.setDebugMode(false);// 设置开启日志,发布时请关闭日志

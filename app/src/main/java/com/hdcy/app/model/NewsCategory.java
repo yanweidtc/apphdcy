@@ -1,6 +1,7 @@
 package com.hdcy.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 资讯分类实体类
@@ -13,28 +14,31 @@ public class NewsCategory implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-/*    参数	属性	说明
-    id	int	分类ID
-    Name	Stirng	分类名称*/
-
     private int id;
+
+    private String parentId;
+
+    private String parentName;
+
     private String name;
 
-    public int getId() {
-        return id;
-    }
+    private String image;
 
-    public void setId(int id) {
+    private List<Children> children ;
+
+    public void setId(int id){
         this.id = id;
     }
-
-    public String getName() {
-        return name;
+    public int getId(){
+        return this.id;
     }
-
-    public void setName(String name) {
+    public void setName(String name){
         this.name = name;
     }
+    public String getName(){
+        return this.name;
+    }
+
 
 
 }

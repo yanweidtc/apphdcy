@@ -108,6 +108,11 @@ public interface BaseData {
      * 消息类型(资讯)
      */
     String MESSAGE_TYPE_NEWS = "news";
+
+    /**
+     * 图片缩放(级别1 120*120)
+     */
+    int PHOTO_ZOOM_LEVEL_1 = 240;
     /**
      * Picasso加载等待图
      */

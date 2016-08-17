@@ -39,14 +39,9 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
         if(savedInstanceState == null){
             mFragments[FIRST] = SecondFragment.newInstance();
-            mFragments[SECOND] = SecondFragment.newInstance();
-            loadMultipleRootFragment(R.id.fl_container, FIRST,mFragments[FIRST],
-                    mFragments[SECOND]);
+            loadMultipleRootFragment(R.id.fl_container, FIRST,mFragments[FIRST]);
         }else {
             mFragments[FIRST] = findFragment(SecondFragment.class);
         }

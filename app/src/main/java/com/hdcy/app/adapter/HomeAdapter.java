@@ -52,7 +52,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Article item = mItems.get(position);
         holder.tvTitle.setText(item.getTitle());
-        holder.tvContent.setText(item.getContent());
+        //holder.tvContent.setText(item.getContent());
     }
 
     @Override
@@ -70,7 +70,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         public MyViewHolder(View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            tvContent = (TextView) itemView.findViewById(R.id.tv_content);
         }
     }
 

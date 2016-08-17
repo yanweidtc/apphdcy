@@ -2,7 +2,6 @@ package com.hdcy.app.fragment.second;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import android.view.ViewGroup;
 import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.fragment.second.child.ViewPagerFragment;
-import com.hdcy.app.fragment.second.child.childpager.FirstPagerFragment;
-import com.hdcy.app.fragment.second.child.childpager.OtherPagerFragment;
 
 /**
  * Created by WeiYanGeorge on 2016-08-15.

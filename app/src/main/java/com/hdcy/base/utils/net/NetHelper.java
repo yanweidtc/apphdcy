@@ -68,13 +68,13 @@ public class NetHelper {
      * @param callBack
      * @return
      */
-    public Callback.Cancelable GetNewsArticleContent(int pagecount,String tagId,final NetRequestCallBack callBack){
+    public Callback.Cancelable GetNewsArticleContent(int pagecount,int tagId,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/article/");
         request.addParam("enable","true");
         request.addParam("page",pagecount);
-        request.addParam("size",2);
+        request.addParam("size",10);
         request.addParam("sort","pagecount");
-        request.addParam("tagid",tagId);
+        request.addParam("tagId",tagId);
         return request.postarray(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {

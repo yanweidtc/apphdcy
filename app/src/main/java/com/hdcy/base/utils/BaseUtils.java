@@ -33,4 +33,39 @@ public class BaseUtils implements BaseData {
         lastClickTime = time;
         return timeD <= 300;
     }
+
+    /**
+     * 获取缩放图片地址
+     *
+     * @param url
+     * @return
+     */
+    public static String getPhotoZoomUrl(String url) {
+        return getPhotoZoomUrl(PHOTO_ZOOM_LEVEL_1, PHOTO_ZOOM_LEVEL_1, url);
+    }
+
+    /**
+     * 获取缩放图片地址
+     *
+     * @param width
+     * @param height
+     * @param url
+     * @return
+     */
+    public static String getPhotoZoomUrl(int width, int height, String url) {
+        if (!BaseUtils.isEmptyString(url) && !url.contains("/storage/") && !url.contains("/system/")
+                && !url.contains("/media/") && !url.startsWith("file") && !url.startsWith("content") && !url.startsWith("assets") && !url.startsWith("drawable")) {
+            if (url.contains("/qn/")) {
+                url += "?imageView/1/w/" + width + "/h/" + height;
+            } else {
+                if (url.contains("/video/") && !url.endsWith(".jpg")) {
+                    url += ".jpg";
+                }
+                url += "/" + width + "/" + height;
+            }
+        } else {
+            url = "";
+        }
+        return url;
+    }
 }

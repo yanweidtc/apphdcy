@@ -66,9 +66,9 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second_pager_first, container, false);
         tagId = getArguments().getInt("param");
+        Log.e("TagValue",tagId+"");
         EventBus.getDefault().register(this);
         initView(view);
-
         initData();
         return view;
     }
@@ -157,12 +157,14 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     private void getNewsArticleInfo(){
-        NetHelper.getInstance().GetNewsArticleContent(0,"1011",new NetRequestCallBack() {
+        NetHelper.getInstance().GetNewsArticleContent(pagecount,tagId,new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                if(contentList.isEmpty()){
                 List<Content> contentListtemp = responseInfo.getContentList();
                 contentList.addAll(contentListtemp);
                 Log.e("Articlesize",contentList.size()+"");
+                }
                 setData();
 
             }

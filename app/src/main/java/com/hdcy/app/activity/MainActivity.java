@@ -3,6 +3,7 @@ package com.hdcy.app.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.WindowManager;
 
 
 import com.hdcy.app.R;
@@ -16,6 +17,7 @@ import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.util.LogUtil;
 import org.xutils.x;
 
@@ -88,7 +90,6 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
     }
 
     @Override

@@ -1,10 +1,12 @@
 package com.hdcy.app.fragment.second.child.childpager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,19 +15,16 @@ import android.view.ViewGroup;
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
 import com.hdcy.app.activity.MainActivity;
+import com.hdcy.app.activity.NewsActivity;
 import com.hdcy.app.adapter.FirsPagersFragmentAdapter;
-import com.hdcy.app.adapter.HomeAdapter;
 import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.TabSelectedEvent;
-import com.hdcy.app.model.Article;
 import com.hdcy.app.model.Content;
-import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -42,6 +41,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     private FirsPagersFragmentAdapter mAdapter;
 
     private boolean mAtTop = true;
+    private Toolbar mToolbar;
 
     private int mScrollTotal;
 
@@ -67,31 +67,22 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
         View view = inflater.inflate(R.layout.fragment_second_pager_first, container, false);
         tagId = getArguments().getInt("param");
         Log.e("TagValue",tagId+"");
-        EventBus.getDefault().register(this);
         initView(view);
         initData();
         return view;
     }
 
     private void initView(View view) {
+        mToolbar =(Toolbar) view.findViewById(R.id.toolbar);
         mRecy = (RecyclerView) view.findViewById(R.id.recy);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mRefreshLayout.setOnRefreshListener(this);
-
         mAdapter = new FirsPagersFragmentAdapter(_mActivity);
 
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
-/*        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                // 这里的DetailFragment在flow包里
-                // 这里是父Fragment启动,要注意 栈层级
-                //((SupportFragment) getParentFragment()).start(DetailFragment.newInstance(mAdapter.getItem(position).getTitle()));
-            }
-        });*/
 
 
 
@@ -107,6 +98,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
                 }
             }
         });
+
     }
 
     private void initData(){
@@ -116,7 +108,18 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
 
     private void setData(){
         mAdapter.setDatas(contentList);
+
         mRecy.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                Log.e("getactivity",getActivity().toString());
+                startActivity(new Intent(getActivity().getParent(), NewsActivity.class));
+
+                // intent.putExtras(bundle);
+                //startActivity(intent);
+            }
+        });
 
     }
 
@@ -153,7 +156,6 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     public void onDestroyView() {
         super.onDestroyView();
         mRecy.setAdapter(null);
-        EventBus.getDefault().unregister(this);
     }
 
     private void getNewsArticleInfo(){

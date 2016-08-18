@@ -11,10 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.hdcy.app.R;
-import com.hdcy.app.adapter.FirsPagersFragmentAdapter;
-import com.hdcy.app.adapter.ViewPageFragmentAdapter;
+import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.fragment.second.child.childpager.FirstPagersFragment;
 import com.hdcy.app.model.NewsCategory;
@@ -23,10 +24,12 @@ import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import me.yokeyword.fragmentation.SupportFragment;
+import static com.hdcy.base.BaseData.URL_BASE;
 
 
 /**
@@ -65,9 +68,8 @@ public class ViewPagerFragment extends BaseFragment {
         mTab.addTab(mTab.newTab());
         mTab.addTab(mTab.newTab());
 
-
-
     }
+
 
     private void initData() {
         getNewsCategory();
@@ -135,5 +137,8 @@ public class ViewPagerFragment extends BaseFragment {
     }
 
 
+    /**
+     * Created by WeiYanGeorge on 2016-08-18.
+     */
 
 }

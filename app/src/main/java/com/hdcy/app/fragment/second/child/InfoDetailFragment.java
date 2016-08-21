@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -24,9 +25,10 @@ import static com.hdcy.base.BaseData.URL_BASE;
 
 public  class InfoDetailFragment extends BaseBackFragment {
 
+
     WebView myWebView;
     private String targetId;
-    private String Url = URL_BASE +"/index.html?id=";
+    private String Url = URL_BASE +"/articleDetails.html?id=";
     private String loadurl;
     private Toolbar mToolbar;
 
@@ -42,37 +44,29 @@ public  class InfoDetailFragment extends BaseBackFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_infodetail,container,false);
-        Bundle bundle = getArguments();
+        Bundle bundle= getArguments();
         if (bundle !=null){
             targetId = bundle.getString("targetid");
         }
         loadurl = Url+targetId;
-        Log.e("访问地址",loadurl);
         myWebView = (WebView)view.findViewById(R.id.mywebview);
-        myWebView.getSettings().setJavaScriptEnabled(true);
-        myWebView.loadUrl(loadurl);
-        myWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
+        Log.e("访问滴滴",loadurl);
+        myWebView.loadUrl("http://192.168.10.101/app2/articleDetails.html?id=630234");
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        myWebView.setWebViewClient(new WebViewClient());
         initView(view);
         return view;
     }
 
     private void initView(View view){
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        mToolbar.setTitle("咨询详情");
-
-        initToolbarNav(mToolbar);
     }
 
 

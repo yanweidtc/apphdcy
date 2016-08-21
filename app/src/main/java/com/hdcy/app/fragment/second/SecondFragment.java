@@ -14,7 +14,7 @@ import com.hdcy.app.fragment.second.child.ViewPagerFragment;
  * Created by WeiYanGeorge on 2016-08-15.
  */
 
-public class SecondFragment extends BaseLazyMainFragment{
+public class SecondFragment extends BaseLazyMainFragment {
 
     public static SecondFragment newInstance() {
 

@@ -19,16 +19,21 @@ import com.hdcy.app.activity.NewsActivity;
 import com.hdcy.app.adapter.FirsPagersFragmentAdapter;
 import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.TabSelectedEvent;
+import com.hdcy.app.fragment.second.child.DetailFragment;
+import com.hdcy.app.fragment.second.child.InfoDetailFragment;
 import com.hdcy.app.model.Content;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by WeiYanGeorge on 2016-08-17.
@@ -41,7 +46,6 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     private FirsPagersFragmentAdapter mAdapter;
 
     private boolean mAtTop = true;
-    private Toolbar mToolbar;
 
     private int mScrollTotal;
 
@@ -65,6 +69,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second_pager_first, container, false);
+        EventBus.getDefault().register(this);
         tagId = getArguments().getInt("param");
         Log.e("TagValue",tagId+"");
         initView(view);
@@ -73,16 +78,27 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     private void initView(View view) {
-        mToolbar =(Toolbar) view.findViewById(R.id.toolbar);
         mRecy = (RecyclerView) view.findViewById(R.id.recy);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mRefreshLayout.setOnRefreshListener(this);
+
         mAdapter = new FirsPagersFragmentAdapter(_mActivity);
 
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
+
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                Log.e("getactivity",getActivity().toString());
+                ((SupportFragment) getParentFragment()).start(InfoDetailFragment.newInstance(mAdapter.getItem(position).getId()+""));
+
+                // intent.putExtras(bundle);
+                //startActivity(intent);
+            }
+        });
 
 
 
@@ -110,16 +126,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
         mAdapter.setDatas(contentList);
 
         mRecy.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                Log.e("getactivity",getActivity().toString());
-                startActivity(new Intent(getActivity().getParent(), NewsActivity.class));
 
-                // intent.putExtras(bundle);
-                //startActivity(intent);
-            }
-        });
 
     }
 
@@ -156,6 +163,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     public void onDestroyView() {
         super.onDestroyView();
         mRecy.setAdapter(null);
+        EventBus.getDefault().unregister(this);
     }
 
     private void getNewsArticleInfo(){

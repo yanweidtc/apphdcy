@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.hdcy.app.fragment.second.SecondFragment;
+
 
 /**
  * Created by WeiYanGeorge on 2016-08-14.
@@ -75,19 +77,19 @@ public abstract class BaseLazyMainFragment extends BaseFragment {
      *
      * @return
      */
-//    @Override
-//    public boolean onBackPressedSupport() {
-//        if (getChildFragmentManager().getBackStackEntryCount() > 1) {
-//            popChild();
-//        } else {
-//            if (this instanceof ZhihuFirstFragment) {   // 如果是 第一个Fragment 则退出app
-//                _mActivity.finish();
-//            } else {                                    // 如果不是,则回到第一个Fragment
-//                _mBackToFirstListener.onBackToFirstFragment();
-//            }
-//        }
-//        return true;
-//    }
+    @Override
+    public boolean onBackPressedSupport() {
+        if (getChildFragmentManager().getBackStackEntryCount() > 1) {
+            popChild();
+        } else {
+            if (this instanceof SecondFragment) {   // 如果是 第一个Fragment 则退出app
+                _mActivity.finish();
+            } else {                                    // 如果不是,则回到第一个Fragment
+                _mBackToFirstListener.onBackToFirstFragment();
+            }
+        }
+        return true;
+    }
 
     public interface OnBackToFirstListener {
         void onBackToFirstFragment();

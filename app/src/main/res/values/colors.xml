@@ -36,4 +36,8 @@
     <color name="main_income_wallet">#FF009944</color><!--APP收入(钱包)-->
     <color name="main_pay_wallet">@color/main</color><!--APP支出(钱包)-->
 
+    <!--评论框-->
+    <color name="color_efeff4">#ffefeff4</color>
+    <color name="color_efeff1">#ffefeff1</color>
+
 </resources>

@@ -22,14 +22,6 @@
             android:orientation="horizontal"
             android:padding="8dp" >
 
-            <ImageView
-                android:id="@+id/img_change"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:contentDescription="@string/app_name"
-                android:src="@mipmap/icon_chat_voice" />
 
             <EditText
                 android:id="@+id/edt_input"
@@ -40,7 +32,7 @@
                 android:layout_weight="1"
                 android:background="@layout/shape_chat_words_input"
                 android:cursorVisible="true"
-                android:hint="在此输入内容"
+                android:hint="写评论"
                 android:maxLines="5"
                 android:paddingBottom="9dp"
                 android:paddingLeft="10dp"
@@ -51,6 +43,13 @@
                 android:textCursorDrawable="@null"
                 android:textSize="12dp"
                 android:visibility="visible" />
+            <ImageView
+                android:id="@+id/iv_comment"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp"
+                android:src="@mipmap/tab_icon_comment_default"/>
 
             <TextView
                 android:id="@+id/tv_voice"
@@ -78,17 +77,8 @@
                 android:layout_marginRight="8dp"
                 android:contentDescription="@string/app_name"
                 android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/img_more"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="bottom"
-                android:contentDescription="@string/app_name"
-                 />
-
             <TextView
-                android:id="@+id/tv_send"
+                android:id="@+id/tv_comment_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -96,10 +86,9 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="7dp"
-                android:text="发送"
                 android:textColor="@color/white"
                 android:textSize="12dp"
-                android:visibility="gone" />
+/>
         </LinearLayout>
 
 </LinearLayout>

@@ -4,9 +4,6 @@ package com.hdcy.app.view;
  * Created by WeiYanGeorge on 2016-08-15.
  */
 
-/**
- * Created by WeiYanGeorge on 2016-08-14.
- */
 
 import android.content.Context;
 import android.graphics.Color;
@@ -103,6 +100,10 @@ public class BottomBar extends LinearLayout {
         });
     }
 
+    public int getCurrentItemPosition() {
+        return mCurrentPosition;
+    }
+
     public interface OnTabSelectedListener {
         void onTabSelected(int position, int prePosition);
 
@@ -129,10 +130,6 @@ public class BottomBar extends LinearLayout {
         mCurrentPosition = ss.position;
     }
 
-    public int getCurrentItemPosition() {
-        return mCurrentPosition;
-    }
-
     static class SavedState extends BaseSavedState {
         private int position;
 
@@ -152,7 +149,7 @@ public class BottomBar extends LinearLayout {
             out.writeInt(position);
         }
 
-        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
@@ -217,4 +214,5 @@ public class BottomBar extends LinearLayout {
         }
     }
 }
+
 

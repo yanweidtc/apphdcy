@@ -1,17 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include
-        layout="@layout/content_detail"/>
-    <TextView
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/line_width"
-        android:background="@color/white" />
-</LinearLayout>>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <include layout="@layout/toolbar"/>
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:showIn="@layout/fragment_infodetail"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <WebView
+                    android:id="@+id/mywebview"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:paddingLeft="16dp"
+            android:orientation="horizontal"
+            android:background="@android:color/white"
+            android:paddingRight="16dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_send"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottombar_height"
+                android:singleLine="true"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tab_icon_comment_default"
+                />
+             <TextView
+                 android:id="@+id/tv_comment_count"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="8372387"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

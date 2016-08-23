@@ -31,7 +31,7 @@ import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
-public class MainActivity extends SupportActivity implements BaseLazyMainFragment.OnBackToFirstListener{
+public class MainActivity extends SupportActivity{
     public static final int FIRST = 0;
     public static final int SECOND = 1;
     public static final int THIRD = 2;
@@ -62,8 +62,10 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
         private void initView(){
             mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
-            mBottomBar.addItem(new BottomBarTab(this, R.mipmap.ic_home_white_24dp))
+/*
+            mBottomBar.addItem(new BottomBarTab(this, R.drawable.tab_icon_activity_default))
                     .addItem(new BottomBarTab(this,R.mipmap.ic_format_list_numbered_white_24dp));
+*/
 
             mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
                 @Override
@@ -78,25 +80,14 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
 
                 @Override
                 public void onTabReselected(int position) {
-                    SupportFragment currentFragment = mFragments[position];
-                    int count = currentFragment.getChildFragmentManager().getBackStackEntryCount();
 
-                    //如果不在该类别Fragment的主页,则回到主页;
-                    if(count>1){
-                        if(currentFragment instanceof SecondFragment){
-                            currentFragment.popToChild(ViewPagerFragment.class, false);
-                        }
-                        return;
-                    }
-
-                    if (count == 1) {
-                        // 在FirstPagerFragment中接收, 因为是嵌套的孙子Fragment 所以用EventBus比较方便
-                        // 主要为了交互: 重选tab 如果列表不在顶部则移动到顶部,如果已经在顶部,则刷新
                         EventBus.getDefault().post(new TabSelectedEvent(position));
-                    }
-
                 }
+
+
             });
+
+
         }
     @Override
     public void onBackPressedSupport() {
@@ -108,11 +99,11 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
     protected void onDestroy() {
         super.onDestroy();
     }
-
+/*
     @Override
     public void onBackToFirstFragment() {
         mBottomBar.setCurrentItem(0);
-    }
+    }*/
 
 
 

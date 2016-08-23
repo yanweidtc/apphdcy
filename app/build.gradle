@@ -30,6 +30,7 @@ dependencies {
     })
     //加入支持分包的依赖库
     //底部导航栏
+    compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.jakewharton:butterknife:8.2.1'
     compile 'com.android.support:multidex:1.0.1'

@@ -87,6 +87,7 @@ public class ViewPagerFragment extends BaseFragment {
                 NewsCategory newsCategory = new NewsCategory();
                 newsCategory.setName("全部");
                 newsCategory.setId(1011);
+                Log.e("全部id",newsCategory.getId()+"");
                 newsCategoryList.add(newsCategory);
                 List<NewsCategory> newsCategoryListTemp = responseInfo.getNewsCategoryList();
                 newsCategoryList.addAll(newsCategoryListTemp);

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
+import com.hdcy.app.R;
 import com.hdcy.app.fragment.second.SecondFragment;
 
 
@@ -13,26 +15,12 @@ import com.hdcy.app.fragment.second.SecondFragment;
  */
 
 public abstract class BaseLazyMainFragment extends BaseFragment {
+    // 再点一次退出程序时间设置
+    private static final long WAIT_TIME = 2000L;
+    private long TOUCH_TIME = 0;
+
     private boolean mInited = false;
-    protected OnBackToFirstListener _mBackToFirstListener;
     private Bundle mSavedInstanceState;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnBackToFirstListener) {
-            _mBackToFirstListener = (OnBackToFirstListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnBackToFirstListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        _mBackToFirstListener = null;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,19 +67,12 @@ public abstract class BaseLazyMainFragment extends BaseFragment {
      */
     @Override
     public boolean onBackPressedSupport() {
-        if (getChildFragmentManager().getBackStackEntryCount() > 1) {
-            popChild();
+        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+            _mActivity.finish();
         } else {
-            if (this instanceof SecondFragment) {   // 如果是 第一个Fragment 则退出app
-                _mActivity.finish();
-            } else {                                    // 如果不是,则回到第一个Fragment
-                _mBackToFirstListener.onBackToFirstFragment();
-            }
+            TOUCH_TIME = System.currentTimeMillis();
+            Toast.makeText(_mActivity, R.string.press_again_exit, Toast.LENGTH_SHORT).show();
         }
         return true;
-    }
-
-    public interface OnBackToFirstListener {
-        void onBackToFirstFragment();
     }
 }

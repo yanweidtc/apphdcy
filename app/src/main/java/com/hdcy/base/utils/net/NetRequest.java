@@ -40,13 +40,11 @@ public class NetRequest implements BaseData {
         netRequestInfo = new NetRequestInfo();
         netResponseInfo = new NetResponseInfo();
         netRequestInfo.setUrl(this.url+"?");
-
     }
 
 
     public void addHeader(String key, String value) {
         params.addHeader(key, value);
-        netRequestInfo.setUrl(netRequestInfo.getUrl() + key + "=" + value + "&");
     }
 
     public void addParam(String key, String value) {
@@ -77,6 +75,89 @@ public class NetRequest implements BaseData {
      *
      * @param callBack 回调
      */
+    public Callback.Cancelable postobject(final NetRequestCallBack callBack) {
+        String str = netRequestInfo.getUrl();
+        netRequestInfo.setUrl(str.substring(0, str.length() - 1));
+        Log.e("testinfo",str);
+        return x.http().get(params, new Callback.ProgressCallback<String>() {
+
+            @Override
+            public void onStarted() {
+                LogUtil.e("onStart");
+                if (callBack != null) {
+                    callBack.onStart();
+                }
+            }
+
+            @Override
+            public void onWaiting() {
+                LogUtil.e("onWaiting");
+                callBack.onWaiting();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                LogUtil.e("onCancelled：" + cex.getMessage());
+                cex.printStackTrace();
+                callBack.onCancelled();
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+                LogUtil.e("onLoading：" + current + " - " + total + " == " + (int) ((current * 1.0f / total) * 100) + "%");
+                if (callBack != null) {
+                    callBack.onLoading(total, current, current * 1.0f / total, isDownloading);
+                }
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                netResponseInfo.setResult(result);
+                try {
+                    Log.e("Successmsg",result);
+                    JSONObject  object = new JSONObject(result);
+                    Log.e("Successmsg1",object.toString());
+                    Log.e("onSuccess1：" + netRequestInfo.getUrl(),"");
+                    Log.e("onSuccess1：" + netResponseInfo.getResult(),"");
+                    netResponseInfo.setDataObj(object);
+                    if (callBack != null) {
+                        callBack.onSuccess(netRequestInfo, netResponseInfo);
+                    }
+                } catch (JSONException e) {
+                    LogUtil.e("onError：" + netRequestInfo.getUrl());
+                    LogUtil.e("onError：" + netResponseInfo.getMessage());
+                    LogUtil.e("onError：" + netResponseInfo.getResult());
+                    if (callBack != null) {
+                        callBack.onError(netRequestInfo, netResponseInfo);
+                    }
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                LogUtil.e("onFailure：" + netRequestInfo.getUrl());
+                LogUtil.e("onFailure：" + ex.getMessage());
+                Log.e("onFailure",netRequestInfo.getUrl());
+                Log.e("onFailure",ex.getLocalizedMessage());
+                netResponseInfo.setMessage(ex.getMessage());
+                if (callBack != null) {
+                    callBack.onFailure(netRequestInfo, netResponseInfo);
+                }
+                ex.printStackTrace();
+            }
+
+            @Override
+            public void onFinished() {
+                LogUtil.e("onFinished");
+                if (callBack != null) {
+                    callBack.onFinished();
+                }
+            }
+        });
+    }
+
+
     public Callback.Cancelable post(final NetRequestCallBack callBack) {
         String str = netRequestInfo.getUrl();
         netRequestInfo.setUrl(str.substring(0, str.length() - 1));

@@ -1,12 +1,10 @@
 package com.hdcy.app.fragment.second.child.childpager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +13,10 @@ import android.view.ViewGroup;
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
 import com.hdcy.app.activity.MainActivity;
-import com.hdcy.app.activity.NewsActivity;
 import com.hdcy.app.adapter.FirsPagersFragmentAdapter;
 import com.hdcy.app.basefragment.BaseFragment;
+import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
-import com.hdcy.app.fragment.second.child.DetailFragment;
 import com.hdcy.app.fragment.second.child.InfoDetailFragment;
 import com.hdcy.app.model.Content;
 import com.hdcy.base.utils.net.NetHelper;
@@ -92,11 +89,9 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                Log.e("getactivity",getActivity().toString());
-                ((SupportFragment) getParentFragment()).start(InfoDetailFragment.newInstance(mAdapter.getItem(position).getId()+""));
 
-                // intent.putExtras(bundle);
-                //startActivity(intent);
+                EventBus.getDefault().post(new StartBrotherEvent(InfoDetailFragment.newInstance(mAdapter.getItem(position).getId()+"")));
+
             }
         });
 
@@ -118,8 +113,11 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     private void initData(){
-        getNewsArticleInfo();
-
+        if(tagId == 1011){
+        getWholeNewsArticleInfo();
+        }else {
+            getNewsArticleInfo();
+        }
     }
 
     private void setData(){
@@ -170,10 +168,35 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
         NetHelper.getInstance().GetNewsArticleContent(pagecount,tagId,new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                if(contentList.isEmpty()){
+            if(contentList.isEmpty()){
                 List<Content> contentListtemp = responseInfo.getContentList();
                 contentList.addAll(contentListtemp);
                 Log.e("Articlesize",contentList.size()+"");
+                }
+                setData();
+
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
+
+    private void getWholeNewsArticleInfo(){
+        NetHelper.getInstance().GetWholeNewsArticleContent(pagecount,new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                if(contentList.isEmpty()){
+                    List<Content> contentListtemp = responseInfo.getContentList();
+                    contentList.addAll(contentListtemp);
+                    Log.e("Articlesize",contentList.size()+"");
                 }
                 setData();
 

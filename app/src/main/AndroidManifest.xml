@@ -35,27 +35,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
-            android:launchMode="singleTask">
+            android:name=".activity.MainActivity1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.WebViewBrowserActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="超级浏览器"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-        <activity
-            android:name=".activity.NewsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="超级浏览器"
-            android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
 
         <!--
      ATTENTION: This was auto-generated to add Google Play services to your project for

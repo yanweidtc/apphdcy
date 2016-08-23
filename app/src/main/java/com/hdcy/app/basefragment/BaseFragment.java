@@ -11,11 +11,11 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by WeiYanGeorge on 2016-08-14.
  */
 
-public abstract class BaseFragment extends SupportFragment{
+public class BaseFragment extends SupportFragment {
     private static final String TAG = "Fragmentation";
 
     protected void initToolbarMenu(Toolbar toolbar) {
-        toolbar.inflateMenu(R.menu.hierachy);
+        toolbar.inflateMenu(R.menu.hierarchy);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

@@ -62,7 +62,6 @@ public class FirstFragment extends BaseLazyMainFragment{
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
 
         mToolbar.setTitle("资讯");
-        initToolbarMenu(mToolbar);
 
 
         mTab.addTab(mTab.newTab());

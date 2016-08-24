@@ -133,7 +133,30 @@ public class NetHelper {
             }
         });
     }
+    public Callback.Cancelable PublishComments(String tagId,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/user/current");
+/*        request.addParam("target","article");
+        request.addParam("targetId", tagId);
+        request.addParam("content","9898");*/
 
+
+        return request.postinfo(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                callBack.onSuccess(requestInfo, responseInfo);
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
     public Callback.Cancelable GetArticleInfo(String tagId,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/article/"+tagId);
         return request.postobject(new NetRequestCallBack() {
@@ -144,18 +167,15 @@ public class NetHelper {
                     responseInfo.setArticleInfo(JSON.parseObject(dataObj.toString(), ArticleInfo.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
-                Log.e("comments","sucess");
             }
 
             @Override
             public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("comments","onfailure");
 
             }
 
             @Override
             public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("comments","onfailure");
 
             }
         });

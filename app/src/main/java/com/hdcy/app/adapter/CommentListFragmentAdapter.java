@@ -9,13 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
+import com.hdcy.app.model.Replys;
 import com.hdcy.base.BaseInfo;
+import com.hdcy.base.utils.BaseUtils;
+import com.nostra13.universalimageloader.utils.L;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ import java.util.List;
 public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentListFragmentAdapter.MyViewHolder>{
 
     private List<CommentsContent> mItems = new ArrayList<>();
+    private List<Replys> replysList = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context context;
 
@@ -76,7 +81,15 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
         CommentsContent item = mItems.get(position);
+/*        replysList = item.getReplysList();
+        if(item.getReplysList().isEmpty()){
+            holder.lv_replys.setVisibility(View.GONE);
+        }else {
+            Log.e("replaysLIst",item.getReplysList().toString());
+            holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
+        }*/
         holder.tv_name.setText(item.getCreaterName()+"");
         Picasso.with(context).load(item.getCreaterHeadimgurl())
                 .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
@@ -84,13 +97,16 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
                 .centerCrop()
                 .into(holder.iv_avatar);
         holder.tv_time.setText(item.getCreatedTime().toLocaleString()+"");
+        Log.e("CommentContent",item.getContent()+"");
         holder.tv_comment_content.setText(item.getContent());
+        holder.tv_praise_count.setText(item.getPraiseCount()+"");
 
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_avatar,iv_praise;
         private TextView tv_name,tv_praise_count, tv_time,tv_comment_content;
+        private ListView lv_replys;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +115,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_praise_count = (TextView) itemView.findViewById(R.id.tv_praise_count);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
+            lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
 
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 

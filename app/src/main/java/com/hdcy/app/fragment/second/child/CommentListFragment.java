@@ -106,6 +106,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
 
     private  void initData(){
         GetCommentsList();
+        PublishComment();
     }
 
     private void setData(){
@@ -159,6 +160,25 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
                     Log.e("CommentListsize",commentsList.size()+"");
                 }
                 setData();
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
+
+    public void PublishComment(){
+        NetHelper.getInstance().PublishComments(tagId, new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("发布成功",tagId);
             }
 
             @Override

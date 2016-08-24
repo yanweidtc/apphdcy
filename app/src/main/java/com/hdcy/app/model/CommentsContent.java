@@ -11,7 +11,6 @@ import java.util.List;
 public class CommentsContent implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
     private int id;
 
     private Date createdTime;
@@ -26,13 +25,14 @@ public class CommentsContent implements Serializable {
 
     private String createrHeadimgurl;
 
-    private String replyToId;
+    private long replyToId;
 
     private String replyToName;
 
     private String content;
 
     private int praiseCount;
+
 
     public List<Replys> getReplysList() {
         return replysList;
@@ -87,10 +87,10 @@ public class CommentsContent implements Serializable {
     public String getCreaterHeadimgurl(){
         return this.createrHeadimgurl;
     }
-    public void setReplyToId(String replyToId){
+    public void setReplyToId(long replyToId){
         this.replyToId = replyToId;
     }
-    public String getReplyToId(){
+    public long getReplyToId(){
         return this.replyToId;
     }
     public void setReplyToName(String replyToName){

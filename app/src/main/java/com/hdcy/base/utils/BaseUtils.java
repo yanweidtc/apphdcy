@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import com.hdcy.base.BaseData;
 
+import java.util.List;
+
 /**
  * Created by WeiYanGeorge on 2016-08-10.
  */
@@ -68,4 +70,21 @@ public class BaseUtils implements BaseData {
         }
         return url;
     }
+
+    /**
+     * List是否为空
+     *
+     * @param list
+     * @return
+     */
+    public static boolean isEmptyList(List list) {
+        if (list == null) {
+            return true;
+        }
+        if (list.size() == 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

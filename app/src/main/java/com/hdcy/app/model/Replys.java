@@ -1,6 +1,7 @@
 package com.hdcy.app.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by WeiYanGeorge on 2016-08-23.
@@ -12,19 +13,19 @@ public class Replys implements Serializable {
 
     private int id;
 
-    private int createdTime;
+    private Date createdTime;
 
     private String target;
 
-    private int targetId;
+    private long targetId;
 
-    private int createrId;
+    private long createrId;
 
     private String createrName;
 
     private String createrHeadimgurl;
 
-    private String replyToId;
+    private long replyToId;
 
     private String replyToName;
 
@@ -38,10 +39,10 @@ public class Replys implements Serializable {
     public int getId(){
         return this.id;
     }
-    public void setCreatedTime(int createdTime){
+    public void setCreatedTime(Date createdTime){
         this.createdTime = createdTime;
     }
-    public int getCreatedTime(){
+    public Date getCreatedTime(){
         return this.createdTime;
     }
     public void setTarget(String target){
@@ -53,13 +54,13 @@ public class Replys implements Serializable {
     public void setTargetId(int targetId){
         this.targetId = targetId;
     }
-    public int getTargetId(){
+    public long getTargetId(){
         return this.targetId;
     }
     public void setCreaterId(int createrId){
         this.createrId = createrId;
     }
-    public int getCreaterId(){
+    public long getCreaterId(){
         return this.createrId;
     }
     public void setCreaterName(String createrName){
@@ -74,10 +75,10 @@ public class Replys implements Serializable {
     public String getCreaterHeadimgurl(){
         return this.createrHeadimgurl;
     }
-    public void setReplyToId(String replyToId){
+    public void setReplyToId(int replyToId){
         this.replyToId = replyToId;
     }
-    public String getReplyToId(){
+    public long getReplyToId(){
         return this.replyToId;
     }
     public void setReplyToName(String replyToName){

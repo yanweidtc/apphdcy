@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,9 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
 
     private int mScrollTotal;
 
+    private String content;
+
+    private boolean isEdit;//是否编辑过
 
 
     private CommentListFragmentAdapter mAdapter;
@@ -104,9 +109,10 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
 
     }
 
+
+
     private  void initData(){
         GetCommentsList();
-        PublishComment();
     }
 
     private void setData(){
@@ -174,22 +180,5 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         });
     }
 
-    public void PublishComment(){
-        NetHelper.getInstance().PublishComments(tagId, new NetRequestCallBack() {
-            @Override
-            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("发布成功",tagId);
-            }
 
-            @Override
-            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-
-            }
-
-            @Override
-            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-
-            }
-        });
-    }
 }

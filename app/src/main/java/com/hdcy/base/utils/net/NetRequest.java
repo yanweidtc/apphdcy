@@ -47,10 +47,14 @@ public class NetRequest implements BaseData {
         params.addHeader(key, value);
     }
 
+
     public void addParam(String key, String value) {
         params.addBodyParameter(key, value);
-        netRequestInfo.setUrl(netRequestInfo.getUrl() + key + "=" + value + "&");
         Log.e(key + " = " + value,"");
+    }
+
+    public void addParamjson( String value) {
+        params.setBodyContent(value);
     }
 
     public void addParam(String key, int value) {
@@ -158,7 +162,7 @@ public class NetRequest implements BaseData {
     }
 
 
-    public Callback.Cancelable post(final NetRequestCallBack callBack) {
+    public Callback.Cancelable getarray(final NetRequestCallBack callBack) {
         String str = netRequestInfo.getUrl();
         netRequestInfo.setUrl(str.substring(0, str.length() - 1));
         Log.e("testinfo",str);
@@ -329,14 +333,13 @@ public class NetRequest implements BaseData {
     }
 
     /**
-     * 请求/上传数据
+     * 上传数据
      *
      * @param callBack 回调
      */
     public Callback.Cancelable postinfo(final NetRequestCallBack callBack) {
         String str = netRequestInfo.getUrl();
         netRequestInfo.setUrl(str.substring(0, str.length() - 1));
-        Log.e("testinfo",str);
         return x.http().post(params, new Callback.ProgressCallback<String>() {
 
             @Override

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hdcy.app.R;
@@ -38,10 +42,15 @@ public  class InfoDetailFragment extends BaseBackFragment {
 
     WebView myWebView;
     TextView tv_comment_count;
+    EditText editText;
+    Button sendButton;
     private String targetId;
     private String Url = URL_BASE +"/articleDetails.html?id=";
     private String loadurl;
     private Toolbar mToolbar;
+    private boolean isEdit;
+
+    private String content;
 
     private ArticleInfo articleInfo = new ArticleInfo();
 
@@ -78,18 +87,25 @@ public  class InfoDetailFragment extends BaseBackFragment {
 
         initView(view);
         initData();
-
+        setListener();
         return view;
     }
 
     private void initView(View view){
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         tv_comment_count = (TextView) view.findViewById(R.id.tv_comment_count);
+        editText = (EditText) view.findViewById(R.id.et_send);
+        sendButton = (Button) view.findViewById(R.id.bt_send);
 
         mToolbar.setTitle("资讯详情");
 
         initToolbarNav(mToolbar);
 
+    }
+
+    private boolean checkData(){
+        content = editText.getText().toString();
+        return true;
 
     }
 
@@ -105,6 +121,36 @@ public  class InfoDetailFragment extends BaseBackFragment {
             public void onClick(View v) {
                 EventBus.getDefault().post(new StartBrotherEvent(CommentListFragment.newInstance(articleInfo.getId()+"")));
                // ((SupportFragment) getParentFragment()).start(CommentListFragment.newInstance(articleInfo.getId()+""));
+            }
+        });
+
+    }
+
+    private void setListener(){
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                isEdit = s.length() >0;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        editText.addTextChangedListener(textWatcher);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkData()){
+                    PublishComment();
+                }
             }
         });
 
@@ -129,7 +175,25 @@ public  class InfoDetailFragment extends BaseBackFragment {
             }
         });
     }
+    public void PublishComment(){
+        NetHelper.getInstance().PublishComments(targetId, content,new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("发布成功",targetId);
+            }
 
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("发布成功",targetId);
 
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("发布成功",targetId);
+
+            }
+        });
+    }
 
 }

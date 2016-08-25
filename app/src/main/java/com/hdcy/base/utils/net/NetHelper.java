@@ -3,6 +3,7 @@ package com.hdcy.base.utils.net;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONCreator;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Comments;
 import com.hdcy.app.model.CommentsContent;
@@ -11,8 +12,15 @@ import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 import org.xutils.common.Callback;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.hdcy.app.R.id.result;
 
 /**
  * Created by WeiYanGeorge on 2016-08-10.
@@ -40,7 +48,7 @@ public class NetHelper {
     public Callback.Cancelable GetNewsCategoryList(final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/tag/child");
         Log.e("nettest","new");
-        return request.post(new NetRequestCallBack() {
+        return request.getarray(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 JSONArray dataArr = responseInfo.getDataArr();
@@ -133,12 +141,19 @@ public class NetHelper {
             }
         });
     }
-    public Callback.Cancelable PublishComments(String tagId,final NetRequestCallBack callBack){
-        NetRequest request = new NetRequest("/user/current");
-/*        request.addParam("target","article");
-        request.addParam("targetId", tagId);
-        request.addParam("content","9898");*/
-
+    public Callback.Cancelable PublishComments(String targetid,String content,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/comment/");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+        JSONObject obj = new JSONObject();
+        try {
+                obj.put("target", "article");
+                obj.put("targetId", targetid);
+                obj.put("content", content);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        request.addParamjson(obj.toString());
 
         return request.postinfo(new NetRequestCallBack() {
             @Override

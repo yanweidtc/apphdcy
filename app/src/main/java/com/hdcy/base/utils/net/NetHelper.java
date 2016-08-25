@@ -141,6 +141,14 @@ public class NetHelper {
             }
         });
     }
+
+    /**
+     * 对资讯文章发布评论
+     * @param targetid
+     * @param content
+     * @param callBack
+     * @return
+     */
     public Callback.Cancelable PublishComments(String targetid,String content,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/comment/");
         request.addHeader("Authorization","Basic MToxMjM0NTY=");
@@ -172,6 +180,47 @@ public class NetHelper {
             }
         });
     }
+
+    /**
+     * 点赞功能
+     */
+    public Callback.Cancelable DoPraiseOrCancel(final String targetId, final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/praise/");
+
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("target", "praise");
+            obj.put("targetId", targetId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        request.addParamjson(obj.toString());
+        return request.postinfo(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("点赞成功",targetId);
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
+
+
+
+    /**
+     * 得到文章内容详情
+     * @param tagId
+     * @param callBack
+     * @return
+     */
     public Callback.Cancelable GetArticleInfo(String tagId,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/article/"+tagId);
         return request.postobject(new NetRequestCallBack() {
@@ -200,12 +249,15 @@ public class NetHelper {
      *
      * @param tagId
      * @param callBack
+     * 得到资讯评论列表
      * @return
      */
 
     public Callback.Cancelable GetCommentsList(String tagId,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/comments/");
         request.addParam("targetId",tagId);
+        request.addParam("size","10");
+        request.addParam("sort","createdTime,desc");
         request.addParam("target","article");
         return request.postarray(new NetRequestCallBack() {
             @Override

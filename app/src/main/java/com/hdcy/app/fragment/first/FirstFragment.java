@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
@@ -36,6 +37,8 @@ public class FirstFragment extends BaseLazyMainFragment{
     private ViewPager mViewPager;
     private List<NewsCategory> newsCategoryList = new ArrayList<>();
 
+    private TextView title;
+
 
     public static FirstFragment newInstance() {
 
@@ -59,8 +62,9 @@ public class FirstFragment extends BaseLazyMainFragment{
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mTab = (TabLayout) view.findViewById(R.id.tab);
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        title = (TextView) view.findViewById(R.id.toolbar_title);
 
-        mToolbar.setTitle("资讯");
+        title.setText("资讯");
 
 
         mTab.addTab(mTab.newTab());

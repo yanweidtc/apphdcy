@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hdcy.app.R;
 import com.hdcy.app.activity.MainActivity;
@@ -29,7 +31,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-//import com.hdcy.app.adapter.CommentListFragmentAdapter;
 
 /**
  * Created by WeiYanGeorge on 2016-08-23.
@@ -40,6 +41,10 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     private RecyclerView mRecy;
     private SwipeRefreshLayout mRefreshLayout;
     private boolean mAtTop = true;
+
+    private Toolbar mToolbar;
+    private TextView title;
+
 
     private int mScrollTotal;
 
@@ -105,7 +110,11 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
                 }
             }
         });
+        title = (TextView) view.findViewById(R.id.toolbar_title);
+        title.setText("评论");
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
+        initToolbarNav(mToolbar);
 
     }
 
@@ -120,6 +129,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
 
         mRecy.setAdapter(mAdapter);
     }
+
     @Override
     public void onRefresh() {
         mRefreshLayout.postDelayed(new Runnable() {
@@ -155,7 +165,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
     public void GetCommentsList(){
-        NetHelper.getInstance().GetCommentsList( "1051", new NetRequestCallBack() {
+        NetHelper.getInstance().GetCommentsList( tagId, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 if(commentsList.isEmpty()){

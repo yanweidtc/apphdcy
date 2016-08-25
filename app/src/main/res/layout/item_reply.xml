@@ -12,7 +12,7 @@
         android:layout_marginRight="24px"
         android:layout_marginTop="24px"
         android:text="Content"
-        android:textColor="@color/main_font_gray_2"
-        android:textSize="44px" />
+        android:textColor="@color/main_font"
+        android:textSize="@dimen/main_font_tips" />
 
 </LinearLayout>

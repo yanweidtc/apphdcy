@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -89,10 +90,10 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         }else {
             Log.e("replysList数据不为空", replysList.get(0).getContent()+"");
         }
-        if(!BaseUtils.isEmptyList(replysList)){
-            holder.lv_replys.setVisibility(View.GONE);
+        if(BaseUtils.isEmptyList(replysList)){
+            holder.ly_sub_replys.setVisibility(View.GONE);
         }else {
-            //holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
+            holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
         }
         holder.tv_name.setText(item.getCreaterName()+"");
         Picasso.with(context).load(item.getCreaterHeadimgurl())
@@ -111,6 +112,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         private ImageView iv_avatar,iv_praise;
         private TextView tv_name,tv_praise_count, tv_time,tv_comment_content;
         private ListView lv_replys;
+        private LinearLayout ly_sub_replys;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -119,6 +121,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_praise_count = (TextView) itemView.findViewById(R.id.tv_praise_count);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
+            ly_sub_replys = (LinearLayout) itemView.findViewById(R.id.ly_sub_reply);
             lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
 
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);

@@ -40,6 +40,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
     TextView tv_comment_count;
     EditText editText;
     Button sendButton;
+    TextView title;
     private String targetId;
     private String Url = URL_BASE +"/articleDetails.html?id=";
     private String loadurl;
@@ -92,8 +93,9 @@ public  class InfoDetailFragment extends BaseBackFragment {
         tv_comment_count = (TextView) view.findViewById(R.id.tv_comment_count);
         editText = (EditText) view.findViewById(R.id.et_send);
         sendButton = (Button) view.findViewById(R.id.bt_send);
+        title = (TextView) view.findViewById(R.id.toolbar_title);
 
-        mToolbar.setTitle("资讯详情");
+        title.setText("资讯详情");
 
         initToolbarNav(mToolbar);
 

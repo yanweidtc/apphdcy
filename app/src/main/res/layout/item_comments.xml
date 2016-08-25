@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/layout_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/layout_space_top"
             android:layout_width="match_parent"
             android:layout_height="34px" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150px"
@@ -20,15 +23,14 @@
             android:layout_marginRight="34px"
             android:layout_marginTop="34px"
             android:orientation="horizontal">
-            <com.makeramen.roundedimageview.RoundedImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id ="@+id/iv_avatar"
+
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/iv_avatar"
                 android:layout_width="134px"
                 android:layout_height="134px"
                 android:layout_gravity="center_vertical"
                 android:scaleType="centerCrop"
-                app:riv_corner_radius="20dp"
-                />
+                app:riv_corner_radius="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,6 +38,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10px"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,6 +46,7 @@
                     android:layout_marginRight="30px"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
@@ -51,26 +55,28 @@
                         android:text="Name"
                         android:textColor="@color/black"
                         android:textSize="46px" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
+
                     <ImageView
                         android:id="@+id/iv_praise"
                         android:layout_width="50px"
                         android:layout_height="50px"
                         android:gravity="right"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/content_con_zambia_default"/>
+                        android:src="@drawable/content_con_zambia_default" />
+
                     <TextView
                         android:id="@+id/tv_praise_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/main_padding"
-                        android:textSize="36px"
                         android:text="3403"
                         android:textColor="@color/main_font_gray_1"
-                        />
+                        android:textSize="36px" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -92,50 +98,41 @@
 
             </LinearLayout>
 
+        </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
+
     <TextView
         android:id="@+id/tv_comment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/main_margin_top"
         android:layout_marginLeft="150px"
         android:layout_marginRight="100px"
+        android:layout_marginTop="@dimen/main_margin_top"
+        android:text="评论的内容"
         android:textColor="@color/main_font"
-        android:textSize="@dimen/main_font_body"
-        android:text="评论的内容"/>
-    <TextView
-        android:layout_height="0px"
-        android:layout_width="match_parent"
-        android:layout_weight="1"/>
-    <FrameLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-       >
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="150px"
-                android:layout_height="150px"
-                android:layout_weight="1"
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:background="@color/gray">
-                <ListView
-                    android:id="@+id/lv_replys"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="48px"
-                    android:paddingTop="24px" />
-        </LinearLayout>
-        </LinearLayout>>
+        android:textSize="@dimen/main_font_body" />
 
-    </FrameLayout>>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/ly_sub_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        android:layout_marginLeft="100px">
+
+        <ListView
+            android:id="@+id/lv_replys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/main_margin_left"
+            android:paddingBottom="48px"
+            android:paddingTop="24px" />
+    </LinearLayout>
 
 
 </LinearLayout>

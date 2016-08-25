@@ -1,4 +1,4 @@
-package com.hdcy.app.fragment.second.child;
+package com.hdcy.app.fragment.first;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,25 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.hdcy.app.R;
-import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.basefragment.BaseFragment;
-import com.hdcy.app.fragment.second.child.childpager.FirstPagersFragment;
+import com.hdcy.app.fragment.first.childpager.FirstPagersFragment;
 import com.hdcy.app.model.NewsCategory;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.hdcy.base.BaseData.URL_BASE;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.hdcy.app.fragment.second.child.childpager;
+package com.hdcy.app.fragment.first.childpager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

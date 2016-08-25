@@ -1,8 +1,7 @@
-package com.hdcy.app.fragment.second.child;
+package com.hdcy.app.fragment.first;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,15 +20,12 @@ import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.model.ArticleInfo;
-import com.hdcy.app.view.BottomBar;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 
 import org.greenrobot.eventbus.EventBus;
-
-import me.yokeyword.fragmentation.SupportFragment;
 
 import static com.hdcy.base.BaseData.URL_BASE;
 

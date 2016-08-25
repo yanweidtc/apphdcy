@@ -15,8 +15,7 @@ import android.view.ViewGroup;
 
 import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
-import com.hdcy.app.fragment.second.child.ViewPagerFragment;
-import com.hdcy.app.fragment.second.child.childpager.FirstPagersFragment;
+import com.hdcy.app.fragment.first.childpager.FirstPagersFragment;
 import com.hdcy.app.model.NewsCategory;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;

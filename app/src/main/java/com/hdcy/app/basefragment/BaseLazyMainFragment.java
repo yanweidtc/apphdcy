@@ -1,13 +1,10 @@
 package com.hdcy.app.basefragment;
 
 import android.os.Bundle;
-import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.hdcy.app.R;
-import com.hdcy.app.fragment.second.SecondFragment;
 
 
 /**

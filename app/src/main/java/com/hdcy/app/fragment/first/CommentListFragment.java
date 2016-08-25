@@ -36,7 +36,7 @@ import java.util.List;
  * Created by WeiYanGeorge on 2016-08-23.
  */
 
-public class CommentListFragment extends BaseBackFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class CommentListFragment extends BaseBackFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRecy;
     private SwipeRefreshLayout mRefreshLayout;
@@ -61,12 +61,13 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     private String tagId;
 
 
-    private List<CommentsContent>  commentsList = new ArrayList<>();
+    private List<CommentsContent> commentsList = new ArrayList<>();
+    private CommentsContent commentsContent;
 
     public static CommentListFragment newInstance(String tagId) {
         CommentListFragment fragment = new CommentListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("param",tagId);
+        bundle.putString("param", tagId);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -74,10 +75,10 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_commentlist,container,false);
+        View view = inflater.inflate(R.layout.fragment_commentlist, container, false);
         EventBus.getDefault().register(this);
         Bundle bundle = getArguments();
-        if(bundle !=null){
+        if (bundle != null) {
             tagId = bundle.getString("param");
         }
         initView(view);
@@ -85,8 +86,8 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         return view;
     }
 
-    private void initView(View view){
-        mRecy = (RecyclerView) view. findViewById(R.id.recy);
+    private void initView(View view) {
+        mRecy = (RecyclerView) view.findViewById(R.id.recy);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -119,15 +120,27 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
 
-
-    private  void initData(){
+    private void initData() {
         GetCommentsList();
     }
 
-    private void setData(){
+    private void setData() {
         mAdapter.setDatas(commentsList);
 
         mRecy.setAdapter(mAdapter);
+
+        mAdapter.setOnPraiseClickListener(new CommentListFragmentAdapter.OnPraiseClickListener() {
+            @Override
+            public void onPraise(int position) {
+                if (!BaseUtils.isEmptyList(commentsList)) {
+                    commentsContent = commentsList.get(position);
+                    String id = commentsContent.getId()+"";
+                    if(!BaseUtils.isEmptyString(id)){
+                    doPraise(id);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -164,14 +177,14 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         EventBus.getDefault().unregister(this);
     }
 
-    public void GetCommentsList(){
-        NetHelper.getInstance().GetCommentsList( tagId, new NetRequestCallBack() {
+    public void GetCommentsList() {
+        NetHelper.getInstance().GetCommentsList(tagId, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                if(commentsList.isEmpty()){
+                if (commentsList.isEmpty()) {
                     List<CommentsContent> commentListFragmentListtemp = responseInfo.getCommentsContentList();
                     commentsList.addAll(commentListFragmentListtemp);
-                    Log.e("CommentListsize",commentsList.size()+"");
+                    Log.e("CommentListsize", commentsList.size() + "");
 /*                    int size = commentsList.size();
                     for(int i = 0; i < size ; i++){
                         List<Replys> templist = commentsList.get(i).getReplysList();
@@ -181,6 +194,25 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
                     }*/
                 }
                 setData();
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
+
+    public void doPraise(final String targetId){
+        NetHelper.getInstance().DoPraiseOrCancel(targetId, new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("点赞成功",targetId);
             }
 
             @Override

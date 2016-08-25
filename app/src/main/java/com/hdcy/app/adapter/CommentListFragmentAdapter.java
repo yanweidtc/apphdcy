@@ -39,11 +39,16 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     private Context context;
 
     private OnItemClickListener itemClickListener;
+    private OnPraiseClickListener onPraiseClickListener;
 
 
     public CommentListFragmentAdapter(Context context){
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
+    }
+
+    public void setOnPraiseClickListener(OnPraiseClickListener onPraiseClickListener){
+        this.onPraiseClickListener = onPraiseClickListener;
     }
 
     public void setDatas(List<CommentsContent> items){
@@ -81,7 +86,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
 
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         CommentsContent item = mItems.get(position);
         replysList = item.getReplys();
@@ -106,6 +111,16 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         holder.tv_comment_content.setText(item.getContent());
         holder.tv_praise_count.setText(item.getPraiseCount()+"");
 
+        holder.iv_praise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                        onPraiseClickListener.onPraise(position);
+
+
+            }
+        });
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -113,6 +128,16 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         private TextView tv_name,tv_praise_count, tv_time,tv_comment_content;
         private ListView lv_replys;
         private LinearLayout ly_sub_replys;
+
+        private  Object tag;
+
+        public Object getTag() {
+            return tag;
+        }
+
+        public void setTag(Object tag){
+            this.tag = tag;
+        }
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -127,6 +152,10 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 
         }
+    }
+
+    public interface OnPraiseClickListener{
+        void onPraise(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {

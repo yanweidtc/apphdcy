@@ -186,10 +186,12 @@ public class NetHelper {
      */
     public Callback.Cancelable DoPraiseOrCancel(final String targetId, final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/praise/");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
 
         JSONObject obj = new JSONObject();
         try {
-            obj.put("target", "praise");
+            obj.put("target", "comment");
             obj.put("targetId", targetId);
         } catch (JSONException e) {
             e.printStackTrace();

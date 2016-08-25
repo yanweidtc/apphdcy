@@ -16,6 +16,8 @@ import com.hdcy.app.adapter.CommentListFragmentAdapter;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.model.CommentsContent;
+import com.hdcy.app.model.Replys;
+import com.hdcy.base.utils.BaseUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -153,13 +155,20 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
     public void GetCommentsList(){
-        NetHelper.getInstance().GetCommentsList( tagId, new NetRequestCallBack() {
+        NetHelper.getInstance().GetCommentsList( "1051", new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 if(commentsList.isEmpty()){
                     List<CommentsContent> commentListFragmentListtemp = responseInfo.getCommentsContentList();
                     commentsList.addAll(commentListFragmentListtemp);
                     Log.e("CommentListsize",commentsList.size()+"");
+/*                    int size = commentsList.size();
+                    for(int i = 0; i < size ; i++){
+                        List<Replys> templist = commentsList.get(i).getReplysList();
+                        if(!BaseUtils.isEmptyList(templist)){
+                         Log.e("TopicListinfo",templist.get(0).getContent().toString());
+                        }
+                    }*/
                 }
                 setData();
             }

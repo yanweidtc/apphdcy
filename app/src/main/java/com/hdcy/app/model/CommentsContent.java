@@ -33,16 +33,15 @@ public class CommentsContent implements Serializable {
 
     private int praiseCount;
 
+    private List<Replys> replys ;
 
-    public List<Replys> getReplysList() {
-        return replysList;
+    public void setReplys(List<Replys> replys){
+        this.replys = replys;
+    }
+    public List<Replys> getReplys(){
+        return this.replys;
     }
 
-    public void setReplysList(List<Replys> replysList) {
-        this.replysList = replysList;
-    }
-
-    private List<Replys> replysList;
 
 
     public void setId(int id){

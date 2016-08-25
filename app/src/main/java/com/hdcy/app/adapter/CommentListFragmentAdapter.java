@@ -83,13 +83,17 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         CommentsContent item = mItems.get(position);
-/*        replysList = item.getReplysList();
-        if(item.getReplysList().isEmpty()){
+        replysList = item.getReplys();
+        if(BaseUtils.isEmptyList(replysList)){
+            Log.e("replysLIst数据","kong");
+        }else {
+            Log.e("replysList数据不为空", replysList.get(0).getContent()+"");
+        }
+        if(!BaseUtils.isEmptyList(replysList)){
             holder.lv_replys.setVisibility(View.GONE);
         }else {
-            Log.e("replaysLIst",item.getReplysList().toString());
-            holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
-        }*/
+            //holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
+        }
         holder.tv_name.setText(item.getCreaterName()+"");
         Picasso.with(context).load(item.getCreaterHeadimgurl())
                 .placeholder(BaseInfo.PICASSO_PLACEHOLDER)

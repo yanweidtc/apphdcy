@@ -65,12 +65,11 @@ public class ReplysAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void setView(int position, ViewHolder holder) {
+    private void setView(final int position, final ViewHolder holder) {
         Replys temp = getItem(position);
         String fromUser = temp.getCreaterName()+"";
         String toUser = temp.getReplyToName()+"";
         String content = fromUser +" 回复 " +toUser +": "+ temp.getContent();
-        Log.e("fromUser",fromUser);
         holder.tv_content.setText(content);
     }
 
@@ -78,6 +77,7 @@ public class ReplysAdapter extends BaseAdapter {
         private Object tag;
 
 
+        public TextView tv_content;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -86,7 +86,6 @@ public class ReplysAdapter extends BaseAdapter {
         }
 
         //@ViewInject(R.id.tv_content)
-        public TextView tv_content;
 
         public Object getTag() {
             return tag;

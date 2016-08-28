@@ -60,22 +60,26 @@
                 android:textAlignment="textStart"
                 android:layout_weight="5"
                 style="?android:attr/borderlessButtonStyle"/>
-
+            <LinearLayout
+                android:id="@+id/ly_comment_countimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                >
             <ImageView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/tab_icon_comment_default"
                 />
-
-
             <TextView
                  android:id="@+id/tv_comment_count"
                  android:layout_width="wrap_content"
                  android:layout_marginLeft="10dp"
                  android:layout_gravity="center_vertical"
                  android:layout_height="wrap_content"
-                 android:text="8372387"/>
+                 android:text="32"/>
+            </LinearLayout>>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

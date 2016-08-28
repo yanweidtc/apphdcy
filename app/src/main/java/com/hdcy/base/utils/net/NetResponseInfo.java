@@ -34,6 +34,16 @@ public class NetResponseInfo {
         return commentsContentList;
     }
 
+    public CommentsContent getCommentsContent() {
+        return commentsContent;
+    }
+
+    public void setCommentsContent(CommentsContent commentsContent) {
+        this.commentsContent = commentsContent;
+    }
+
+    public CommentsContent commentsContent;
+
 
     public ArticleInfo getArticleInfo() {
         return articleInfo;

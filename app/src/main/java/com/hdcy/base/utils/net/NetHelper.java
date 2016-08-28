@@ -149,13 +149,14 @@ public class NetHelper {
      * @param callBack
      * @return
      */
-    public Callback.Cancelable PublishComments(String targetid,String content,final NetRequestCallBack callBack){
+    public Callback.Cancelable PublishComments(String targetid,String content,String target,String replyid,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/comment/");
         request.addHeader("Authorization","Basic MToxMjM0NTY=");
         request.addHeader("Content-Type", "application/json;charset=UTF-8");
         JSONObject obj = new JSONObject();
         try {
-                obj.put("target", "article");
+                obj.put("replyToId",replyid);
+                obj.put("target", target);
                 obj.put("targetId", targetid);
                 obj.put("content", content);
         } catch (JSONException e) {
@@ -166,6 +167,10 @@ public class NetHelper {
         return request.postinfo(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.setCommentsContent(JSON.parseObject(dataObj.toString(), CommentsContent.class));
+                }
                 callBack.onSuccess(requestInfo, responseInfo);
             }
 
@@ -293,7 +298,7 @@ public class NetHelper {
     public Callback.Cancelable GetCommentsList(String tagId,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/comments/");
         request.addParam("targetId",tagId);
-        request.addParam("size","10");
+        request.addParam("size","20");
         request.addParam("sort","createdTime,desc");
         request.addParam("target","article");
         return request.postarray(new NetRequestCallBack() {

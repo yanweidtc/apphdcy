@@ -95,11 +95,6 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         final CommentsContent item = mItems.get(position);
         replysList = item.getReplys();
         if(BaseUtils.isEmptyList(replysList)){
-            Log.e("replysLIst数据","kong");
-        }else {
-            Log.e("replysList数据不为空", replysList.get(0).getContent()+"");
-        }
-        if(BaseUtils.isEmptyList(replysList)){
             holder.ly_sub_replys.setVisibility(View.GONE);
         }else {
             holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));

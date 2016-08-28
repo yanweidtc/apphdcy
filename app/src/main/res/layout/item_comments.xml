@@ -128,7 +128,7 @@
         android:orientation="horizontal"
         android:layout_marginLeft="100px">
 
-        <ListView
+        <com.hdcy.app.view.AdaHeightListView
             android:id="@+id/lv_replys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

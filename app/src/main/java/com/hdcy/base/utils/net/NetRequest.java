@@ -385,12 +385,11 @@ public class NetRequest implements BaseData {
                 netResponseInfo.setResult(result);
                 try {
                     Log.e("Successmsg",result);
-                    JSONObject object = new JSONObject(result);
-                    Log.e("Successmsg1",object.toString());
-                    Log.e("onSuccess2：" + netRequestInfo.getUrl(),"");
-                    Log.e("onSuccess2：" + netResponseInfo.getResult(),"");
-                    netResponseInfo.setDataObj(object.optJSONObject("content"));
-                    netResponseInfo.setDataArr(object.optJSONArray("content"));
+                    JSONObject  objarry = new JSONObject(result);
+                    Log.e("Successmsg1",objarry.toString());
+                    Log.e("onSuccess1：" + netRequestInfo.getUrl(),"");
+                    Log.e("onSuccess1：" + netResponseInfo.getResult(),"");
+                    netResponseInfo.setDataObj(objarry);
                     if (callBack != null) {
                         callBack.onSuccess(netRequestInfo, netResponseInfo);
                     }

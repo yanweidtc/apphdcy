@@ -21,6 +21,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
     Button sendButton;
     TextView title;
     AlertDialog alertDialog;
+    LinearLayout ly_comment_button;
     private String targetId;
     private String Url = URL_BASE +"/articleDetails.html?id=";
     private String loadurl;
@@ -107,6 +109,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
         //editText = (EditText) view.findViewById(R.id.et_send);
         sendButton = (Button) view.findViewById(R.id.bt_send);
         title = (TextView) view.findViewById(R.id.toolbar_title);
+        ly_comment_button =(LinearLayout) view.findViewById(R.id.ly_comment_countimage);
 
         title.setText("资讯详情");
 
@@ -135,7 +138,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
 
     private void setData(){
         tv_comment_count.setText(articleInfo.getCommentCount()+"");
-        tv_comment_count.setOnClickListener(new View.OnClickListener() {
+        ly_comment_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new StartBrotherEvent(CommentListFragment.newInstance(articleInfo.getId()+"")));
@@ -238,7 +241,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
         });
     }
     public void PublishComment(){
-        NetHelper.getInstance().PublishComments(targetId, content,new NetRequestCallBack() {
+        NetHelper.getInstance().PublishComments(targetId, content,"article",null,new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Toast.makeText(getActivity(),"评论发布成功",Toast.LENGTH_LONG).show();

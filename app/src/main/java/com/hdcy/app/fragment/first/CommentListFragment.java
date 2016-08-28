@@ -1,17 +1,29 @@
 package com.hdcy.app.fragment.first;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
 import com.hdcy.app.activity.MainActivity;
 import com.hdcy.app.adapter.CommentListFragmentAdapter;
@@ -41,6 +53,18 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     private RecyclerView mRecy;
     private SwipeRefreshLayout mRefreshLayout;
     private boolean mAtTop = true;
+
+    TextView tv_comment_submit;
+    TextView tv_comment_cancel;
+    TextView tv_limit;
+    EditText editText;
+    AlertDialog alertDialog;
+    Button sendButton;
+
+    String targetid;
+    String target;
+    String replyid;
+
 
     private Toolbar mToolbar;
     private TextView title;
@@ -85,6 +109,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         }
         initView(view);
         initData();
+        setListener();
         return view;
     }
 
@@ -118,6 +143,33 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
         initToolbarNav(mToolbar);
+
+        sendButton = (Button) view.findViewById(R.id.bt_send);
+
+    }
+
+    private void setListener() {
+
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replyid =null;
+                targetid = tagId;
+                target = "article";
+                ShowInputDialog();
+            }
+        });
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                replyid = commentsList.get(position).getId()+"";
+                Log.e("replyid",replyid);
+                targetid =tagId;
+                target ="aricle";
+                ShowInputDialog();
+            }
+        });
 
     }
 
@@ -167,6 +219,82 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 检查数据是否为空
+     *
+     * @return
+     */
+
+    private boolean checkData() {
+        content = editText.getText().toString();
+        return true;
+    }
+
+    /**
+     * 刷新控件数据
+     */
+    private void resetViewData() {
+        int fontcount = 200 - editText.length();
+        tv_limit.setText(fontcount + "");
+    }
+
+    private void ShowInputDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.fragment_edit_dialog, null);
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                isEdit = s.length() > 0;
+                resetViewData();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        tv_limit = (TextView) view.findViewById(R.id.tv_limit);
+        tv_comment_submit = (TextView) view.findViewById(R.id.tv_submit_comment);
+        tv_comment_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkData()) {
+                    PublishComment();
+                }
+            }
+        });
+        tv_comment_cancel = (TextView) view.findViewById(R.id.tv_cancel);
+        tv_comment_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        editText = (EditText) view.findViewById(R.id.edt_comment);
+        editText.addTextChangedListener(textWatcher);
+        editText.requestFocus();
+        builder.setView(view);
+        builder.create();
+        alertDialog = builder.create();
+        Window windowManager = alertDialog.getWindow();
+        windowManager.setGravity(Gravity.BOTTOM);
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            public void onShow(DialogInterface dialog) {
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+        alertDialog.show();
+    }
+
     public void GetCommentsList() {
         NetHelper.getInstance().GetCommentsList(tagId, new NetRequestCallBack() {
             @Override
@@ -175,13 +303,6 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
                     List<CommentsContent> commentListFragmentListtemp = responseInfo.getCommentsContentList();
                     commentsList.addAll(commentListFragmentListtemp);
                     Log.e("CommentListsize", commentsList.size() + "");
-/*                    int size = commentsList.size();
-                    for(int i = 0; i < size ; i++){
-                        List<Replys> templist = commentsList.get(i).getReplysList();
-                        if(!BaseUtils.isEmptyList(templist)){
-                         Log.e("TopicListinfo",templist.get(0).getContent().toString());
-                        }
-                    }*/
                 }
                 setData();
             }
@@ -199,6 +320,35 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
 
+    public void PublishComment() {
+        NetHelper.getInstance().PublishComments(targetid, content, target,replyid,new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                commentsContent = responseInfo.getCommentsContent();
+                Log.e("评论成功后的数据",responseInfo.toString());
+                if(replyid ==null){
+                commentsList.add(0,commentsContent);
+                mAdapter.notifyDataSetChanged();
+                setData();
+                }
+                Toast.makeText(getActivity(), "评论发布成功", Toast.LENGTH_LONG).show();
+                alertDialog.dismiss();
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("发布成功", targetid);
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Toast.makeText(getContext(), "评论发布失败", Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+    }
 
 
 }

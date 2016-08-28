@@ -60,15 +60,15 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
-
                     <ImageView
                         android:id="@+id/iv_praise"
                         android:layout_width="50px"
                         android:layout_height="50px"
+                        android:src="@drawable/content_con_zambia_default"
+                        android:button="@null"
                         android:gravity="right"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/content_con_zambia_default" />
-
+                         />
                     <TextView
                         android:id="@+id/tv_praise_count"
                         android:layout_width="wrap_content"
@@ -77,6 +77,9 @@
                         android:text="3403"
                         android:textColor="@color/main_font_gray_1"
                         android:textSize="36px" />
+
+
+
                 </LinearLayout>
 
                 <LinearLayout

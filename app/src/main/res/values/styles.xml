@@ -17,6 +17,23 @@
     <style name="tab_appearance">
         <item name="android:textSize">16sp</item>
     </style>
+    <!--圆角button的特性-->
+    <style name="common_button_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">6.0dip</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/main_font_body</item>
+    </style>
+
+    <style name="EditText_Base">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:background">@null</item>
+    </style>
 
 
 </resources>

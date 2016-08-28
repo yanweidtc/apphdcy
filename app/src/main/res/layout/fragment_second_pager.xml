@@ -16,9 +16,9 @@
         android:id="@+id/tab"
         android:layout_width="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:tabIndicatorColor="@android:color/holo_orange_light"
-        app:tabSelectedTextColor="@android:color/holo_orange_light"
-        app:tabTextColor="@android:color/holo_orange_light"
+        app:tabIndicatorColor="@android:color/holo_orange_dark"
+        app:tabSelectedTextColor="@android:color/holo_orange_dark"
+        app:tabTextColor="@color/main_font_gray_2"
         app:tabTextAppearance="@style/tab_appearance"
         android:layout_height="45dp"/>
 

@@ -69,7 +69,7 @@ public class FirsPagersFragmentAdapter extends RecyclerView.Adapter<FirsPagersFr
         Log.e("imageurl",cover);
         Picasso.with(context).load(cover)
                     .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
-                    .resize(360,360)
+                    .resize(240,240)
                     .centerCrop()
                     .into(holder.iv_info_cover);
         holder.tv_info_tag.setText(item.getTagInfos().get(0).getName());

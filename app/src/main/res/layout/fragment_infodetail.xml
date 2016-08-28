@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/fragment_infodetail"
-            android:layout_weight="1">
+            android:layout_weight="7">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,35 +30,50 @@
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_width"
+            android:background="@color/color_efeff1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_gravity="bottom"
-            android:paddingLeft="16dp"
             android:orientation="horizontal"
-            android:background="@android:color/white"
-            android:paddingRight="16dp"
-            android:layout_height="wrap_content">
+            android:background="@color/color_efeff1"
+            android:paddingRight="8dp"
+            android:layout_height="150px">
 
-            <EditText
-                android:id="@+id/et_send"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/bottombar_height"
-                android:singleLine="true"
-                android:layout_weight="1"/>
             <Button
                 android:id="@+id/bt_send"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center|start"
                 android:layout_height="wrap_content"
-                android:text="发送"/>
+                android:text="写评论"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="@dimen/main_margin_top"
+                android:layout_marginBottom="@dimen/main_margin_bottom"
+                android:layout_marginLeft="@dimen/main_margin_left"
+                android:layout_marginRight="@dimen/main_margin_right"
+                android:background="@drawable/buttonshape"
+                android:textColor="@color/main_font_gray_2"
+                android:textSize="12dp"
+                android:textAlignment="textStart"
+                android:layout_weight="5"
+                style="?android:attr/borderlessButtonStyle"/>
+
             <ImageView
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/tab_icon_comment_default"
                 />
-             <TextView
+
+
+            <TextView
                  android:id="@+id/tv_comment_count"
                  android:layout_width="wrap_content"
+                 android:layout_marginLeft="10dp"
+                 android:layout_gravity="center_vertical"
                  android:layout_height="wrap_content"
                  android:text="8372387"/>
         </LinearLayout>

@@ -45,6 +45,8 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     private Toolbar mToolbar;
     private TextView title;
 
+    private boolean praise = false;
+
 
     private int mScrollTotal;
 
@@ -129,18 +131,6 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
 
         mRecy.setAdapter(mAdapter);
 
-        mAdapter.setOnPraiseClickListener(new CommentListFragmentAdapter.OnPraiseClickListener() {
-            @Override
-            public void onPraise(int position) {
-                if (!BaseUtils.isEmptyList(commentsList)) {
-                    commentsContent = commentsList.get(position);
-                    String id = commentsContent.getId()+"";
-                    if(!BaseUtils.isEmptyString(id)){
-                    doPraise(id);
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -208,24 +198,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         });
     }
 
-    public void doPraise(final String targetId){
-        NetHelper.getInstance().DoPraiseOrCancel(targetId, new NetRequestCallBack() {
-            @Override
-            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("点赞成功",targetId);
-            }
 
-            @Override
-            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-
-            }
-
-            @Override
-            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-
-            }
-        });
-    }
 
 
 }

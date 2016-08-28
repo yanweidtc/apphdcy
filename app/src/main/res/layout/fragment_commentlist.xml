@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <include layout="@layout/toolbar"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="fill_parent"
+        android:layout_weight="7">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recy"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="46dp"
             android:clipChildren="false"
             android:paddingLeft="-12dp"
             android:paddingRight="-12dp"/>
-
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/color_efeff1"
+        android:paddingRight="8dp"
+        android:layout_height="150px">
+
+        <Button
+            android:id="@+id/bt_send"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center|start"
+            android:layout_height="wrap_content"
+            android:text="写评论"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="@dimen/main_margin_top"
+            android:layout_marginBottom="@dimen/main_margin_bottom"
+            android:layout_marginLeft="@dimen/main_margin_left"
+            android:layout_marginRight="@dimen/main_margin_right"
+            android:background="@drawable/buttonshape"
+            android:textColor="@color/main_font_gray_2"
+            android:textSize="12dp"
+            android:textAlignment="textStart"
+            android:layout_weight="5"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    </LinearLayout>
 </LinearLayout>
+</FrameLayout>

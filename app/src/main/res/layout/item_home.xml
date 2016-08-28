@@ -6,11 +6,11 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginTop="6dp"
+    android:layout_marginTop="0dp"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@android:color/white"
     app:cardPreventCornerOverlap="false"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="false">
 
     <LinearLayout
         android:layout_height="match_parent"
@@ -19,8 +19,8 @@
         android:padding="16dp">
         <ImageView
             android:id="@+id/iv_cover"
-            android:layout_width="360px"
-            android:layout_height="360px"
+            android:layout_width="240px"
+            android:layout_height="240px"
             android:scaleType="centerCrop"
             />
     <LinearLayout
@@ -48,38 +48,52 @@
             android:layout_marginTop="150px"
             android:orientation="horizontal">
 
-
             <TextView
+                android:id="@+id/tv_info_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_info_tag"
                 android:text="热门回答"
+                android:layout_gravity="left"
                 android:textColor="@color/main_font_gray_2"
                 android:textSize="@dimen/main_font_tips"/>
             <TextView
                 android:id="@+id/tv_info_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_info_tag"
+                android:layout_marginLeft="@dimen/main_margin_left"
                 android:text="2016/05/24"
                 android:textColor="@color/main_font_gray_2"
                 android:textSize="@dimen/main_font_tips" />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
 
+                 >
             <ImageView
-                android:layout_width="25px"
-                android:layout_height="25px"
-                android:layout_marginLeft="@dimen/main_margin_left"
-                android:layout_gravity="center_vertical"
+                android:id="@+id/iv_watched"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="70px"
+                android:layout_gravity="center_vertical|"
                 android:src="@mipmap/icon_count_view" />
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignRight="@+id/iv_watched"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_info_watched"
                 android:text="热门回答"
                 android:textColor="@color/main_font_gray_2"
                 android:textSize="@dimen/main_font_tips"/>
-
+                </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>
     </LinearLayout>>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_width"
+        android:background="@color/color_efeff1" />
 </android.support.v7.widget.CardView>

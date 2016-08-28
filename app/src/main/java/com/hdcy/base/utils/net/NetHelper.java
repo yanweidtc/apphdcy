@@ -215,6 +215,41 @@ public class NetHelper {
         });
     }
 
+    /**
+     * 取消点赞
+     */
+
+    public Callback.Cancelable UnDoPraise(final String targetId, final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/praise/");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("target", "comment");
+            obj.put("targetId", targetId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        request.addParamjson(obj.toString());
+        return request.putinfo(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("取消点赞成功",targetId);
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
+
 
 
     /**

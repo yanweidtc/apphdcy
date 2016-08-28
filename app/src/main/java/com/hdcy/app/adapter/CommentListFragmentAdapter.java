@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
+import com.hdcy.app.fragment.first.CommentPraiseApi;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
 import com.hdcy.app.model.Replys;
@@ -37,6 +39,8 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     private List<Replys> replysList = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context context;
+
+    private boolean isPraised = false;
 
     private OnItemClickListener itemClickListener;
     private OnPraiseClickListener onPraiseClickListener;
@@ -88,7 +92,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        CommentsContent item = mItems.get(position);
+        final CommentsContent item = mItems.get(position);
         replysList = item.getReplys();
         if(BaseUtils.isEmptyList(replysList)){
             Log.e("replysLIst数据","kong");
@@ -114,17 +118,29 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         holder.iv_praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                        onPraiseClickListener.onPraise(position);
-
-
+                String targetId = item.getId()+"";
+                int count = item.getPraiseCount();
+                if(!isPraised){
+                    CommentPraiseApi.doPraise(targetId);
+                    isPraised = true;
+                    holder.iv_praise.setImageResource(R.drawable.content_icon_zambia_pressed);
+                    count++;
+                    holder.tv_praise_count.setText(count+"");
+                }else {
+                    holder.iv_praise.setImageResource(R.drawable.content_con_zambia_default);
+                    CommentPraiseApi.UndoPraise(targetId);
+                    isPraised = false;
+                }
             }
         });
 
+
     }
 
+
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_avatar,iv_praise;
+        private ImageView iv_avatar;
+        private ImageView iv_praise;
         private TextView tv_name,tv_praise_count, tv_time,tv_comment_content;
         private ListView lv_replys;
         private LinearLayout ly_sub_replys;
@@ -141,6 +157,8 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
 
         public MyViewHolder(View itemView) {
             super(itemView);
+
+
             iv_avatar =(ImageView) itemView.findViewById(R.id.iv_avatar);
             iv_praise =(ImageView) itemView.findViewById(R.id.iv_praise);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);

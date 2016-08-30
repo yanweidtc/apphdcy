@@ -53,6 +53,8 @@ public class FirsPagersFragmentAdapter extends RecyclerView.Adapter<FirsPagersFr
                 int position = holder.getAdapterPosition();
                 if (itemClickListener != null) {
                     itemClickListener.onItemClick(position, v, holder);
+                    int count = mItems.get(position).getReadCount()+1;
+                    holder.tv_info_watched.setText(count+"");
                 }
             }
         });
@@ -65,14 +67,24 @@ public class FirsPagersFragmentAdapter extends RecyclerView.Adapter<FirsPagersFr
         holder.tvTitle.setText(item.getTitle());
         holder.tv_info_update.setText(item.getCreatedTime().toLocaleString());
         holder.tv_info_watched.setText(item.getReadCount()+"");
-        String cover = item.getImage();
-        Log.e("imageurl",cover);
-        Picasso.with(context).load(cover)
+       if(!BaseUtils.isEmptyList(item.getTagInfos()))
+       if (!BaseUtils.isEmptyString(item.getImage())) {
+           String cover = item.getImage();
+           // Log.e("imageurl",cover);
+       Picasso.with(context).load(cover)
                     .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
+                    .error(BaseInfo.PICASSO_ERROR)
                     .resize(240,240)
                     .centerCrop()
                     .into(holder.iv_info_cover);
-        holder.tv_info_tag.setText(item.getTagInfos().get(0).getName());
+       }
+        if(!BaseUtils.isEmptyList(item.getTagInfos())){
+            if(!BaseUtils.isEmptyString(item.getTagInfos().get(0).getName())){
+               holder.tv_info_tag.setText(item.getTagInfos().get(0).getName()+"");
+            }
+        }
+
+        // holder.tv_info_tag.setText(item.getTagInfos().get(0).getName());
 
     }
 
@@ -93,9 +105,9 @@ public class FirsPagersFragmentAdapter extends RecyclerView.Adapter<FirsPagersFr
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_info_title);
             tv_info_update = (TextView)itemView.findViewById(R.id.tv_info_update);
-            tv_info_watched = (TextView)itemView.findViewById(R.id.tv_info_watched);
+           tv_info_watched = (TextView)itemView.findViewById(R.id.tv_info_watched);
             iv_info_cover = (ImageView) itemView.findViewById(R.id.iv_cover);
-            tv_info_tag =(TextView) itemView.findViewById(R.id.tv_info_tag);
+            tv_info_tag =(TextView) itemView.findViewById(R.id.tv_info_tag_name);
         }
     }
 

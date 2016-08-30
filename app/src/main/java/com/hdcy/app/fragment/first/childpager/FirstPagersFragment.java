@@ -81,6 +81,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
 
         mAdapter = new FirsPagersFragmentAdapter(_mActivity);
 
+
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
 
@@ -121,7 +122,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     private void setData(){
         mAdapter.setDatas(contentList);
 
-        mRecy.setAdapter(mAdapter);
+       mRecy.setAdapter(mAdapter);
 
 
     }

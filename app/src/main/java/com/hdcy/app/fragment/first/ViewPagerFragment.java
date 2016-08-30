@@ -55,7 +55,7 @@ public class ViewPagerFragment extends BaseFragment {
     private void initView(View view) {
         mTab = (TabLayout) view.findViewById(R.id.tab);
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mTab.addTab(mTab.newTab());
+      //  mTab.addTab(mTab.newTab());
         mTab.addTab(mTab.newTab());
         mTab.addTab(mTab.newTab());
         mTab.addTab(mTab.newTab());
@@ -77,11 +77,11 @@ public class ViewPagerFragment extends BaseFragment {
         NetHelper.getInstance().GetNewsCategoryList(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                NewsCategory newsCategory = new NewsCategory();
-                newsCategory.setName("全部");
-                newsCategory.setId(1011);
-                Log.e("全部id",newsCategory.getId()+"");
-                newsCategoryList.add(newsCategory);
+                //NewsCategory newsCategory = new NewsCategory();
+               // newsCategory.setName("全部");
+                //newsCategory.setId(1011);
+                //Log.e("全部id",newsCategory.getId()+"");
+                //newsCategoryList.add(newsCategory);
                 List<NewsCategory> newsCategoryListTemp = responseInfo.getNewsCategoryList();
                 newsCategoryList.addAll(newsCategoryListTemp);
                 setAdapter();

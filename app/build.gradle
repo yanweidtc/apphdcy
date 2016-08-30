@@ -29,6 +29,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //加入支持分包的依赖库
+    compile 'com.android.support:multidex:1.0.1'
     //底部导航栏
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.android.support:appcompat-v7:23.3.0'

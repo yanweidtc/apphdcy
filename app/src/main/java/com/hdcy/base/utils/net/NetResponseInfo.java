@@ -1,6 +1,7 @@
 package com.hdcy.base.utils.net;
 
 
+import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.Article;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Comments;
@@ -29,6 +30,16 @@ public class NetResponseInfo {
     private List<NewsCategory> newsCategoryList;
     private List<Content> contentList;
     private List<Comments> commentsList;
+
+    public List<ActivityContent> getActivityContentList() {
+        return activityContentList;
+    }
+
+    public void setActivityContentList(List<ActivityContent> activityContentList) {
+        this.activityContentList = activityContentList;
+    }
+
+    private List<ActivityContent> activityContentList;
 
     public List<CommentsContent> getCommentsContentList() {
         return commentsContentList;

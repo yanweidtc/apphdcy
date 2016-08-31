@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONCreator;
+import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Comments;
 import com.hdcy.app.model.CommentsContent;
@@ -321,6 +322,45 @@ public class NetHelper {
             @Override
             public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Log.e("comments","onfailure");
+
+            }
+        });
+    }
+
+    /**
+     * 得到活动列表
+     * 全部null 线上为ONLINE 线下为ACTIVTY
+     * @param activityType
+     * @param callBack
+     * @return
+     */
+
+    public Callback.Cancelable GetPaticipationList(String activityType,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/participation/");
+        request.addParam("enable","true");
+        request.addParam("actType",activityType);
+        request.addParam("size","20");
+        request.addParam("sort","createdTime,desc");
+        return request.postarray(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONArray dataObj = responseInfo.getDataArr();
+                if (dataObj != null){
+                    responseInfo.setActivityContentList(JSON.parseArray(dataObj.toString(), ActivityContent.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("activity","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activity","onfailure");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activity","onfailure");
 
             }
         });

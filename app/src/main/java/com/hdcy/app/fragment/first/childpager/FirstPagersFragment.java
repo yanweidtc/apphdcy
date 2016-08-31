@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
-import com.hdcy.app.activity.MainActivity;
 import com.hdcy.app.adapter.FirsPagersFragmentAdapter;
 import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.StartBrotherEvent;
@@ -63,7 +62,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_second_pager_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_first_pager_first, container, false);
         EventBus.getDefault().register(this);
         tagId = getArguments().getInt("param");
         Log.e("TagValue",tagId+"");
@@ -121,7 +120,6 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
 
     private void setData(){
         mAdapter.setDatas(contentList);
-
        mRecy.setAdapter(mAdapter);
 
 
@@ -145,13 +143,13 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
      * 选择tab事件
      */
     @Subscribe
-    public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (mAtTop) {
-            mRefreshLayout.setRefreshing(true);
-            onRefresh();
-        } else {
-            scrollToTop();
-        }
+        public void onTabSelectedEvent(TabSelectedEvent event) {
+            if (mAtTop) {
+                mRefreshLayout.setRefreshing(true);
+                onRefresh();
+            } else {
+                scrollToTop();
+            }
     }
 
     @Override

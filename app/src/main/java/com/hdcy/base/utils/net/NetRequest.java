@@ -254,7 +254,7 @@ public class NetRequest implements BaseData {
     }
 
     /**
-     * 请求/上传数据
+     * 请求数据
      * get请求 content
      * @param callBack 回调
      */

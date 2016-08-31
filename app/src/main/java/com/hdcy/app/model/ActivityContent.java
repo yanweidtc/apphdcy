@@ -1,6 +1,7 @@
 package com.hdcy.app.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,9 +24,9 @@ public class ActivityContent implements Serializable {
 
     private String actType;
 
-    private int startTime;
+    private Date startTime;
 
-    private int endTime;
+    private Date endTime;
 
     private int hot;
 
@@ -93,16 +94,16 @@ public class ActivityContent implements Serializable {
     public String getActType(){
         return this.actType;
     }
-    public void setStartTime(int startTime){
+    public void setStartTime(Date startTime){
         this.startTime = startTime;
     }
-    public int getStartTime(){
+    public Date getStartTime(){
         return this.startTime;
     }
-    public void setEndTime(int endTime){
+    public void setEndTime(Date endTime){
         this.endTime = endTime;
     }
-    public int getEndTime(){
+    public Date getEndTime(){
         return this.endTime;
     }
     public void setHot(int hot){

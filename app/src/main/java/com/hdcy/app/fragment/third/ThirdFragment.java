@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.fragment.first.childpager.FirstPagersFragment;
+import com.hdcy.app.fragment.third.child.ThirdPagesFragment;
 
 /**
  * Created by WeiYanGeorge on 2016-08-30.
@@ -84,7 +85,7 @@ public class ThirdFragment extends BaseLazyMainFragment{
 
         @Override
         public Fragment getItem(int position) {
-            return FirstPagersFragment.newInstance(1011);
+            return ThirdPagesFragment.newInstance();
         }
 
         @Override

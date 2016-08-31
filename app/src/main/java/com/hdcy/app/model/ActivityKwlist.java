@@ -1,6 +1,8 @@
 package com.hdcy.app.model;
 
+import java.io.DataInput;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by WeiYanGeorge on 2016-08-31.
@@ -13,7 +15,7 @@ public class ActivityKwlist implements Serializable {
 
     private int id;
 
-    private int createdTime;
+    private Date createdTime;
 
     private String modifyTime;
 
@@ -25,10 +27,10 @@ public class ActivityKwlist implements Serializable {
     public int getId(){
         return this.id;
     }
-    public void setCreatedTime(int createdTime){
+    public void setCreatedTime(Date createdTime){
         this.createdTime = createdTime;
     }
-    public int getCreatedTime(){
+    public Date getCreatedTime(){
         return this.createdTime;
     }
     public void setModifyTime(String modifyTime){

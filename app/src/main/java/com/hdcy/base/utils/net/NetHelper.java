@@ -335,11 +335,12 @@ public class NetHelper {
      * @return
      */
 
-    public Callback.Cancelable GetPaticipationList(String activityType,final NetRequestCallBack callBack){
+    public Callback.Cancelable GetPaticipationList(String activityType,int pagecount,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/participation/");
+        request.addParam("page",pagecount);
         request.addParam("enable","true");
         request.addParam("actType",activityType);
-        request.addParam("size","20");
+        request.addParam("size","10");
         request.addParam("sort","createdTime,desc");
         return request.postarray(new NetRequestCallBack() {
             @Override
@@ -361,6 +362,46 @@ public class NetHelper {
             @Override
             public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Log.e("activity","onfailure");
+
+            }
+        });
+    }
+
+    /**
+     * 得到轮播图信息
+     * @param activityType
+     * @param callBack
+     * @return
+     */
+
+    public Callback.Cancelable GetActivityTopBanner(String activityType,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/participation/");
+        request.addParam("page",0);
+        request.addParam("enable","true");
+        request.addParam("actType",activityType);
+        request.addParam("size","10");
+        request.addParam("sort","createdTime,desc");
+        request.addParam("top","true");
+        return request.postarray(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONArray dataObj = responseInfo.getDataArr();
+                if (dataObj != null){
+                    responseInfo.setActivityContentList(JSON.parseArray(dataObj.toString(), ActivityContent.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("activityhot","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activityhot","onfailure");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activityhot","onfailure");
 
             }
         });

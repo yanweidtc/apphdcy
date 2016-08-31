@@ -52,6 +52,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.umeng.analytics:analytics:latest.integration'
 
+    //轮播图依赖控件
+    compile 'cn.bingoogolapple:bga-banner:2.0.9@aar'
+    compile 'com.android.support:support-v4:23.0.0'
+    compile 'com.nineoldandroids:library:2.4.0'
+
 
 
 }

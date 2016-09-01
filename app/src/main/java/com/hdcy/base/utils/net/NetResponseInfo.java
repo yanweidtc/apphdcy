@@ -9,6 +9,7 @@ import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
 import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
+import com.hdcy.app.model.PraiseResult;
 import com.nostra13.universalimageloader.core.assist.deque.LIFOLinkedBlockingDeque;
 
 import org.json.JSONArray;
@@ -18,7 +19,6 @@ import java.util.List;
 
 /**
  * Created by WeiYanGeorge on 2016-08-10.
- *
  */
 
 public class NetResponseInfo {
@@ -30,70 +30,12 @@ public class NetResponseInfo {
     private List<NewsCategory> newsCategoryList;
     private List<Content> contentList;
     private List<Comments> commentsList;
-
-    public List<ActivityContent> getActivityContentList() {
-        return activityContentList;
-    }
-
-    public void setActivityContentList(List<ActivityContent> activityContentList) {
-        this.activityContentList = activityContentList;
-    }
-
+    public PraiseResult praiseResult;
     private List<ActivityContent> activityContentList;
-
-    public List<CommentsContent> getCommentsContentList() {
-        return commentsContentList;
-    }
-
-    public CommentsContent getCommentsContent() {
-        return commentsContent;
-    }
-
-    public void setCommentsContent(CommentsContent commentsContent) {
-        this.commentsContent = commentsContent;
-    }
-
     public CommentsContent commentsContent;
-
-
-    public ArticleInfo getArticleInfo() {
-        return articleInfo;
-    }
-
-    public void setArticleInfo(ArticleInfo articleInfo) {
-        this.articleInfo = articleInfo;
-    }
-
-    public ArticleInfo articleInfo;
-
-
-
-    public void setCommentsContentList(List<CommentsContent> commentsContentList) {
-        this.commentsContentList = commentsContentList;
-    }
-
     private List<CommentsContent> commentsContentList;
-
-
-    public List<Comments> getCommentsList() {
-        return commentsList;
-    }
-
-    public void setCommentsList(List<Comments> commentsList) {
-        this.commentsList = commentsList;
-    }
-
-
-    public List<NewsArticleInfo> getNewsArticleInfoList() {
-        return newsArticleInfoList;
-    }
-
-    public void setNewsArticleInfoList(List<NewsArticleInfo> newsArticleInfoList) {
-        this.newsArticleInfoList = newsArticleInfoList;
-    }
-
     private List<NewsArticleInfo> newsArticleInfoList;
-
+    public ArticleInfo articleInfo;
 
 
     public String getCode() {
@@ -136,13 +78,14 @@ public class NetResponseInfo {
         this.dataArr = dataArr;
     }
 
-    public List<NewsCategory> getNewsCategoryList(){
+    public List<NewsCategory> getNewsCategoryList() {
         return newsCategoryList;
     }
 
-    public void setNewsCategoryList(List<NewsCategory> newsCategoryList){
+    public void setNewsCategoryList(List<NewsCategory> newsCategoryList) {
         this.newsCategoryList = newsCategoryList;
     }
+
     public List<Content> getContentList() {
         return contentList;
     }
@@ -150,6 +93,64 @@ public class NetResponseInfo {
     public void setContentList(List<Content> contentList) {
         this.contentList = contentList;
     }
+
+    public PraiseResult getPraiseResult() {
+        return praiseResult;
+    }
+
+    public void setPraiseResult(PraiseResult praiseResult) {
+        this.praiseResult = praiseResult;
+    }
+
+    public List<ActivityContent> getActivityContentList() {
+        return activityContentList;
+    }
+
+    public void setActivityContentList(List<ActivityContent> activityContentList) {
+        this.activityContentList = activityContentList;
+    }
+
+    public List<CommentsContent> getCommentsContentList() {
+        return commentsContentList;
+    }
+
+    public CommentsContent getCommentsContent() {
+        return commentsContent;
+    }
+
+    public void setCommentsContent(CommentsContent commentsContent) {
+        this.commentsContent = commentsContent;
+    }
+
+    public void setCommentsContentList(List<CommentsContent> commentsContentList) {
+        this.commentsContentList = commentsContentList;
+    }
+
+    public List<Comments> getCommentsList() {
+        return commentsList;
+    }
+
+    public void setCommentsList(List<Comments> commentsList) {
+        this.commentsList = commentsList;
+    }
+
+    public List<NewsArticleInfo> getNewsArticleInfoList() {
+        return newsArticleInfoList;
+    }
+
+    public void setNewsArticleInfoList(List<NewsArticleInfo> newsArticleInfoList) {
+        this.newsArticleInfoList = newsArticleInfoList;
+    }
+
+    public void setArticleInfo(ArticleInfo articleInfo) {
+        this.articleInfo = articleInfo;
+    }
+
+    public ArticleInfo getArticleInfo() {
+        return articleInfo;
+    }
+
+
 
 
 }

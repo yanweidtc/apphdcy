@@ -11,6 +11,7 @@ import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
 import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
+import com.hdcy.app.model.PraiseResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -190,11 +191,10 @@ public class NetHelper {
     /**
      * 点赞功能
      */
-    public Callback.Cancelable DoPraiseOrCancel(final String targetId, final NetRequestCallBack callBack){
+    public Callback.Cancelable  DoPraise( String targetId, final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/praise/");
         request.addHeader("Authorization","Basic MToxMjM0NTY=");
         request.addHeader("Content-Type", "application/json;charset=UTF-8");
-
         JSONObject obj = new JSONObject();
         try {
             obj.put("target", "comment");
@@ -206,7 +206,12 @@ public class NetHelper {
         return request.postinfo(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("点赞成功",targetId);
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.setPraiseResult(JSON.parseObject(dataObj.toString(), PraiseResult.class));
+                }
+                Log.e("点赞成功",dataObj.toString());
+                callBack.onSuccess(requestInfo, responseInfo);
             }
 
             @Override
@@ -225,7 +230,7 @@ public class NetHelper {
      * 取消点赞
      */
 
-    public Callback.Cancelable UnDoPraise(final String targetId, final NetRequestCallBack callBack){
+    public Callback.Cancelable UnDoPraise( String targetId, final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/praise/");
         request.addHeader("Authorization","Basic MToxMjM0NTY=");
         request.addHeader("Content-Type", "application/json;charset=UTF-8");
@@ -241,7 +246,8 @@ public class NetHelper {
         return request.putinfo(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("取消点赞成功",targetId);
+                callBack.onSuccess(requestInfo, responseInfo);
+
             }
 
             @Override

@@ -1,28 +1,28 @@
 package com.hdcy.app.adapter;
 
 import android.content.Context;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
-import com.hdcy.app.fragment.first.CommentPraiseApi;
 import com.hdcy.app.model.CommentsContent;
-import com.hdcy.app.model.Content;
+import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
 import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.BaseUtils;
-import com.nostra13.universalimageloader.utils.L;
+import com.hdcy.base.utils.net.NetHelper;
+import com.hdcy.base.utils.net.NetRequestCallBack;
+import com.hdcy.base.utils.net.NetRequestInfo;
+import com.hdcy.base.utils.net.NetResponseInfo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,6 +41,12 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     private Context context;
 
     private boolean isPraised = false;
+
+    private int actualcount;
+
+    private boolean PraisedStatus;
+
+    private PraiseResult praiseResult ;
 
     private OnItemClickListener itemClickListener;
     private OnPraiseClickListener onPraiseClickListener;
@@ -91,7 +97,8 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-
+        holder.setTag(position);
+        holder.setIsRecyclable(false);
         final CommentsContent item = mItems.get(position);
         replysList = item.getReplys();
         if(BaseUtils.isEmptyList(replysList)){
@@ -109,28 +116,68 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         Log.e("CommentContent",item.getContent()+"");
         holder.tv_comment_content.setText(item.getContent());
         holder.tv_praise_count.setText(item.getPraiseCount()+"");
-
+        actualcount = item.getPraiseCount();
+        Log.e("actualcount", actualcount+"");
         holder.iv_praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String targetId = item.getId()+"";
-                int count = item.getPraiseCount();
-                if(!isPraised){
-                    CommentPraiseApi.doPraise(targetId);
-                    isPraised = true;
-                    holder.iv_praise.setImageResource(R.drawable.content_icon_zambia_pressed);
-                    count++;
-                    holder.tv_praise_count.setText(count+"");
-                }else {
-                    holder.iv_praise.setImageResource(R.drawable.content_con_zambia_default);
-                    CommentPraiseApi.UndoPraise(targetId);
-                    isPraised = false;
+                int tag = (int) holder.getTag();
+                if (tag == position) {
+                    String targetId = item.getId() + "";
+                    if (!isPraised) {
+                        NetHelper.getInstance().DoPraise(targetId, new NetRequestCallBack() {
+                            @Override
+                            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                                praiseResult = responseInfo.getPraiseResult();
+                                PraisedStatus = praiseResult.getContent();
+                                if (PraisedStatus) {
+                                    Log.e("点赞成功1", praiseResult.getContent() + "");
+                                    isPraised = true;
+                                    int count = actualcount+1;
+                                    Log.e("actualcount", count + "");
+                                    holder.iv_praise.setImageResource(R.drawable.content_icon_zambia_pressed);
+                                    holder.tv_praise_count.setText(count + "");
+                                } else {
+                                    Toast.makeText(context, "你已经赞过", Toast.LENGTH_SHORT).show();
+                                    holder.iv_praise.setImageResource(R.drawable.content_icon_zambia_pressed);
+                                    isPraised = true;
+                                    return;
+                                }
+                            }
+
+                            @Override
+                            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+                            }
+
+                            @Override
+                            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+                            }
+
+                        });
+
+
+                    } else {
+                        UndoPraise(targetId);
+                        int count = actualcount;
+                        if(isPraised){
+                        count = count -1;
+                        holder.tv_praise_count.setText(actualcount + "");}
+                        else {
+                            holder.tv_praise_count.setText(actualcount);
+                        }
+                        holder.iv_praise.setImageResource(R.drawable.content_con_zambia_default);
+                        Toast.makeText(context, "取消赞成功", Toast.LENGTH_SHORT).show();
+                        isPraised = false;
+                    }
                 }
             }
         });
 
 
     }
+
 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -174,5 +221,46 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
+
+    public  void doPraise(final String targetId) {
+            NetHelper.getInstance().DoPraise(targetId, new NetRequestCallBack() {
+                @Override
+                public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+                }
+
+                @Override
+                public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+                }
+
+                @Override
+                public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+                }
+            });
+        }
+
+        public  void UndoPraise(final String targetId) {
+            NetHelper.getInstance().UnDoPraise(targetId, new NetRequestCallBack() {
+                @Override
+                public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                    Log.e("取消赞成功1", targetId);
+                }
+
+                @Override
+                public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+                }
+
+                @Override
+                public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                    Log.e("取消赞失败", targetId);
+
+                }
+            });
+        }
+
+
 
 }

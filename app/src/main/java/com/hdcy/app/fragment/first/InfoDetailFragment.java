@@ -92,7 +92,8 @@ public  class InfoDetailFragment extends BaseBackFragment {
         }
         loadurl = Url+targetId;
         myWebView = (WebView)view.findViewById(R.id.mywebview);
-        myWebView.loadUrl("http://www.ifeng.com");
+        myWebView.loadUrl(loadurl);
+        Log.e("WebUrl",loadurl);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         myWebView.setWebViewClient(new WebViewClient());

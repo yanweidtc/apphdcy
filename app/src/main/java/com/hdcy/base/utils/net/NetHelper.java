@@ -12,6 +12,7 @@ import com.hdcy.app.model.Content;
 import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.model.PraiseResult;
+import com.hdcy.app.model.Replys;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -172,6 +173,7 @@ public class NetHelper {
                 JSONObject dataObj = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.setCommentsContent(JSON.parseObject(dataObj.toString(), CommentsContent.class));
+                    responseInfo.setReplys(JSON.parseObject(dataObj.toString(), Replys.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
             }
@@ -375,19 +377,50 @@ public class NetHelper {
 
     /**
      * 得到轮播图信息
-     * @param activityType
+     *
      * @param callBack
      * @return
      */
 
-    public Callback.Cancelable GetActivityTopBanner(String activityType,final NetRequestCallBack callBack){
+    public Callback.Cancelable GetActivityTopBanner( final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/participation/");
         request.addParam("page",0);
         request.addParam("enable","true");
-        request.addParam("actType",activityType);
         request.addParam("size","10");
         request.addParam("sort","createdTime,desc");
         request.addParam("top","true");
+        return request.postarray(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONArray dataObj = responseInfo.getDataArr();
+                if (dataObj != null){
+                    responseInfo.setActivityContentList(JSON.parseArray(dataObj.toString(), ActivityContent.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("activityhot","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activityhot","onfailure");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activityhot","onfailure");
+
+            }
+        });
+    }
+
+    public Callback.Cancelable GetActivityRecommended( final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/participation/");
+        request.addParam("page",0);
+        request.addParam("enable","true");
+        request.addParam("size","10");
+        request.addParam("sort","createdTime,desc");
+        request.addParam("recommend","true");
         return request.postarray(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {

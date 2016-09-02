@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ExpandableListAdapter;
 import android.widget.TextView;
 
 import com.hdcy.app.R;
@@ -19,6 +20,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import it.sephiroth.android.library.widget.ExpandableHListView;
 
 /**
  * Created by WeiYanGeorge on 2016-08-24.
@@ -27,6 +29,7 @@ import butterknife.ButterKnife;
 public class ReplysAdapter extends BaseAdapter {
     private Context context;
     private List<Replys> data;
+    int itemCount =2 ;
 
     public ReplysAdapter(Context context, List<Replys> data) {
         super();
@@ -36,7 +39,11 @@ public class ReplysAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data == null ? 0 : data.size();
+        if(data.size()>2){
+            return itemCount;
+        }else {
+            return data.size();
+        }
     }
 
     @Override
@@ -95,5 +102,9 @@ public class ReplysAdapter extends BaseAdapter {
             this.tag = tag;
         }
 
+    }
+
+    public void addItemNum(int number){
+        itemCount = number;
     }
 }

@@ -65,6 +65,8 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     String target;
     String replyid;
 
+    int globalposition;
+
 
     private Toolbar mToolbar;
     private TextView title;
@@ -88,7 +90,11 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
 
 
     private List<CommentsContent> commentsList = new ArrayList<>();
-    private CommentsContent commentsContent;
+    private CommentsContent commentsContent = new CommentsContent();
+
+    private List<Replys> replysList = new ArrayList<>();
+    private Replys replys;
+
 
     public static CommentListFragment newInstance(String tagId) {
         CommentListFragment fragment = new CommentListFragment();
@@ -154,7 +160,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replyid =null;
+                replyid = null;
                 targetid = tagId;
                 target = "article";
                 ShowInputDialog();
@@ -163,10 +169,11 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                replyid = commentsList.get(position).getId()+"";
-                Log.e("replyid",replyid);
-                targetid =tagId;
-                target ="aricle";
+                replyid = commentsList.get(position).getId() + "";
+                Log.e("replyid", replyid);
+                targetid = tagId;
+                target = "aricle";
+                globalposition = position;
                 ShowInputDialog();
             }
         });
@@ -321,18 +328,26 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
 
 
     public void PublishComment() {
-        NetHelper.getInstance().PublishComments(targetid, content, target,replyid,new NetRequestCallBack() {
+        NetHelper.getInstance().PublishComments(targetid, content, target, replyid, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                commentsContent = responseInfo.getCommentsContent();
-                Log.e("评论成功后的数据",responseInfo.toString());
-                if(replyid ==null){
-                commentsList.add(0,commentsContent);
-                mAdapter.notifyDataSetChanged();
-                setData();
+                alertDialog.dismiss();
+                Log.e("评论成功后的数据", responseInfo.toString());
+                if (replyid == null) {
+                    commentsContent = responseInfo.getCommentsContent();
+                    commentsList.add(0, commentsContent);
+                    mAdapter.notifyDataSetChanged();
+                    setData();
+                } else {
+                    replys = responseInfo.getReplys();
+                    replysList.add(0, replys);
+                    commentsContent.setReplys(replysList);
+                    commentsList.set(globalposition,commentsContent);
+                    mAdapter.notifyDataSetChanged();
+                    setData();
                 }
                 Toast.makeText(getActivity(), "评论发布成功", Toast.LENGTH_LONG).show();
-                alertDialog.dismiss();
+
             }
 
             @Override

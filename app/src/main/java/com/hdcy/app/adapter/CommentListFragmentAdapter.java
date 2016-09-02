@@ -25,6 +25,7 @@ import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     private List<Replys> replysList = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context context;
+
+     ReplysAdapter replysAdapter ;
 
     private boolean isPraised = false;
 
@@ -101,10 +104,25 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         holder.setIsRecyclable(false);
         final CommentsContent item = mItems.get(position);
         replysList = item.getReplys();
+
         if(BaseUtils.isEmptyList(replysList)){
             holder.ly_sub_replys.setVisibility(View.GONE);
         }else {
-            holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
+            replysAdapter = new ReplysAdapter(context,replysList);
+            holder.lv_replys.setAdapter(replysAdapter);
+            final int size = replysList.size();
+            if(replysList.size() >2){
+                holder.tv_more.setVisibility(View.VISIBLE);
+                holder.tv_more.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        replysAdapter.addItemNum(size);
+                        replysAdapter.notifyDataSetChanged();
+                        holder.tv_more.setVisibility(View.GONE);
+                    }
+                });
+            }
+
         }
         holder.tv_name.setText(item.getCreaterName()+"");
         Picasso.with(context).load(item.getCreaterHeadimgurl())
@@ -112,7 +130,9 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
                 .resize(50,50)
                 .centerCrop()
                 .into(holder.iv_avatar);
-        holder.tv_time.setText(item.getCreatedTime().toLocaleString()+"");
+        SimpleDateFormat foramt = new SimpleDateFormat("MM-dd");
+        String dateformat = foramt.format(item.getCreatedTime()).toString();
+        holder.tv_time.setText(dateformat);
         Log.e("CommentContent",item.getContent()+"");
         holder.tv_comment_content.setText(item.getContent());
         holder.tv_praise_count.setText(item.getPraiseCount()+"");
@@ -186,6 +206,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         private TextView tv_name,tv_praise_count, tv_time,tv_comment_content;
         private ListView lv_replys;
         private LinearLayout ly_sub_replys;
+        private TextView tv_more;
 
         private  Object tag;
 
@@ -208,6 +229,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             ly_sub_replys = (LinearLayout) itemView.findViewById(R.id.ly_sub_reply);
             lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
+            tv_more =(TextView) itemView.findViewById(R.id.tv_more);
 
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 

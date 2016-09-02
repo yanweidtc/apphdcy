@@ -2,28 +2,63 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="200dp"
+    android:background="@color/transparent_black_60">
     <ImageView
         android:id="@+id/iv_activity_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/ic_launcher"/>
+        android:alpha="0.7"
+        />
     <TextView
         android:id="@+id/tv_activity_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="90dp"
-        android:textSize="50px"
+        android:layout_marginTop="50dp"
+        android:textSize="16sp"
         android:text="主题名称"
-        android:textColor="@color/white"/>
+        android:textColor="#FFFFFF"/>
     <TextView
         android:id="@+id/tv_activity_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="70dp"
+        android:textSize="14sp"
+        android:textColor="#FFFFFF"
         android:layout_gravity="center_horizontal"
       />
+    <ImageView
+        android:id="@+id/iv_activity_status"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_gravity="left"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
+        android:alpha="0.5"
+        android:src="@mipmap/icon_activity_status"
+        android:visibility="visible"
+        />
+    <ImageView
+        android:layout_height="20dp"
+        android:layout_width="20dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/tab_con_user_default"
+        android:layout_marginBottom="10dp"
+        android:alpha="0.7"
+        />
+    <TextView
+        android:id="@+id/tv_activity_persons_count"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="23dp"
+        android:layout_marginBottom="12dp"
+        android:textSize="13sp"
+        android:alpha="0.7"
+        android:textColor="@color/white"
+        android:text="4453"/>
 
 </FrameLayout>

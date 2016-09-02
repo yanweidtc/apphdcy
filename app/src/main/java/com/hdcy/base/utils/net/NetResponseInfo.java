@@ -10,6 +10,7 @@ import com.hdcy.app.model.Content;
 import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.model.PraiseResult;
+import com.hdcy.app.model.Replys;
 import com.nostra13.universalimageloader.core.assist.deque.LIFOLinkedBlockingDeque;
 
 import org.json.JSONArray;
@@ -36,6 +37,10 @@ public class NetResponseInfo {
     private List<CommentsContent> commentsContentList;
     private List<NewsArticleInfo> newsArticleInfoList;
     public ArticleInfo articleInfo;
+
+
+
+    public Replys replys;
 
 
     public String getCode() {
@@ -149,7 +154,13 @@ public class NetResponseInfo {
     public ArticleInfo getArticleInfo() {
         return articleInfo;
     }
+    public Replys getReplys() {
+        return replys;
+    }
 
+    public void setReplys(Replys replys) {
+        this.replys = replys;
+    }
 
 
 

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
     <LinearLayout
         android:id="@+id/layout_root"
         android:layout_width="match_parent"
@@ -53,8 +52,8 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="Name"
-                        android:textColor="@color/black"
-                        android:textSize="46px" />
+                        android:textColor="#6593C5"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -97,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:text="Time"
                         android:textColor="@color/main_font_gray_1"
-                        android:textSize="@dimen/main_font_tips" />
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -115,7 +114,7 @@
         android:layout_marginTop="@dimen/main_margin_top"
         android:text="评论的内容"
         android:textColor="@color/main_font"
-        android:textSize="@dimen/main_font_body" />
+        android:textSize="17sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -127,16 +126,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/gray"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:layout_marginRight="70px"
         android:layout_marginLeft="100px">
 
         <com.hdcy.app.view.AdaHeightListView
             android:id="@+id/lv_replys"
+            android:divider="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/main_margin_left"
             android:paddingBottom="48px"
             android:paddingTop="24px" />
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="显示更多"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

@@ -8,6 +8,14 @@
         android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部评论"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="12dp"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"

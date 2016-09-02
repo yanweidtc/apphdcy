@@ -77,7 +77,7 @@ public class ThirdFragment extends BaseLazyMainFragment{
     public class SecondViewPageFragmentAdapter extends FragmentPagerAdapter{
 
         private String[] mTab = new String[]{"全部","线上活动","线下活动"};
-
+        private String[] activitytype = new String[]{null, "ONLINE","ACTIVITY"};
 
         public SecondViewPageFragmentAdapter(FragmentManager fm){
             super(fm);
@@ -85,7 +85,7 @@ public class ThirdFragment extends BaseLazyMainFragment{
 
         @Override
         public Fragment getItem(int position) {
-            return ThirdPagesFragment.newInstance();
+            return ThirdPagesFragment.newInstance(activitytype[position]);
         }
 
         @Override

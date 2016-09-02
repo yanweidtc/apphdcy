@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.serializer.SimpleDateFormatSerializer;
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
 import com.hdcy.app.model.Article;
@@ -18,6 +19,7 @@ import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.BaseUtils;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +67,9 @@ public class FirsPagersFragmentAdapter extends RecyclerView.Adapter<FirsPagersFr
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Content item = mItems.get(position);
         holder.tvTitle.setText(item.getTitle());
-        holder.tv_info_update.setText(item.getCreatedTime().toLocaleString());
+        SimpleDateFormat foramt = new SimpleDateFormat("MM-dd");
+        String dateformat = foramt.format(item.getCreatedTime()).toString();
+        holder.tv_info_update.setText(dateformat);
         holder.tv_info_watched.setText(item.getReadCount()+"");
        if(!BaseUtils.isEmptyList(item.getTagInfos()))
        if (!BaseUtils.isEmptyString(item.getImage())) {
@@ -82,6 +86,10 @@ public class FirsPagersFragmentAdapter extends RecyclerView.Adapter<FirsPagersFr
             if(!BaseUtils.isEmptyString(item.getTagInfos().get(0).getName())){
                holder.tv_info_tag.setText(item.getTagInfos().get(0).getName()+"");
             }
+        }
+        if(item.getBusiness() ==true){
+            holder.tv_info_tag.setText("置顶");
+            holder.tv_info_update.setVisibility(View.GONE);
         }
 
         // holder.tv_info_tag.setText(item.getTagInfos().get(0).getName());

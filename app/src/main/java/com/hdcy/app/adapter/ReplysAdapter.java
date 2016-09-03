@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ExpandableListAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hdcy.app.R;
@@ -29,7 +30,12 @@ import it.sephiroth.android.library.widget.ExpandableHListView;
 public class ReplysAdapter extends BaseAdapter {
     private Context context;
     private List<Replys> data;
-    int itemCount =2 ;
+
+    public OnItemsClickListeners onItemsClickListeners;
+
+    public void setOnItemsClickListeners (OnItemsClickListeners onItemsClickListeners){
+        this.onItemsClickListeners =onItemsClickListeners;
+    }
 
     public ReplysAdapter(Context context, List<Replys> data) {
         super();
@@ -39,11 +45,11 @@ public class ReplysAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(data.size()>2){
+/*        if(data.size()>2){
             return itemCount;
-        }else {
+        }else {*/
             return data.size();
-        }
+
     }
 
     @Override
@@ -78,6 +84,18 @@ public class ReplysAdapter extends BaseAdapter {
         String toUser = temp.getReplyToName()+"";
         String content = fromUser +" 回复 " +toUser +": "+ temp.getContent();
         holder.tv_content.setText(content);
+
+        holder.fy_item_replys.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int tag = (int) holder.getTag();
+                if (tag ==position){
+                    if(onItemsClickListeners !=null){
+                        onItemsClickListeners.onFrameLayout(position);
+                    }
+                }
+            }
+        });
     }
 
     public class ViewHolder {
@@ -85,10 +103,11 @@ public class ReplysAdapter extends BaseAdapter {
 
 
         public TextView tv_content;
+        public FrameLayout fy_item_replys;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
-
+            fy_item_replys = (FrameLayout) view.findViewById(R.id.ry_item_reply);
             tv_content =(TextView) view.findViewById(R.id.tv_content);
         }
 
@@ -104,7 +123,15 @@ public class ReplysAdapter extends BaseAdapter {
 
     }
 
-    public void addItemNum(int number){
+/*    public void addItemNum(int number){
         itemCount = number;
+    }*/
+
+    public interface OnItemsClickListeners{
+        void onFrameLayout(int position);
+    }
+
+    public void OnItemsClickListeners(OnItemsClickListeners onItemsClickListeners) {
+        this.onItemsClickListeners = onItemsClickListeners;
     }
 }

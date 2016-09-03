@@ -3,7 +3,6 @@ package com.hdcy.app.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
+import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
@@ -34,30 +35,30 @@ import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 import com.squareup.picasso.Picasso;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.SupportActivity;
+
 /**
- * Created by WeiYanGeorge on 2016-08-23.
+ * Created by WeiYanGeorge on 2016-09-03.
  */
 
+public class CommentListViewFragmentAdapter extends BaseAdapter {
 
-public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentListFragmentAdapter.MyViewHolder>{
-
-    private List<CommentsContent> mItems = new ArrayList<>();
-    private List<Replys> replysList = new ArrayList<>();
-
-    private List<CommentsContent> commentsList = new ArrayList<>();
-    private CommentsContent commentsContent = new CommentsContent();
-
+    private List<CommentsContent> data = new ArrayList<>();
+    List<Replys> replysList = new ArrayList<>();
     private Replys replys;
 
     private LayoutInflater mInflater;
     private Context context;
 
-    ReplysAdapter replysAdapter ;
+
+    ReplysAdapter replysAdapter;
 
     private boolean isPraised = false;
 
@@ -65,10 +66,8 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
 
     private boolean PraisedStatus;
 
-    private PraiseResult praiseResult ;
+    private PraiseResult praiseResult;
 
-    private OnItemClickListener itemClickListener;
-    private OnPraiseClickListener onPraiseClickListener;
 
     private String replyid;
     private String targetid;
@@ -79,107 +78,107 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     TextView tv_limit;
     EditText editText;
     AlertDialog alertDialog;
-    Button sendButton;
 
     private String content;
 
-    private boolean isEdit;//是否编辑过
+    private boolean isEdit = false;//是否编辑过
+
+    private OnAvatarClickListener onAvatarClickListener;
+    private OnReplyClickListener onReplyClickListener;
 
 
+    public void setOnAvatarClickListener(OnAvatarClickListener onAvatarClickListener) {
+        this.onAvatarClickListener = onAvatarClickListener;
+    }
 
-    public CommentListFragmentAdapter(Context context){
-        this.mInflater = LayoutInflater.from(context);
+    public void setOnReplyClickListener(OnReplyClickListener onReplyClickListener) {
+        this.onReplyClickListener = onReplyClickListener;
+    }
+
+    public CommentListViewFragmentAdapter(Context context, List<CommentsContent> data) {
+        super();
         this.context = context;
+        this.mInflater = LayoutInflater.from(context);
+        this.data = data;
     }
-
-    public void setOnPraiseClickListener(OnPraiseClickListener onPraiseClickListener){
-        this.onPraiseClickListener = onPraiseClickListener;
-    }
-
-    public void setDatas(List<CommentsContent> items){
-        mItems.clear();
-        mItems.addAll(items);
-    }
-
 
     @Override
-    public int getItemCount() {
-        return mItems.size();
+    public int getCount() {
+        return data == null ? 0 : data.size();
     }
 
+    @Override
     public CommentsContent getItem(int position) {
-        return mItems.get(position);
+        return data.get(position);
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_comments, parent, false);
-        final MyViewHolder holder = new MyViewHolder(view);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder holder;
+        if (convertView == null) {
+            convertView = View.inflate(context, R.layout.item_comments,null);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
+            AutoUtils.autoSize(convertView);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        holder.setTag(position);
+        ((SupportActivity)context).runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if (itemClickListener != null) {
-                    itemClickListener.onItemClick(position, v, holder);
-                }
+            public void run() {
+                setView(position, holder);
+
             }
         });
-        holder.getAdapterPosition();
-        holder.setIsRecyclable(false);
-        return holder;
+        return convertView;
     }
 
 
-
-    @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.setTag(mItems.get(position).getId());
-        final CommentsContent item = mItems.get(position);
+    private void setView(final int position, final ViewHolder holder) {
+        final CommentsContent item = getItem(position);
         replysList = item.getReplys();
-        if(BaseUtils.isEmptyList(replysList)){
-            holder.ly_sub_replys.setVisibility(View.GONE);
-        }else {
-            Log.e("Replyssize",replysList.size()+"");
-            replysAdapter = new ReplysAdapter(context,replysList);
-            holder.lv_replys.setAdapter(replysAdapter);
-            holder.lv_replys.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    replyid = item.getReplys().get(position).getId()+"";
-                    target="article";
-                    targetid = item.getReplys().get(position).getTargetId()+"";
-                    ShowInputDialog();
-                }
-            });
-            final int size = replysList.size();
-/*            if(replysList.size() >2){
-                holder.tv_more.setVisibility(View.VISIBLE);
-                holder.tv_more.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        replysAdapter.addItemNum(size);
-                        replysAdapter.notifyDataSetChanged();
-                        holder.tv_more.setVisibility(View.GONE);
-                    }
-                });
-            }*/
+        Log.e("Replyssize", replysList.size() + "");
+       // holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
+        replysAdapter = new ReplysAdapter(context, replysList);
+        holder.lv_replys.setAdapter(replysAdapter);
 
-        }
-        holder.tv_name.setText(item.getCreaterName()+"");
+        replysAdapter.setOnItemsClickListeners(new ReplysAdapter.OnItemsClickListeners() {
+            @Override
+            public void onFrameLayout(int replyposition) {
+                int tag = (int) holder.getTag();
+                if (tag == position){
+                    replysList =data.get(position).getReplys();
+                }
+                replyid = replysList.get(replyposition).getId() + "";
+                target = "article";
+                targetid = replysList.get(replyposition).getTargetId() + "";
+                Toast.makeText(context, "点击的位置" + replyid, Toast.LENGTH_SHORT).show();
+                ShowInputDialog();
+
+            }
+        });
+
+
+        holder.tv_name.setText(item.getCreaterName() + "");
         Picasso.with(context).load(item.getCreaterHeadimgurl())
                 .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
-                .resize(50,50)
+                .resize(50, 50)
                 .centerCrop()
                 .into(holder.iv_avatar);
         SimpleDateFormat foramt = new SimpleDateFormat("MM-dd");
         String dateformat = foramt.format(item.getCreatedTime()).toString();
         holder.tv_time.setText(dateformat);
-        Log.e("CommentContent",item.getContent()+"");
+        Log.e("CommentContent", item.getContent() + "");
         holder.tv_comment_content.setText(item.getContent());
-        holder.tv_praise_count.setText(item.getPraiseCount()+"");
+        holder.tv_praise_count.setText(item.getPraiseCount() + "");
         actualcount = item.getPraiseCount();
-        Log.e("actualcount", actualcount+"");
+        Log.e("actualcount", actualcount + "");
         holder.iv_praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,7 +194,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
                                 if (PraisedStatus) {
                                     Log.e("点赞成功1", praiseResult.getContent() + "");
                                     isPraised = true;
-                                    int count = actualcount+1;
+                                    int count = actualcount + 1;
                                     Log.e("actualcount", count + "");
                                     holder.iv_praise.setImageResource(R.drawable.content_icon_zambia_pressed);
                                     holder.tv_praise_count.setText(count + "");
@@ -223,10 +222,10 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
                     } else {
                         UndoPraise(targetId);
                         int count = actualcount;
-                        if(isPraised){
-                        count = count -1;
-                        holder.tv_praise_count.setText(actualcount + "");}
-                        else {
+                        if (isPraised) {
+                            count = count - 1;
+                            holder.tv_praise_count.setText(actualcount + "");
+                        } else {
                             holder.tv_praise_count.setText(actualcount);
                         }
                         holder.iv_praise.setImageResource(R.drawable.content_con_zambia_default);
@@ -236,94 +235,109 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
                 }
             }
         });
-
-
+        holder.iv_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "点击的位置" + position, Toast.LENGTH_SHORT).show();
+                int tag = (int) holder.getTag();
+                if (tag == position) {
+                    if (onAvatarClickListener != null) {
+                        onAvatarClickListener.onAvatar(position);
+                    }
+                }
+            }
+        });
+/*        holder.lv_replys.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int positionReply, long id) {
+                Toast.makeText(context, "点击的位置" + position, Toast.LENGTH_SHORT).show();
+                int tag = (int) holder.getTag();
+                if (tag == position) {
+                    Replys temp = item.getReplys().get(positionReply);
+                    if (onReplyClickListener != null) {
+                        onReplyClickListener.onReplyClick(position, temp);
+                    }
+                }
+            }
+        });*/
     }
 
-
-
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder {
         private ImageView iv_avatar;
         private ImageView iv_praise;
-        private TextView tv_name,tv_praise_count, tv_time,tv_comment_content;
+        private TextView tv_name, tv_praise_count, tv_time, tv_comment_content;
         private ListView lv_replys;
         private LinearLayout ly_sub_replys;
         private TextView tv_more;
 
-        private  Object tag;
+        private Object tag;
 
         public Object getTag() {
             return tag;
         }
 
-        public void setTag(Object tag){
+        public void setTag(Object tag) {
             this.tag = tag;
         }
 
-        public MyViewHolder(View itemView) {
-            super(itemView);
+        public ViewHolder(View itemView) {
+
+            ButterKnife.bind(this, itemView);
 
 
-            iv_avatar =(ImageView) itemView.findViewById(R.id.iv_avatar);
-            iv_praise =(ImageView) itemView.findViewById(R.id.iv_praise);
+            iv_avatar = (ImageView) itemView.findViewById(R.id.iv_avatar);
+            iv_praise = (ImageView) itemView.findViewById(R.id.iv_praise);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
             tv_praise_count = (TextView) itemView.findViewById(R.id.tv_praise_count);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             ly_sub_replys = (LinearLayout) itemView.findViewById(R.id.ly_sub_reply);
             lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
-            tv_more =(TextView) itemView.findViewById(R.id.tv_more);
+            tv_more = (TextView) itemView.findViewById(R.id.tv_more);
 
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 
         }
     }
 
-    public interface OnPraiseClickListener{
-        void onPraise(int position);
+
+    public void doPraise(final String targetId) {
+        NetHelper.getInstance().DoPraise(targetId, new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
     }
 
-    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
+    public void UndoPraise(final String targetId) {
+        NetHelper.getInstance().UnDoPraise(targetId, new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("取消赞成功1", targetId);
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("取消赞失败", targetId);
+
+            }
+        });
     }
-
-    public  void doPraise(final String targetId) {
-            NetHelper.getInstance().DoPraise(targetId, new NetRequestCallBack() {
-                @Override
-                public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-
-                }
-
-                @Override
-                public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-
-                }
-
-                @Override
-                public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-
-                }
-            });
-        }
-
-        public  void UndoPraise(final String targetId) {
-            NetHelper.getInstance().UnDoPraise(targetId, new NetRequestCallBack() {
-                @Override
-                public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                    Log.e("取消赞成功1", targetId);
-                }
-
-                @Override
-                public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-
-                }
-
-                @Override
-                public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                    Log.e("取消赞失败", targetId);
-
-                }
-            });
-        }
 
     private boolean checkData() {
         content = editText.getText().toString();
@@ -339,8 +353,9 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
     }
 
 
-    private void ShowInputDialog() {
+    public void ShowInputDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
 
         View view = mInflater.inflate(R.layout.fragment_edit_dialog, null);
 
@@ -403,7 +418,7 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
                 Log.e("评论成功后的数据", responseInfo.toString());
                 alertDialog.dismiss();
                 replys = responseInfo.getReplys();
-                replysList.add(0, replys);
+                //replysList.add(0, replys);
                 replysAdapter.notifyDataSetChanged();
 
                 Toast.makeText(context, "评论发布成功", Toast.LENGTH_LONG).show();
@@ -423,7 +438,16 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         });
     }
 
+    public interface OnAvatarClickListener {
+        void onAvatar(int position);
+    }
 
+    public void OnAvatarClickListener(OnAvatarClickListener onAvatarClickListener) {
+        this.onAvatarClickListener = onAvatarClickListener;
+    }
 
+    public interface OnReplyClickListener {
+        void onReplyClick(int position ,Replys replys);
+    }
 
 }

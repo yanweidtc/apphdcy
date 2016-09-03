@@ -18,8 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +29,12 @@ import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
 import com.hdcy.app.activity.MainActivity;
 import com.hdcy.app.adapter.CommentListFragmentAdapter;
+import com.hdcy.app.adapter.CommentListViewFragmentAdapter;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Replys;
+import com.hdcy.app.view.NoScrollListView;
 import com.hdcy.base.utils.BaseUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
@@ -50,7 +54,7 @@ import java.util.List;
 
 public class CommentListFragment extends BaseBackFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private RecyclerView mRecy;
+    private NoScrollListView mRecy;
     private SwipeRefreshLayout mRefreshLayout;
     private boolean mAtTop = true;
 
@@ -81,7 +85,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     private boolean isEdit;//是否编辑过
 
 
-    private CommentListFragmentAdapter mAdapter;
+    private CommentListViewFragmentAdapter mAdapter;
 
     //加载更多页数,默认第一页为0
     private int pagecount = 0;
@@ -108,6 +112,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_commentlist, container, false);
+        mRecy = (NoScrollListView) view.findViewById(R.id.recy);
         EventBus.getDefault().register(this);
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -120,15 +125,13 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
     private void initView(View view) {
-        mRecy = (RecyclerView) view.findViewById(R.id.recy);
-        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+/*        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnRefreshListener(this);*/
 
-        mAdapter = new CommentListFragmentAdapter(_mActivity);
 
-        LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
+/*        LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
 
         mRecy.setLayoutManager(manager);
 
@@ -143,7 +146,8 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
                     mAtTop = false;
                 }
             }
-        });
+        });*/
+
         title = (TextView) view.findViewById(R.id.toolbar_title);
         title.setText("评论");
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -166,17 +170,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
                 ShowInputDialog();
             }
         });
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                replyid = commentsList.get(position).getId() + "";
-                Log.e("replyid", replyid);
-                targetid = tagId;
-                target = "aricle";
-                globalposition = position;
-                ShowInputDialog();
-            }
-        });
+
 
     }
 
@@ -186,9 +180,32 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
     private void setData() {
-        mAdapter.setDatas(commentsList);
 
+        mAdapter = new CommentListViewFragmentAdapter(getContext(),commentsList);
         mRecy.setAdapter(mAdapter);
+        mAdapter.setOnAvatarClickListener(new CommentListViewFragmentAdapter.OnAvatarClickListener() {
+            @Override
+            public void onAvatar(int position) {
+                Log.e("replyid", position+"");
+                replyid = commentsList.get(position).getId() + "";
+                Log.e("replyid", replyid);
+                targetid = tagId;
+                target = "aricle";
+                globalposition = position;
+                ShowInputDialog();
+            }
+        });
+        mAdapter.setOnReplyClickListener(new CommentListViewFragmentAdapter.OnReplyClickListener() {
+            @Override
+            public void onReplyClick(int position, Replys reply) {
+                Toast.makeText(getContext(), "点击的位置" + position, Toast.LENGTH_SHORT).show();
+                replyid = reply.getId()+"";
+                targetid = reply.getTargetId()+"";
+                target = "article";
+                ShowInputDialog();
+
+            }
+        });
 
     }
 
@@ -202,9 +219,9 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         }, 2000);
     }
 
-    private void scrollToTop() {
+/*    private void scrollToTop() {
         mRecy.smoothScrollToPosition(0);
-    }
+    }*/
 
     /**
      * 选择tab事件
@@ -215,7 +232,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
             mRefreshLayout.setRefreshing(true);
             onRefresh();
         } else {
-            scrollToTop();
+           // scrollToTop();
         }
     }
 
@@ -332,20 +349,23 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 alertDialog.dismiss();
-                Log.e("评论成功后的数据", responseInfo.toString());
                 if (replyid == null) {
                     commentsContent = responseInfo.getCommentsContent();
                     commentsList.add(0, commentsContent);
-                    mAdapter.notifyDataSetChanged();
-                    setData();
                 } else {
+                    Log.e("评论成功后的数据", commentsList.size()+"");
                     replys = responseInfo.getReplys();
+                    replysList = commentsList.get(globalposition).getReplys();
                     replysList.add(0, replys);
+                    commentsContent = commentsList.get(globalposition);
                     commentsContent.setReplys(replysList);
                     commentsList.set(globalposition,commentsContent);
-                    mAdapter.notifyDataSetChanged();
-                    setData();
+                    Log.e("评论成功后的数据", commentsList.size()+"");
+
                 }
+                mAdapter.notifyDataSetChanged();
+                setData();
+
                 Toast.makeText(getActivity(), "评论发布成功", Toast.LENGTH_LONG).show();
 
             }

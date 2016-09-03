@@ -109,7 +109,7 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
 
     private void setData(){
 
-        mAdapter = new ThirdPageFragmentAdapter(getContext(),activityContentList);
+        mAdapter = new ThirdPageFragmentAdapter(getActivity(),activityContentList);
         mRecy.setAdapter(mAdapter);
         mRecy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

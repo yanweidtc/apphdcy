@@ -9,23 +9,24 @@ package cn.bingoogolapple.bgabanner;
 public final class R {
 	public static final class attr {
 		public static final int banner_indicatorGravity = 0x7f010005;
-		public static final int banner_isNeedShowIndicatorOnOnlyOnePage = 0x7f010011;
-		public static final int banner_isNumberIndicator = 0x7f01000d;
-		public static final int banner_numberIndicatorBackground = 0x7f010010;
-		public static final int banner_numberIndicatorTextColor = 0x7f01000e;
-		public static final int banner_numberIndicatorTextSize = 0x7f01000f;
-		public static final int banner_pageChangeDuration = 0x7f010008;
-		public static final int banner_placeholderDrawable = 0x7f01000c;
-		public static final int banner_pointAutoPlayAble = 0x7f010006;
-		public static final int banner_pointAutoPlayInterval = 0x7f010007;
+		public static final int banner_isNeedShowIndicatorOnOnlyOnePage = 0x7f010012;
+		public static final int banner_isNumberIndicator = 0x7f01000e;
+		public static final int banner_mtipsGravity = 0x7f010006;
+		public static final int banner_numberIndicatorBackground = 0x7f010011;
+		public static final int banner_numberIndicatorTextColor = 0x7f01000f;
+		public static final int banner_numberIndicatorTextSize = 0x7f010010;
+		public static final int banner_pageChangeDuration = 0x7f010009;
+		public static final int banner_placeholderDrawable = 0x7f01000d;
+		public static final int banner_pointAutoPlayAble = 0x7f010007;
+		public static final int banner_pointAutoPlayInterval = 0x7f010008;
 		public static final int banner_pointContainerBackground = 0x7f010000;
 		public static final int banner_pointContainerLeftRightPadding = 0x7f010002;
 		public static final int banner_pointDrawable = 0x7f010001;
 		public static final int banner_pointLeftRightMargin = 0x7f010004;
 		public static final int banner_pointTopBottomMargin = 0x7f010003;
-		public static final int banner_tipTextColor = 0x7f01000a;
-		public static final int banner_tipTextSize = 0x7f01000b;
-		public static final int banner_transitionEffect = 0x7f010009;
+		public static final int banner_tipTextColor = 0x7f01000b;
+		public static final int banner_tipTextSize = 0x7f01000c;
+		public static final int banner_transitionEffect = 0x7f01000a;
 	}
 	public static final class drawable {
 		public static final int bga_banner_point_disabled = 0x7f020000;
@@ -58,24 +59,25 @@ public final class R {
 		public static final int bga_banner_item_image = 0x7f030000;
 	}
 	public static final class styleable {
-		public static final int[] BGABanner = { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f, 0x7f010010, 0x7f010011 };
+		public static final int[] BGABanner = { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f, 0x7f010010, 0x7f010011, 0x7f010012 };
 		public static final int BGABanner_banner_indicatorGravity = 5;
-		public static final int BGABanner_banner_isNeedShowIndicatorOnOnlyOnePage = 17;
-		public static final int BGABanner_banner_isNumberIndicator = 13;
-		public static final int BGABanner_banner_numberIndicatorBackground = 16;
-		public static final int BGABanner_banner_numberIndicatorTextColor = 14;
-		public static final int BGABanner_banner_numberIndicatorTextSize = 15;
-		public static final int BGABanner_banner_pageChangeDuration = 8;
-		public static final int BGABanner_banner_placeholderDrawable = 12;
-		public static final int BGABanner_banner_pointAutoPlayAble = 6;
-		public static final int BGABanner_banner_pointAutoPlayInterval = 7;
+		public static final int BGABanner_banner_isNeedShowIndicatorOnOnlyOnePage = 18;
+		public static final int BGABanner_banner_isNumberIndicator = 14;
+		public static final int BGABanner_banner_mtipsGravity = 6;
+		public static final int BGABanner_banner_numberIndicatorBackground = 17;
+		public static final int BGABanner_banner_numberIndicatorTextColor = 15;
+		public static final int BGABanner_banner_numberIndicatorTextSize = 16;
+		public static final int BGABanner_banner_pageChangeDuration = 9;
+		public static final int BGABanner_banner_placeholderDrawable = 13;
+		public static final int BGABanner_banner_pointAutoPlayAble = 7;
+		public static final int BGABanner_banner_pointAutoPlayInterval = 8;
 		public static final int BGABanner_banner_pointContainerBackground = 0;
 		public static final int BGABanner_banner_pointContainerLeftRightPadding = 2;
 		public static final int BGABanner_banner_pointDrawable = 1;
 		public static final int BGABanner_banner_pointLeftRightMargin = 4;
 		public static final int BGABanner_banner_pointTopBottomMargin = 3;
-		public static final int BGABanner_banner_tipTextColor = 10;
-		public static final int BGABanner_banner_tipTextSize = 11;
-		public static final int BGABanner_banner_transitionEffect = 9;
+		public static final int BGABanner_banner_tipTextColor = 11;
+		public static final int BGABanner_banner_tipTextSize = 12;
+		public static final int BGABanner_banner_transitionEffect = 10;
 	}
 }

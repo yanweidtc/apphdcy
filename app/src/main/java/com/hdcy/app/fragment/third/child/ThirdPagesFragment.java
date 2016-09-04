@@ -24,6 +24,7 @@ import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.first.InfoDetailFragment;
+import com.hdcy.app.fragment.third.OfflineActivityFragment;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.view.NoScrollListView;
 import com.hdcy.base.BaseInfo;
@@ -99,6 +100,8 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
         mBanner =(BGABanner) view.findViewById(R.id.banner);
         iv_recommend_first = (ImageView) view.findViewById(R.id.iv_rd_first);
         iv_recommend_second = (ImageView) view.findViewById(R.id.iv_rd_second);
+
+
     }
 
     private void initData(){
@@ -114,8 +117,12 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
         mRecy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(activityContentList.get(position).getType() == "ACTIVITY"){
-
+                Log.e("点击时的位置",activityContentList.get(position).getId()+"");
+                if(activityContentList.get(position).getType().equalsIgnoreCase("ACTIVITY")){
+                    String ActivityId = activityContentList.get(position).getId()+"";
+                EventBus.getDefault().post(new StartBrotherEvent(OfflineActivityFragment.newInstance(ActivityId)));
+                }else {
+                    return;
                 }
             }
         });

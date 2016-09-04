@@ -8,7 +8,7 @@
     <dimen name="bottombar_height">48dp</dimen>
     <dimen name="bottombar_wechat_height">52dp</dimen>
     <!--高度-->
-    <dimen name="line_width">1px</dimen><!--APP线宽-->
+    <dimen name="line_width">2px</dimen><!--APP线宽-->
     <dimen name="line_width_bold">4px</dimen><!--APP粗线宽-->
     <dimen name="title_height">44dp</dimen><!--APP标题栏高度(具体和代码同步)-->
     <dimen name="list_height_single">126px</dimen><!--APP单行列表高度-->

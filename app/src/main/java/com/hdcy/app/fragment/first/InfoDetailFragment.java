@@ -96,6 +96,8 @@ public  class InfoDetailFragment extends BaseBackFragment {
         Log.e("WebUrl",loadurl);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadsImagesAutomatically(true);
         myWebView.setWebViewClient(new WebViewClient());
 
         initView(view);
@@ -142,7 +144,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
         ly_comment_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(CommentListFragment.newInstance(articleInfo.getId()+"")));
+                EventBus.getDefault().post(new StartBrotherEvent(CommentListFragment.newInstance(articleInfo.getId()+"","article")));
                // ((SupportFragment) getParentFragment()).start(CommentListFragment.newInstance(articleInfo.getId()+""));
             }
         });

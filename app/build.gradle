@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -52,13 +52,13 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.umeng.analytics:analytics:latest.integration'
-
     //轮播图依赖控件
     compile 'com.android.support:support-v4:23.0.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile files('libs/jsoup-1.7.2.jar')
 
-
-
+    //展开收起控件
+    compile 'com.ms-square:expandableTextView:0.1.4'
 
 }

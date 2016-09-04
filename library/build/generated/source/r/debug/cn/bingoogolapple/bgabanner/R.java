@@ -30,7 +30,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int banner_isNeedShowIndicatorOnOnlyOnePage=0x7f010011;
+        public static int banner_isNeedShowIndicatorOnOnlyOnePage=0x7f010012;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -38,17 +38,31 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int banner_isNumberIndicator=0x7f01000d;
+        public static int banner_isNumberIndicator=0x7f01000e;
+        /** <p>Must be one or more (separated by '|') of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>top</code></td><td>0x30</td><td></td></tr>
+<tr><td><code>bottom</code></td><td>0x50</td><td></td></tr>
+<tr><td><code>left</code></td><td>0x03</td><td></td></tr>
+<tr><td><code>right</code></td><td>0x05</td><td></td></tr>
+<tr><td><code>center_horizontal</code></td><td>0x01</td><td></td></tr>
+</table>
+         */
+        public static int banner_mtipsGravity=0x7f010006;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static int banner_numberIndicatorBackground=0x7f010010;
+        public static int banner_numberIndicatorBackground=0x7f010011;
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-        public static int banner_numberIndicatorTextColor=0x7f01000e;
+        public static int banner_numberIndicatorTextColor=0x7f01000f;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -58,7 +72,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int banner_numberIndicatorTextSize=0x7f01000f;
+        public static int banner_numberIndicatorTextSize=0x7f010010;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -66,11 +80,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int banner_pageChangeDuration=0x7f010008;
+        public static int banner_pageChangeDuration=0x7f010009;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static int banner_placeholderDrawable=0x7f01000c;
+        public static int banner_placeholderDrawable=0x7f01000d;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -78,7 +92,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int banner_pointAutoPlayAble=0x7f010006;
+        public static int banner_pointAutoPlayAble=0x7f010007;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -86,7 +100,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int banner_pointAutoPlayInterval=0x7f010007;
+        public static int banner_pointAutoPlayInterval=0x7f010008;
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
@@ -132,7 +146,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-        public static int banner_tipTextColor=0x7f01000a;
+        public static int banner_tipTextColor=0x7f01000b;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -142,7 +156,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int banner_tipTextSize=0x7f01000b;
+        public static int banner_tipTextSize=0x7f01000c;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -164,7 +178,7 @@ containing a value of this type.
 <tr><td><code>zoom</code></td><td>12</td><td></td></tr>
 </table>
          */
-        public static int banner_transitionEffect=0x7f010009;
+        public static int banner_transitionEffect=0x7f01000a;
     }
     public static final class drawable {
         public static int bga_banner_point_disabled=0x7f020000;
@@ -206,6 +220,7 @@ containing a value of this type.
            <tr><td><code>{@link #BGABanner_banner_indicatorGravity cn.bingoogolapple.bgabanner:banner_indicatorGravity}</code></td><td></td></tr>
            <tr><td><code>{@link #BGABanner_banner_isNeedShowIndicatorOnOnlyOnePage cn.bingoogolapple.bgabanner:banner_isNeedShowIndicatorOnOnlyOnePage}</code></td><td></td></tr>
            <tr><td><code>{@link #BGABanner_banner_isNumberIndicator cn.bingoogolapple.bgabanner:banner_isNumberIndicator}</code></td><td></td></tr>
+           <tr><td><code>{@link #BGABanner_banner_mtipsGravity cn.bingoogolapple.bgabanner:banner_mtipsGravity}</code></td><td></td></tr>
            <tr><td><code>{@link #BGABanner_banner_numberIndicatorBackground cn.bingoogolapple.bgabanner:banner_numberIndicatorBackground}</code></td><td></td></tr>
            <tr><td><code>{@link #BGABanner_banner_numberIndicatorTextColor cn.bingoogolapple.bgabanner:banner_numberIndicatorTextColor}</code></td><td></td></tr>
            <tr><td><code>{@link #BGABanner_banner_numberIndicatorTextSize cn.bingoogolapple.bgabanner:banner_numberIndicatorTextSize}</code></td><td></td></tr>
@@ -225,6 +240,7 @@ containing a value of this type.
            @see #BGABanner_banner_indicatorGravity
            @see #BGABanner_banner_isNeedShowIndicatorOnOnlyOnePage
            @see #BGABanner_banner_isNumberIndicator
+           @see #BGABanner_banner_mtipsGravity
            @see #BGABanner_banner_numberIndicatorBackground
            @see #BGABanner_banner_numberIndicatorTextColor
            @see #BGABanner_banner_numberIndicatorTextSize
@@ -246,7 +262,7 @@ containing a value of this type.
             0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
             0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
             0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f,
-            0x7f010010, 0x7f010011
+            0x7f010010, 0x7f010011, 0x7f010012
         };
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_indicatorGravity}
@@ -281,7 +297,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name cn.bingoogolapple.bgabanner:banner_isNeedShowIndicatorOnOnlyOnePage
         */
-        public static int BGABanner_banner_isNeedShowIndicatorOnOnlyOnePage = 17;
+        public static int BGABanner_banner_isNeedShowIndicatorOnOnlyOnePage = 18;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_isNumberIndicator}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -295,7 +311,27 @@ theme attribute (in the form
 containing a value of this type.
           @attr name cn.bingoogolapple.bgabanner:banner_isNumberIndicator
         */
-        public static int BGABanner_banner_isNumberIndicator = 13;
+        public static int BGABanner_banner_isNumberIndicator = 14;
+        /**
+          <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_mtipsGravity}
+          attribute's value can be found in the {@link #BGABanner} array.
+
+
+          <p>Must be one or more (separated by '|') of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>top</code></td><td>0x30</td><td></td></tr>
+<tr><td><code>bottom</code></td><td>0x50</td><td></td></tr>
+<tr><td><code>left</code></td><td>0x03</td><td></td></tr>
+<tr><td><code>right</code></td><td>0x05</td><td></td></tr>
+<tr><td><code>center_horizontal</code></td><td>0x01</td><td></td></tr>
+</table>
+          @attr name cn.bingoogolapple.bgabanner:banner_mtipsGravity
+        */
+        public static int BGABanner_banner_mtipsGravity = 6;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_numberIndicatorBackground}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -305,7 +341,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name cn.bingoogolapple.bgabanner:banner_numberIndicatorBackground
         */
-        public static int BGABanner_banner_numberIndicatorBackground = 16;
+        public static int BGABanner_banner_numberIndicatorBackground = 17;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_numberIndicatorTextColor}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -317,7 +353,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           @attr name cn.bingoogolapple.bgabanner:banner_numberIndicatorTextColor
         */
-        public static int BGABanner_banner_numberIndicatorTextColor = 14;
+        public static int BGABanner_banner_numberIndicatorTextColor = 15;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_numberIndicatorTextSize}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -333,7 +369,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name cn.bingoogolapple.bgabanner:banner_numberIndicatorTextSize
         */
-        public static int BGABanner_banner_numberIndicatorTextSize = 15;
+        public static int BGABanner_banner_numberIndicatorTextSize = 16;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_pageChangeDuration}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -347,7 +383,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name cn.bingoogolapple.bgabanner:banner_pageChangeDuration
         */
-        public static int BGABanner_banner_pageChangeDuration = 8;
+        public static int BGABanner_banner_pageChangeDuration = 9;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_placeholderDrawable}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -357,7 +393,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name cn.bingoogolapple.bgabanner:banner_placeholderDrawable
         */
-        public static int BGABanner_banner_placeholderDrawable = 12;
+        public static int BGABanner_banner_placeholderDrawable = 13;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_pointAutoPlayAble}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -371,7 +407,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name cn.bingoogolapple.bgabanner:banner_pointAutoPlayAble
         */
-        public static int BGABanner_banner_pointAutoPlayAble = 6;
+        public static int BGABanner_banner_pointAutoPlayAble = 7;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_pointAutoPlayInterval}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -385,7 +421,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name cn.bingoogolapple.bgabanner:banner_pointAutoPlayInterval
         */
-        public static int BGABanner_banner_pointAutoPlayInterval = 7;
+        public static int BGABanner_banner_pointAutoPlayInterval = 8;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_pointContainerBackground}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -467,7 +503,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           @attr name cn.bingoogolapple.bgabanner:banner_tipTextColor
         */
-        public static int BGABanner_banner_tipTextColor = 10;
+        public static int BGABanner_banner_tipTextColor = 11;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_tipTextSize}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -483,7 +519,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name cn.bingoogolapple.bgabanner:banner_tipTextSize
         */
-        public static int BGABanner_banner_tipTextSize = 11;
+        public static int BGABanner_banner_tipTextSize = 12;
         /**
           <p>This symbol is the offset where the {@link cn.bingoogolapple.bgabanner.R.attr#banner_transitionEffect}
           attribute's value can be found in the {@link #BGABanner} array.
@@ -511,6 +547,6 @@ containing a value of this type.
 </table>
           @attr name cn.bingoogolapple.bgabanner:banner_transitionEffect
         */
-        public static int BGABanner_banner_transitionEffect = 9;
+        public static int BGABanner_banner_transitionEffect = 10;
     };
 }

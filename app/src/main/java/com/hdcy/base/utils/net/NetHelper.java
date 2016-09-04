@@ -5,6 +5,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONCreator;
 import com.hdcy.app.model.ActivityContent;
+import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Comments;
 import com.hdcy.app.model.CommentsContent;
@@ -13,6 +14,7 @@ import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
+import com.hdcy.app.model.Result;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -304,12 +306,12 @@ public class NetHelper {
      * @return
      */
 
-    public Callback.Cancelable GetCommentsList(String tagId,final NetRequestCallBack callBack){
+    public Callback.Cancelable GetCommentsList(String tagId,String target,String size,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/comments/");
         request.addParam("targetId",tagId);
-        request.addParam("size","20");
+        request.addParam("size",size);
         request.addParam("sort","createdTime,desc");
-        request.addParam("target","article");
+        request.addParam("target",target);
         return request.postarray(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
@@ -445,6 +447,101 @@ public class NetHelper {
             }
         });
     }
+
+    public Callback.Cancelable GetActivityDeatil(String activityId,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/activity/"+activityId);
+        return request.postobject(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.setActivityDetails(JSON.parseObject(dataObj.toString(), ActivityDetails.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("ActivityDeatils","success");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("ActivityDeatils","failed");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("ActivityDeatils","failed");
+            }
+        });
+    }
+
+    public Callback.Cancelable GetCurrentPaticipationStatus(String activityid,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/participator/member");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+
+        request.addParam("participationId",activityid);
+
+        return request.postobject(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.setResultinfo(JSON.parseObject(dataObj.toString(), Result.class));
+                }
+                Log.e("aticipationStatus", "success");
+                callBack.onSuccess(requestInfo, responseInfo);
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
+
+    public Callback.Cancelable RegisterOfflineActivity(String activityId,String message,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/activityParticipator/");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("activityId",activityId);
+            obj.put("message", message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        request.addParamjson(obj.toString());
+
+        return request.postinfo(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("报名状态","success");
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
+
+
+
 
 
 

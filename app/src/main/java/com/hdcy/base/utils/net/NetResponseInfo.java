@@ -2,6 +2,7 @@ package com.hdcy.base.utils.net;
 
 
 import com.hdcy.app.model.ActivityContent;
+import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.Article;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Comments;
@@ -11,6 +12,7 @@ import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
+import com.hdcy.app.model.Result;
 import com.nostra13.universalimageloader.core.assist.deque.LIFOLinkedBlockingDeque;
 
 import org.json.JSONArray;
@@ -38,6 +40,10 @@ public class NetResponseInfo {
     private List<NewsArticleInfo> newsArticleInfoList;
     public ArticleInfo articleInfo;
 
+    public Result resultinfo;
+
+
+    public ActivityDetails activityDetails;
 
 
     public Replys replys;
@@ -154,6 +160,7 @@ public class NetResponseInfo {
     public ArticleInfo getArticleInfo() {
         return articleInfo;
     }
+
     public Replys getReplys() {
         return replys;
     }
@@ -162,6 +169,22 @@ public class NetResponseInfo {
         this.replys = replys;
     }
 
+    public ActivityDetails getActivityDetails() {
+        return activityDetails;
+    }
+
+    public void setActivityDetails(ActivityDetails activityDetails) {
+        this.activityDetails = activityDetails;
+    }
+
+
+    public Result getResultinfo() {
+        return resultinfo;
+    }
+
+    public void setResultinfo(Result resultinfo) {
+        this.resultinfo = resultinfo;
+    }
 
 
 }

@@ -145,6 +145,10 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
         replysList = item.getReplys();
         Log.e("Replyssize", replysList.size() + "");
        // holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
+/*        if(replysList.isEmpty()){
+            holder.lv_replys.setVisibility(View.GONE);
+        }*/
+
         replysAdapter = new ReplysAdapter(context, replysList);
         holder.lv_replys.setAdapter(replysAdapter);
 
@@ -158,7 +162,7 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
                 replyid = replysList.get(replyposition).getId() + "";
                 target = "article";
                 targetid = replysList.get(replyposition).getTargetId() + "";
-                Toast.makeText(context, "点击的位置" + replyid, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "点击的位置" + replyid, Toast.LENGTH_SHORT).show();
                 ShowInputDialog();
 
             }
@@ -418,7 +422,7 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
                 Log.e("评论成功后的数据", responseInfo.toString());
                 alertDialog.dismiss();
                 replys = responseInfo.getReplys();
-                //replysList.add(0, replys);
+                replysList.add(0, replys);
                 replysAdapter.notifyDataSetChanged();
 
                 Toast.makeText(context, "评论发布成功", Toast.LENGTH_LONG).show();

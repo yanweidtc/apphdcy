@@ -66,7 +66,6 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     Button sendButton;
 
     String targetid;
-    String target;
     String replyid;
 
     int globalposition;
@@ -91,6 +90,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     private int pagecount = 0;
 
     private String tagId;
+    private String target;
 
 
     private List<CommentsContent> commentsList = new ArrayList<>();
@@ -100,10 +100,11 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     private Replys replys;
 
 
-    public static CommentListFragment newInstance(String tagId) {
+    public static CommentListFragment newInstance(String tagId ,String target) {
         CommentListFragment fragment = new CommentListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("param", tagId);
+        bundle.putString("param1", target);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -117,6 +118,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
         Bundle bundle = getArguments();
         if (bundle != null) {
             tagId = bundle.getString("param");
+            target = bundle.getString("param1");
         }
         initView(view);
         initData();
@@ -166,7 +168,6 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
             public void onClick(View v) {
                 replyid = null;
                 targetid = tagId;
-                target = "article";
                 ShowInputDialog();
             }
         });
@@ -190,7 +191,6 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
                 replyid = commentsList.get(position).getId() + "";
                 Log.e("replyid", replyid);
                 targetid = tagId;
-                target = "aricle";
                 globalposition = position;
                 ShowInputDialog();
             }
@@ -201,7 +201,6 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
                 Toast.makeText(getContext(), "点击的位置" + position, Toast.LENGTH_SHORT).show();
                 replyid = reply.getId()+"";
                 targetid = reply.getTargetId()+"";
-                target = "article";
                 ShowInputDialog();
 
             }
@@ -320,7 +319,7 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
     public void GetCommentsList() {
-        NetHelper.getInstance().GetCommentsList(tagId, new NetRequestCallBack() {
+        NetHelper.getInstance().GetCommentsList(tagId,target, "20", new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 if (commentsList.isEmpty()) {

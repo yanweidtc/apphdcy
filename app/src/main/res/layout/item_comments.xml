@@ -28,6 +28,7 @@
                 android:layout_width="134px"
                 android:layout_height="134px"
                 android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_null_data"
                 android:scaleType="centerCrop"
                 app:riv_corner_radius="20dp" />
 
@@ -52,6 +53,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="Name"
+                        android:padding="20px"
                         android:textColor="#6593C5"
                         android:textSize="15sp" />
 
@@ -86,7 +88,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16px"
+                    android:layout_marginLeft="6px"
+                    android:layout_marginTop="-8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -95,6 +98,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Time"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center"
                         android:textColor="@color/main_font_gray_1"
                         android:textSize="11sp" />
 

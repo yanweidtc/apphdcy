@@ -27,16 +27,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hdcy.app.R;
+import com.hdcy.app.adapter.ActivityCommentListAdapter;
 import com.hdcy.app.adapter.CommentListViewFragmentAdapter;
 import com.hdcy.app.adapter.ImageListViewAdapter;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.fragment.first.CommentListFragment;
+import com.hdcy.app.fragment.third.child.PhotoScaleFragment;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Result;
 import com.hdcy.app.view.NoScrollHListView;
 import com.hdcy.app.view.NoScrollListView;
+import com.hdcy.base.utils.BaseUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -52,6 +55,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.sephiroth.android.library.widget.AdapterView;
 import it.sephiroth.android.library.widget.HListView;
 
 /**
@@ -103,10 +107,10 @@ public class OfflineActivityFragment extends BaseBackFragment{
     private Button bt_register;
     private Button bt_cancel;
 
-    private NoScrollHListView lv_imgs;
+    private HListView lv_imgs;
     private NoScrollListView lv_activity_comment;
 
-    private CommentListViewFragmentAdapter mAdapter;
+    private ActivityCommentListAdapter mAdapter;
 
 
     ExpandableTextView expTv1;
@@ -120,7 +124,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
     private Result result;
     private List<CommentsContent> commentsList = new ArrayList<>();
 
-    private List<String> imgurls = new ArrayList<>();
+    private List<String> imgurls = new ArrayList<String>();
 
     private String htmlcontent;
 
@@ -152,7 +156,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
         lv_activity_comment.setFocusable(false);
         tv_actvity_title = (TextView) view.findViewById(R.id.tv_activity_detail_title);
         tv_desc_html = (TextView) view.findViewById(R.id.expandable_text);
-        lv_imgs = (NoScrollHListView) view.findViewById(R.id.lv_imgs_list);
+        lv_imgs = (HListView) view.findViewById(R.id.lv_imgs_list);
         tv_attend_count = (TextView) view.findViewById(R.id.tv_attend_count);
         tv_activity_sponsor = (TextView) view.findViewById(R.id.tv_activity_sponsor);
         tv_activity_starttime = (TextView) view.findViewById(R.id.tv_activity_starttime);
@@ -192,6 +196,18 @@ public class OfflineActivityFragment extends BaseBackFragment{
         imageListViewAdapter = new ImageListViewAdapter(getContext(),imgurls);
         lv_imgs.setAdapter(imageListViewAdapter);
 
+        lv_imgs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String imgUrls[] =new String[imgurls.size()];
+                for(int t =0 ; t< imgurls.size(); t++ ){
+                    String str = imgurls.get(t);
+                    imgUrls[t] = str;
+                }
+                EventBus.getDefault().post(new StartBrotherEvent(PhotoScaleFragment.newInstance(imgUrls, i)));
+
+            }
+        });
         iv_activity_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,7 +246,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
         //填充数据
         tv_attend_count.setText(activityDetails.getHot()+"");
         tv_activity_sponsor.setText(activityDetails.getSponsor()+"df");
-        SimpleDateFormat foramt = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat foramt = new SimpleDateFormat("yyyy年MM月dd日");
         String dateformat1 = foramt.format(activityDetails.getStartTime()).toString();
         String dateformat2 = foramt.format(activityDetails.getEndTime()).toString();
         tv_activity_starttime.setText(dateformat1);
@@ -241,7 +257,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
 
 
 
-        mAdapter = new CommentListViewFragmentAdapter(getContext(),commentsList);
+        mAdapter = new ActivityCommentListAdapter(getContext(),commentsList);
         lv_activity_comment.setAdapter(mAdapter);
 
 
@@ -306,7 +322,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 result =responseInfo.getResultinfo();
                 if(result.getContent() == true){
-                    button_submit.setBackgroundResource((R.color.gray));
+                    button_submit.setBackgroundResource((R.color.main_font_gray_2));
                     button_submit.setText("已报名");
                 }
             }

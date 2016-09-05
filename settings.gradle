@@ -1,1 +1,1 @@
-include ':app', ':fragmentation', ':library'
+include ':app', ':fragmentation', ':library', ':multi-image-selector'

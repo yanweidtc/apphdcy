@@ -30,6 +30,7 @@ import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
 import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.BaseUtils;
+import com.hdcy.base.utils.RelativeTimeUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -39,6 +40,7 @@ import com.zhy.autolayout.utils.AutoUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -175,9 +177,9 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
                 .resize(50, 50)
                 .centerCrop()
                 .into(holder.iv_avatar);
-        SimpleDateFormat foramt = new SimpleDateFormat("MM-dd");
-        String dateformat = foramt.format(item.getCreatedTime()).toString();
-        holder.tv_time.setText(dateformat);
+        Date time = item.getCreatedTime();
+        String nowdate = RelativeTimeUtils.format(time);
+        holder.tv_time.setText(nowdate);
         Log.e("CommentContent", item.getContent() + "");
         holder.tv_comment_content.setText(item.getContent());
         holder.tv_praise_count.setText(item.getPraiseCount() + "");
@@ -251,19 +253,6 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
                 }
             }
         });
-/*        holder.lv_replys.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int positionReply, long id) {
-                Toast.makeText(context, "点击的位置" + position, Toast.LENGTH_SHORT).show();
-                int tag = (int) holder.getTag();
-                if (tag == position) {
-                    Replys temp = item.getReplys().get(positionReply);
-                    if (onReplyClickListener != null) {
-                        onReplyClickListener.onReplyClick(position, temp);
-                    }
-                }
-            }
-        });*/
     }
 
     public class ViewHolder {

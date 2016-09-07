@@ -340,7 +340,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
     }
 
     public void GetCommentsList() {
-        NetHelper.getInstance().GetCommentsList(activityid,target, "3", new NetRequestCallBack() {
+        NetHelper.getInstance().GetCommentsList(activityid,target, pagecount, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 if (commentsList.isEmpty()) {

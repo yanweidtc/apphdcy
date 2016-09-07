@@ -32,8 +32,9 @@ public class MainFragment extends BaseFragment {
     public static final int FIRST = 0;
     public static final int SECOND = 1;
     public static final int THIRD = 2;
+    public static final int FOURTH = 3;
 
-    private SupportFragment[] mFragments = new SupportFragment[3];
+    private SupportFragment[] mFragments = new SupportFragment[4];
 
     private BottomBar mBottomBar;
 
@@ -56,13 +57,16 @@ public class MainFragment extends BaseFragment {
             mFragments[FIRST] = FirstFragment.newInstance();
             mFragments[SECOND] = OtherPagerFragment.newInstance(1);
             mFragments[THIRD] = ThirdFragment.newInstance();
+            mFragments[FOURTH] = OtherPagerFragment.newInstance(0);
             loadMultipleRootFragment(R.id.fl_tab_container,FIRST,mFragments[FIRST],
                     mFragments[SECOND],
-                    mFragments[THIRD]);
+                    mFragments[THIRD],
+                    mFragments[FOURTH]);
         }else {
             mFragments[FIRST] = findChildFragment(FirstFragment.class);
             mFragments[SECOND] = findChildFragment(OtherPagerFragment.class);
             mFragments[THIRD] = findChildFragment(ThirdFragment.class);
+            mFragments[FOURTH] = findChildFragment(OtherPagerFragment.class);
         }
 
         initView(view);

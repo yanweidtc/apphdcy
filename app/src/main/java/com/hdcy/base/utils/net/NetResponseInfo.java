@@ -5,6 +5,7 @@ import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.Article;
 import com.hdcy.app.model.ArticleInfo;
+import com.hdcy.app.model.ArticleList;
 import com.hdcy.app.model.Comments;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
@@ -39,14 +40,12 @@ public class NetResponseInfo {
     private List<CommentsContent> commentsContentList;
     private List<NewsArticleInfo> newsArticleInfoList;
     public ArticleInfo articleInfo;
-
     public Result resultinfo;
-
-
     public ActivityDetails activityDetails;
-
-
     public Replys replys;
+
+
+    public ArticleList articleList;
 
 
     public String getCode() {
@@ -184,6 +183,14 @@ public class NetResponseInfo {
 
     public void setResultinfo(Result resultinfo) {
         this.resultinfo = resultinfo;
+    }
+
+    public ArticleList getArticleList() {
+        return articleList;
+    }
+
+    public void setArticleList(ArticleList articleList) {
+        this.articleList = articleList;
     }
 
 

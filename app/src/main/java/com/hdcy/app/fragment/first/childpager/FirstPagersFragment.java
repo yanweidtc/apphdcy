@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
@@ -17,6 +18,7 @@ import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.first.InfoDetailFragment;
+import com.hdcy.app.model.ArticleList;
 import com.hdcy.app.model.Content;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
@@ -29,13 +31,17 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
 /**
  * Created by WeiYanGeorge on 2016-08-17.
  */
 
-public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class FirstPagersFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
     private RecyclerView mRecy;
-    private SwipeRefreshLayout mRefreshLayout;
+    private BGARefreshLayout mRefreshLayout;
 
     private FirsPagersFragmentAdapter mAdapter;
 
@@ -44,11 +50,15 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     private int mScrollTotal;
 
     private List<Content> contentList = new ArrayList<>();
+    private ArticleList articleList = new ArticleList();
+    private boolean isLast;
+    private boolean isFirst;
 
     private int tagId;
 
     //加载更多页数,默认第一页为0
     private int pagecount = 0;
+    private int morepagecount =0;
 
     public static FirstPagersFragment newInstance(int tagId) {
 
@@ -73,10 +83,12 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
 
     private void initView(View view) {
         mRecy = (RecyclerView) view.findViewById(R.id.recy);
-        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refresh_layout);
+        mRefreshLayout.setDelegate(this);
 
-        mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mRefreshLayout.setOnRefreshListener(this);
+
+        mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
+
 
         mAdapter = new FirsPagersFragmentAdapter(_mActivity);
 
@@ -116,15 +128,42 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
         }else {
             getNewsArticleInfo();
         }
+
     }
 
     private void setData(){
         mAdapter.setDatas(contentList);
-       mRecy.setAdapter(mAdapter);
-
+        mRecy.setAdapter(mAdapter);
+        mRefreshLayout.endLoadingMore();
+        //加载完成后的焦点位置
+        mRecy.scrollToPosition(pagecount*9);
 
     }
 
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        contentList.clear();
+        pagecount = 0;
+        initData();
+        mRefreshLayout.endRefreshing();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        pagecount++;
+        Log.e("isLastStatus",isLast+"");
+        Log.e("loadTagid", tagId+"");
+        if(isLast){
+            mRefreshLayout.endLoadingMore();
+            Toast.makeText(getActivity(), "没有更多的数据了", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            initData();
+            return true;
+        }
+    }
+
+/*
     @Override
     public void onRefresh() {
         mRefreshLayout.postDelayed(new Runnable() {
@@ -134,6 +173,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
             }
         }, 2000);
     }
+*/
 
     private void scrollToTop() {
         mRecy.smoothScrollToPosition(0);
@@ -145,8 +185,7 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
     @Subscribe
         public void onTabSelectedEvent(TabSelectedEvent event) {
             if (mAtTop) {
-                mRefreshLayout.setRefreshing(true);
-                onRefresh();
+                mRefreshLayout.beginRefreshing();
             } else {
                 scrollToTop();
             }
@@ -163,11 +202,13 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
         NetHelper.getInstance().GetNewsArticleContent(pagecount,tagId,new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-            if(contentList.isEmpty()){
                 List<Content> contentListtemp = responseInfo.getContentList();
+                articleList = responseInfo.getArticleList();
+                isLast = articleList.isLast();
+                isFirst = articleList.isFirst();
                 contentList.addAll(contentListtemp);
+                Log.e("ArticleisLast",isLast+""+tagId);
                 Log.e("Articlesize",contentList.size()+"");
-                }
                 setData();
 
             }
@@ -188,12 +229,14 @@ public class FirstPagersFragment extends BaseFragment implements SwipeRefreshLay
         NetHelper.getInstance().GetWholeNewsArticleContent(pagecount,new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                if(contentList.isEmpty()){
                     List<Content> contentListtemp = responseInfo.getContentList();
+                    articleList = responseInfo.getArticleList();
+                    isFirst = articleList.isFirst();
+                    isLast = articleList.isLast();
                     contentList.addAll(contentListtemp);
                     Log.e("Articlesize",contentList.size()+"");
-                }
-                setData();
+                    Log.e("ArticleisLast",isLast+""+tagId);
+                    setData();
 
             }
 

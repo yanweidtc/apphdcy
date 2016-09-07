@@ -7,6 +7,7 @@ import com.alibaba.fastjson.annotation.JSONCreator;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
+import com.hdcy.app.model.ArticleList;
 import com.hdcy.app.model.Comments;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
@@ -87,8 +88,10 @@ public class NetHelper {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 JSONArray dataObj = responseInfo.getDataArr();
+                JSONObject dataObj1 = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.setContentList(JSON.parseArray(dataObj.toString(), Content.class));
+                    responseInfo.setArticleList(JSON.parseObject(dataObj1.toString(),ArticleList.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
                 Log.e("article2","sucess");
@@ -119,15 +122,17 @@ public class NetHelper {
         NetRequest request = new NetRequest("/article/");
         request.addParam("enable","true");
         request.addParam("page",pagecount);
-        request.addParam("size",10);
+        request.addParam("size","10");
         request.addParam("sort","pagecount");
         request.addParam("tagId",tagId);
         return request.postarray(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 JSONArray dataObj = responseInfo.getDataArr();
+                JSONObject dataObj1 = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.setContentList(JSON.parseArray(dataObj.toString(), Content.class));
+                    responseInfo.setArticleList(JSON.parseObject(dataObj1.toString(), ArticleList.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
                 Log.e("article2","sucess");
@@ -306,18 +311,21 @@ public class NetHelper {
      * @return
      */
 
-    public Callback.Cancelable GetCommentsList(String tagId,String target,String size,final NetRequestCallBack callBack){
+    public Callback.Cancelable GetCommentsList(String tagId,String target,int pagecount,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/comments/");
         request.addParam("targetId",tagId);
-        request.addParam("size",size);
+        request.addParam("page",pagecount);
+        request.addParam("size",10);
         request.addParam("sort","createdTime,desc");
         request.addParam("target",target);
         return request.postarray(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 JSONArray dataObj = responseInfo.getDataArr();
+                JSONObject dataObj1 = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.setCommentsContentList(JSON.parseArray(dataObj.toString(), CommentsContent.class));
+                    responseInfo.setArticleList(JSON.parseObject(dataObj1.toString(), ArticleList.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
                 Log.e("comments","sucess");

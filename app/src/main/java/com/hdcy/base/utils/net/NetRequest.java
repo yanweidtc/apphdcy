@@ -302,7 +302,8 @@ public class NetRequest implements BaseData {
                     Log.e("Successmsg1",object.toString());
                     Log.e("onSuccess2：" + netRequestInfo.getUrl(),"");
                     Log.e("onSuccess2：" + netResponseInfo.getResult(),"");
-                    netResponseInfo.setDataObj(object.optJSONObject("content"));
+                    netResponseInfo.setDataObj(object);
+                    //netResponseInfo.setDataObj(object.optJSONObject("content"));
                     netResponseInfo.setDataArr(object.optJSONArray("content"));
                     if (callBack != null) {
                         callBack.onSuccess(netRequestInfo, netResponseInfo);

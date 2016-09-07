@@ -32,6 +32,7 @@ import com.hdcy.app.adapter.CommentListFragmentAdapter;
 import com.hdcy.app.adapter.CommentListViewFragmentAdapter;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.TabSelectedEvent;
+import com.hdcy.app.model.ArticleList;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Replys;
 import com.hdcy.app.view.NoScrollListView;
@@ -47,15 +48,18 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
 
 /**
  * Created by WeiYanGeorge on 2016-08-23.
  */
 
-public class CommentListFragment extends BaseBackFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class CommentListFragment extends BaseBackFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
 
-    private NoScrollListView mRecy;
-    private SwipeRefreshLayout mRefreshLayout;
+    private ListView mRecy;
+    private BGARefreshLayout mRefreshLayout;
     private boolean mAtTop = true;
 
     TextView tv_comment_submit;
@@ -99,6 +103,9 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     private List<Replys> replysList = new ArrayList<>();
     private Replys replys;
 
+    private ArticleList rootobjet = new ArticleList();
+    private boolean isLast;
+
 
     public static CommentListFragment newInstance(String tagId ,String target) {
         CommentListFragment fragment = new CommentListFragment();
@@ -113,7 +120,6 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_commentlist, container, false);
-        mRecy = (NoScrollListView) view.findViewById(R.id.recy);
         EventBus.getDefault().register(this);
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -127,28 +133,13 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
     private void initView(View view) {
-/*        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+        mRecy = (ListView) view.findViewById(R.id.recy);
+        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refresh_layout);
+        mRefreshLayout.setDelegate(this);
+        mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
 
-        mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        mRefreshLayout.setOnRefreshListener(this);*/
-
-
-/*        LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
-
-        mRecy.setLayoutManager(manager);
-
-        mRecy.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                mScrollTotal += dy;
-                if (mScrollTotal <= 0) {
-                    mAtTop = true;
-                } else {
-                    mAtTop = false;
-                }
-            }
-        });*/
+        View headview = View.inflate(getContext(),R.layout.item_comment_top,null);
+        mRecy.addHeaderView(headview);
 
         title = (TextView) view.findViewById(R.id.toolbar_title);
         title.setText("评论");
@@ -205,22 +196,31 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
 
             }
         });
+        mRefreshLayout.endLoadingMore();
+        mRecy.smoothScrollToPosition(pagecount*9);
 
     }
 
     @Override
-    public void onRefresh() {
-        mRefreshLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshLayout.setRefreshing(false);
-            }
-        }, 2000);
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        commentsList.clear();
+        pagecount = 0;
+        initData();
+        mRefreshLayout.endRefreshing();
     }
 
-/*    private void scrollToTop() {
-        mRecy.smoothScrollToPosition(0);
-    }*/
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        pagecount++;
+        if(isLast){
+            mRefreshLayout.endLoadingMore();
+            Toast.makeText(getActivity(), "没有更多的数据了", Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            initData();
+            return true;
+        }
+    }
 
     /**
      * 选择tab事件
@@ -228,10 +228,9 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event) {
         if (mAtTop) {
-            mRefreshLayout.setRefreshing(true);
-            onRefresh();
+            mRefreshLayout.beginRefreshing();
         } else {
-           // scrollToTop();
+
         }
     }
 
@@ -319,15 +318,16 @@ public class CommentListFragment extends BaseBackFragment implements SwipeRefres
     }
 
     public void GetCommentsList() {
-        NetHelper.getInstance().GetCommentsList(tagId,target, "20", new NetRequestCallBack() {
+        NetHelper.getInstance().GetCommentsList(tagId,target, pagecount, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                if (commentsList.isEmpty()) {
                     List<CommentsContent> commentListFragmentListtemp = responseInfo.getCommentsContentList();
                     commentsList.addAll(commentListFragmentListtemp);
+                    rootobjet = responseInfo.getArticleList();
+                    isLast = rootobjet.isLast();
+                    Log.e("CommentisLast",isLast+""+tagId);
                     Log.e("CommentListsize", commentsList.size() + "");
-                }
-                setData();
+                    setData();
             }
 
             @Override

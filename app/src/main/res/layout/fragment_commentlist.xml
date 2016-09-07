@@ -8,30 +8,22 @@
         android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="全部评论"
-            android:textColor="@color/colorPrimary"
-            android:textSize="15sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginLeft="12dp"/>
+        <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="7">
-
-        <com.hdcy.app.view.NoScrollListView
+        <ListView
             android:id="@+id/recy"
             android:divider="@null"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:clipChildren="false"
             android:paddingLeft="-12dp"
             android:paddingRight="-12dp"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

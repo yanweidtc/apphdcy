@@ -3,9 +3,8 @@ package com.hdcy.base.utils.net;
 
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
-import com.hdcy.app.model.Article;
 import com.hdcy.app.model.ArticleInfo;
-import com.hdcy.app.model.ArticleList;
+import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.Comments;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
@@ -14,7 +13,6 @@ import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
 import com.hdcy.app.model.Result;
-import com.nostra13.universalimageloader.core.assist.deque.LIFOLinkedBlockingDeque;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,7 +43,7 @@ public class NetResponseInfo {
     public Replys replys;
 
 
-    public ArticleList articleList;
+    public RootListInfo rootListInfo;
 
 
     public String getCode() {
@@ -185,12 +183,12 @@ public class NetResponseInfo {
         this.resultinfo = resultinfo;
     }
 
-    public ArticleList getArticleList() {
-        return articleList;
+    public RootListInfo getRootListInfo() {
+        return rootListInfo;
     }
 
-    public void setArticleList(ArticleList articleList) {
-        this.articleList = articleList;
+    public void setRootListInfo(RootListInfo rootListInfo) {
+        this.rootListInfo = rootListInfo;
     }
 
 

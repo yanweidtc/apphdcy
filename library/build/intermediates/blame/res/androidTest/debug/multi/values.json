@@ -11,30 +11,13 @@
                     "endOffset": 2055
                 },
                 "from": {
-                    "file": "/Users/WeiYanGeorge/Documents/apphdcy/library/build/intermediates/bundles/debug/res/values/values.xml"
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "/Users/WeiYanGeorge/Documents/BGABanner-Android/library/build/intermediates/res/merged/androidTest/debug/values/values.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 3,
-                    "startColumn": 4,
-                    "startOffset": 1797,
-                    "endColumn": 47,
-                    "endOffset": 1840
-                },
-                "from": {
-                    "file": "/Users/WeiYanGeorge/Documents/BGABanner-Android/library/build/intermediates/bundles/debug/res/values/values.xml",
+                    "file": "/Users/WeiYanGeorge/Documents/apphdcy/library/build/intermediates/bundles/debug/res/values/values.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
-                        "startOffset": 1797,
+                        "startOffset": 2012,
                         "endColumn": 47,
-                        "endOffset": 1840
+                        "endOffset": 2055
                     }
                 }
             }

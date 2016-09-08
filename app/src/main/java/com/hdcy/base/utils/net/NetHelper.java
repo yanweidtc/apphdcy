@@ -3,15 +3,12 @@ package com.hdcy.base.utils.net;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.annotation.JSONCreator;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
-import com.hdcy.app.model.ArticleList;
-import com.hdcy.app.model.Comments;
+import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
-import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
@@ -20,13 +17,7 @@ import com.hdcy.app.model.Result;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 import org.xutils.common.Callback;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.hdcy.app.R.id.result;
 
 /**
  * Created by WeiYanGeorge on 2016-08-10.
@@ -91,7 +82,7 @@ public class NetHelper {
                 JSONObject dataObj1 = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.setContentList(JSON.parseArray(dataObj.toString(), Content.class));
-                    responseInfo.setArticleList(JSON.parseObject(dataObj1.toString(),ArticleList.class));
+                    responseInfo.setRootListInfo(JSON.parseObject(dataObj1.toString(),RootListInfo.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
                 Log.e("article2","sucess");
@@ -122,7 +113,7 @@ public class NetHelper {
         NetRequest request = new NetRequest("/article/");
         request.addParam("enable","true");
         request.addParam("page",pagecount);
-        request.addParam("size","10");
+        request.addParam("size","20");
         request.addParam("sort","pagecount");
         request.addParam("tagId",tagId);
         return request.postarray(new NetRequestCallBack() {
@@ -132,7 +123,7 @@ public class NetHelper {
                 JSONObject dataObj1 = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.setContentList(JSON.parseArray(dataObj.toString(), Content.class));
-                    responseInfo.setArticleList(JSON.parseObject(dataObj1.toString(), ArticleList.class));
+                    responseInfo.setRootListInfo(JSON.parseObject(dataObj1.toString(), RootListInfo.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
                 Log.e("article2","sucess");
@@ -315,7 +306,7 @@ public class NetHelper {
         NetRequest request = new NetRequest("/comments/");
         request.addParam("targetId",tagId);
         request.addParam("page",pagecount);
-        request.addParam("size",10);
+        request.addParam("size",30);
         request.addParam("sort","createdTime,desc");
         request.addParam("target",target);
         return request.postarray(new NetRequestCallBack() {
@@ -325,7 +316,7 @@ public class NetHelper {
                 JSONObject dataObj1 = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.setCommentsContentList(JSON.parseArray(dataObj.toString(), CommentsContent.class));
-                    responseInfo.setArticleList(JSON.parseObject(dataObj1.toString(), ArticleList.class));
+                    responseInfo.setRootListInfo(JSON.parseObject(dataObj1.toString(), RootListInfo.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
                 Log.e("comments","sucess");
@@ -364,8 +355,10 @@ public class NetHelper {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 JSONArray dataObj = responseInfo.getDataArr();
+                JSONObject dataObj1 = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.setActivityContentList(JSON.parseArray(dataObj.toString(), ActivityContent.class));
+                    responseInfo.setRootListInfo(JSON.parseObject(dataObj1.toString(), RootListInfo.class));
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
                 Log.e("activity","sucess");

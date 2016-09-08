@@ -12,28 +12,8 @@
         "source": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/src/main/res/layout/view_refresh_header_stickiness.xml"
     },
     {
-        "merged": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/build/intermediates/res/merged/debug/layout/view_normal_refresh_footer.xml",
-        "source": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/src/main/res/layout/view_normal_refresh_footer.xml"
-    },
-    {
-        "merged": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/build/intermediates/res/merged/debug/layout/view_refresh_header_stickiness.xml",
-        "source": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/src/main/res/layout/view_refresh_header_stickiness.xml"
-    },
-    {
         "merged": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/build/intermediates/res/merged/debug/layout/view_refresh_header_mooc_style.xml",
         "source": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/src/main/res/layout/view_refresh_header_mooc_style.xml"
-    },
-    {
-        "merged": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/build/intermediates/res/merged/debug/layout/view_refresh_header_meituan.xml",
-        "source": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/src/main/res/layout/view_refresh_header_meituan.xml"
-    },
-    {
-        "merged": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/build/intermediates/res/merged/debug/layout/view_refresh_header_mooc_style.xml",
-        "source": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/src/main/res/layout/view_refresh_header_mooc_style.xml"
-    },
-    {
-        "merged": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/build/intermediates/res/merged/debug/layout/view_refresh_header_normal.xml",
-        "source": "/Users/WeiYanGeorge/Documents/BGARefreshLayout-Android/library/src/main/res/layout/view_refresh_header_normal.xml"
     },
     {
         "merged": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/build/intermediates/res/merged/debug/layout/view_refresh_header_meituan.xml",

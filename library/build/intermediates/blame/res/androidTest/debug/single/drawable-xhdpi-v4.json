@@ -1,13 +1,5 @@
 [
     {
-        "merged": "/Users/WeiYanGeorge/Documents/BGABanner-Android/library/build/intermediates/res/merged/androidTest/debug/drawable-xhdpi-v4/bga_banner_point_disabled.png",
-        "source": "/Users/WeiYanGeorge/Documents/BGABanner-Android/library/build/intermediates/bundles/debug/res/drawable-xhdpi-v4/bga_banner_point_disabled.png"
-    },
-    {
-        "merged": "/Users/WeiYanGeorge/Documents/BGABanner-Android/library/build/intermediates/res/merged/androidTest/debug/drawable-xhdpi-v4/bga_banner_point_enabled.png",
-        "source": "/Users/WeiYanGeorge/Documents/BGABanner-Android/library/build/intermediates/bundles/debug/res/drawable-xhdpi-v4/bga_banner_point_enabled.png"
-    },
-    {
         "merged": "/Users/WeiYanGeorge/Documents/apphdcy/library/build/intermediates/res/merged/androidTest/debug/drawable-xhdpi-v4/bga_banner_point_disabled.png",
         "source": "/Users/WeiYanGeorge/Documents/apphdcy/library/build/intermediates/bundles/debug/res/drawable-xhdpi-v4/bga_banner_point_disabled.png"
     },

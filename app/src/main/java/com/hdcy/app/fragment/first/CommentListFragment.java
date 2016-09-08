@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,25 +15,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
-import com.hdcy.app.activity.MainActivity;
-import com.hdcy.app.adapter.CommentListFragmentAdapter;
 import com.hdcy.app.adapter.CommentListViewFragmentAdapter;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.TabSelectedEvent;
-import com.hdcy.app.model.ArticleList;
+import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Replys;
-import com.hdcy.app.view.NoScrollListView;
-import com.hdcy.base.utils.BaseUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -103,7 +94,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
     private List<Replys> replysList = new ArrayList<>();
     private Replys replys;
 
-    private ArticleList rootobjet = new ArticleList();
+    private RootListInfo rootobjet = new RootListInfo();
     private boolean isLast;
 
 
@@ -197,7 +188,6 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
             }
         });
         mRefreshLayout.endLoadingMore();
-        mRecy.smoothScrollToPosition(pagecount*9);
 
     }
 
@@ -323,7 +313,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                     List<CommentsContent> commentListFragmentListtemp = responseInfo.getCommentsContentList();
                     commentsList.addAll(commentListFragmentListtemp);
-                    rootobjet = responseInfo.getArticleList();
+                    rootobjet = responseInfo.getRootListInfo();
                     isLast = rootobjet.isLast();
                     Log.e("CommentisLast",isLast+""+tagId);
                     Log.e("CommentListsize", commentsList.size() + "");

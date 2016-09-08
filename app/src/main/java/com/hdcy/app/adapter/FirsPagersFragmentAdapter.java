@@ -17,10 +17,12 @@ import com.hdcy.app.model.Content;
 import com.hdcy.app.model.NewsArticleInfo;
 import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.BaseUtils;
+import com.hdcy.base.utils.RelativeTimeUtils;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,9 +69,9 @@ public class FirsPagersFragmentAdapter extends RecyclerView.Adapter<FirsPagersFr
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Content item = mItems.get(position);
         holder.tvTitle.setText(item.getTitle());
-        SimpleDateFormat foramt = new SimpleDateFormat("MM-dd");
-        String dateformat = foramt.format(item.getCreatedTime()).toString();
-        holder.tv_info_update.setText(dateformat);
+        Date time = item.getCreatedTime();
+        String nowdate = RelativeTimeUtils.format(time);
+        holder.tv_info_update.setText(nowdate);
         holder.tv_info_watched.setText(item.getReadCount()+"");
        if(!BaseUtils.isEmptyList(item.getTagInfos()))
        if (!BaseUtils.isEmptyString(item.getImage())) {

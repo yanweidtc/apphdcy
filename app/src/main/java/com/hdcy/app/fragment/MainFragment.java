@@ -12,6 +12,7 @@ import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.first.FirstFragment;
 import com.hdcy.app.fragment.first.childpager.OtherPagerFragment;
+import com.hdcy.app.fragment.fourth.FourthFragment;
 import com.hdcy.app.fragment.third.ThirdFragment;
 import com.hdcy.app.view.BottomBar;
 import com.hdcy.app.view.BottomBarTab;
@@ -57,7 +58,7 @@ public class MainFragment extends BaseFragment {
             mFragments[FIRST] = FirstFragment.newInstance();
             mFragments[SECOND] = OtherPagerFragment.newInstance(1);
             mFragments[THIRD] = ThirdFragment.newInstance();
-            mFragments[FOURTH] = OtherPagerFragment.newInstance(0);
+            mFragments[FOURTH] = FourthFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_tab_container,FIRST,mFragments[FIRST],
                     mFragments[SECOND],
                     mFragments[THIRD],
@@ -66,7 +67,7 @@ public class MainFragment extends BaseFragment {
             mFragments[FIRST] = findChildFragment(FirstFragment.class);
             mFragments[SECOND] = findChildFragment(OtherPagerFragment.class);
             mFragments[THIRD] = findChildFragment(ThirdFragment.class);
-            mFragments[FOURTH] = findChildFragment(OtherPagerFragment.class);
+            mFragments[FOURTH] = findChildFragment(FourthFragment.class);
         }
 
         initView(view);

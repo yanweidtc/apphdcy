@@ -2,7 +2,6 @@ package com.hdcy.app.fragment.first.childpager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,7 +17,7 @@ import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.first.InfoDetailFragment;
-import com.hdcy.app.model.ArticleList;
+import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.Content;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
@@ -31,7 +30,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
@@ -50,7 +48,7 @@ public class FirstPagersFragment extends BaseFragment implements BGARefreshLayou
     private int mScrollTotal;
 
     private List<Content> contentList = new ArrayList<>();
-    private ArticleList articleList = new ArticleList();
+    private RootListInfo rootListInfo = new RootListInfo();
     private boolean isLast;
     private boolean isFirst;
 
@@ -203,9 +201,9 @@ public class FirstPagersFragment extends BaseFragment implements BGARefreshLayou
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 List<Content> contentListtemp = responseInfo.getContentList();
-                articleList = responseInfo.getArticleList();
-                isLast = articleList.isLast();
-                isFirst = articleList.isFirst();
+                rootListInfo = responseInfo.getRootListInfo();
+                isLast = rootListInfo.isLast();
+                isFirst = rootListInfo.isFirst();
                 contentList.addAll(contentListtemp);
                 Log.e("ArticleisLast",isLast+""+tagId);
                 Log.e("Articlesize",contentList.size()+"");
@@ -230,9 +228,9 @@ public class FirstPagersFragment extends BaseFragment implements BGARefreshLayou
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                     List<Content> contentListtemp = responseInfo.getContentList();
-                    articleList = responseInfo.getArticleList();
-                    isFirst = articleList.isFirst();
-                    isLast = articleList.isLast();
+                    rootListInfo = responseInfo.getRootListInfo();
+                    isFirst = rootListInfo.isFirst();
+                    isLast = rootListInfo.isLast();
                     contentList.addAll(contentListtemp);
                     Log.e("Articlesize",contentList.size()+"");
                     Log.e("ArticleisLast",isLast+""+tagId);

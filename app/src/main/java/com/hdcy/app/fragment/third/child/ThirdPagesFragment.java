@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hdcy.app.OnItemClickListener;
@@ -26,6 +27,7 @@ import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.first.InfoDetailFragment;
 import com.hdcy.app.fragment.third.OfflineActivityFragment;
 import com.hdcy.app.model.ActivityContent;
+import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.view.NoScrollListView;
 import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.net.NetHelper;
@@ -41,15 +43,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
+import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 
 /**
  * Created by WeiYanGeorge on 2016-08-31.
  */
 
-public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class ThirdPagesFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
     private NoScrollListView mRecy;
-    private SwipeRefreshLayout mRefreshLayout;
+    private BGARefreshLayout mRefreshLayout;
     private BGABanner mBanner;
 
     private ImageView iv_recommend_first, iv_recommend_second;
@@ -61,14 +65,16 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
 
 
 
-    private int mScrollTotal;
-
     private List<ActivityContent> activityContentList = new ArrayList<>();
     private List<ActivityContent> activityHotList = new ArrayList<>();
     private List<ActivityContent> activityRecommend = new ArrayList<>();
 
     private List<String> imgurls = new ArrayList<>();
     private List<String> tips = new ArrayList<>();
+
+    private RootListInfo rootListInfo = new RootListInfo();
+
+    private boolean isLast;
 
     private int pagecount = 0;
 
@@ -100,8 +106,32 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
         mBanner =(BGABanner) view.findViewById(R.id.banner);
         iv_recommend_first = (ImageView) view.findViewById(R.id.iv_rd_first);
         iv_recommend_second = (ImageView) view.findViewById(R.id.iv_rd_second);
+        mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
+        mRefreshLayout.setDelegate(this);
+        mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
 
 
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        activityContentList.clear();
+        pagecount = 0;
+        initData();
+        mRefreshLayout.endRefreshing();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        pagecount++;
+        if(isLast){
+            mRefreshLayout.endLoadingMore();
+            Toast.makeText(getActivity(), "没有更多的数据了", Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            GetActivityList();
+            return true;
+        }
     }
 
     private void initData(){
@@ -126,6 +156,9 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
                 }
             }
         });
+        mRefreshLayout.endLoadingMore();
+
+
 
     }
 
@@ -153,10 +186,6 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
 
-    @Override
-    public void onRefresh() {
-
-    }
 
     private void scrollToTop(){
 
@@ -168,8 +197,7 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event) {
         if (mAtTop) {
-            mRefreshLayout.setRefreshing(true);
-            onRefresh();
+            mRefreshLayout.beginRefreshing();
         } else {
             scrollToTop();
         }
@@ -186,11 +214,11 @@ public class ThirdPagesFragment extends BaseFragment implements SwipeRefreshLayo
         NetHelper.getInstance().GetPaticipationList(activityType, pagecount,new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                activityContentList.clear();
                 List<ActivityContent> activityContentstemp = responseInfo.getActivityContentList();
+                rootListInfo = responseInfo.getRootListInfo();
                 activityContentList.addAll(activityContentstemp);
+                isLast = rootListInfo.isLast();
                 Log.e("ActivityContentList",activityContentList.size()+"");
-
                 setData();
 
             }

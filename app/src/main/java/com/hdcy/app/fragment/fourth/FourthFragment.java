@@ -31,6 +31,7 @@ public class FourthFragment extends BaseLazyMainFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fourth_pager,container,false);
+        initView(view);
         return view;
     }
 

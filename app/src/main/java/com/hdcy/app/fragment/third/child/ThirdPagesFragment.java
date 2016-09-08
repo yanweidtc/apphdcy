@@ -75,6 +75,7 @@ public class ThirdPagesFragment extends BaseFragment implements BGARefreshLayout
     private RootListInfo rootListInfo = new RootListInfo();
 
     private boolean isLast;
+    private boolean isLoadMore;
 
     private int pagecount = 0;
 
@@ -110,11 +111,11 @@ public class ThirdPagesFragment extends BaseFragment implements BGARefreshLayout
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
 
-
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        isLoadMore = false;
         activityContentList.clear();
         pagecount = 0;
         initData();
@@ -160,6 +161,7 @@ public class ThirdPagesFragment extends BaseFragment implements BGARefreshLayout
 
 
 
+
     }
 
     private void setData1(){
@@ -199,7 +201,7 @@ public class ThirdPagesFragment extends BaseFragment implements BGARefreshLayout
         if (mAtTop) {
             mRefreshLayout.beginRefreshing();
         } else {
-            scrollToTop();
+           // scrollToTop();
         }
     }
 
@@ -220,6 +222,7 @@ public class ThirdPagesFragment extends BaseFragment implements BGARefreshLayout
                 isLast = rootListInfo.isLast();
                 Log.e("ActivityContentList",activityContentList.size()+"");
                 setData();
+
 
             }
 

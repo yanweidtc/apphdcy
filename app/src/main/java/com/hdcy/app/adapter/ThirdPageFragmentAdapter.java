@@ -1,6 +1,7 @@
 package com.hdcy.app.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.hdcy.app.model.Content;
 import com.hdcy.app.model.Replys;
 import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.BaseUtils;
+import com.hdcy.base.utils.SizeUtils;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -32,6 +35,10 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
     private List<ActivityContent> data = new ArrayList<>();
     private Context context;
 
+    private int width;
+
+    private int imgheight;
+
     //WindowManager wm = (WindowManager) context.get
 
 
@@ -39,6 +46,8 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
         super();
         this.context = context;
         this.data = data;
+        width = SizeUtils.getScreenWidth();
+        imgheight = SizeUtils.dpToPx(200);
     }
 
     @Override
@@ -80,8 +89,11 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
             String cover = item.getImage();
             Picasso.with(context).load(cover)
                     .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
-                    .resize(1150,550)
+                    .resize(width,imgheight)
                     .centerCrop()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE)
+                    .tag(holder.getTag())
+                    .config(Bitmap.Config.RGB_565)
                     .into(holder.iv_activity_background);
         }
         if(item.getFinish()==false){

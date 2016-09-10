@@ -13,6 +13,7 @@ import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
 import com.hdcy.app.model.Result;
+import com.hdcy.app.model.UserBaseInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -475,6 +476,13 @@ public class NetHelper {
         });
     }
 
+    /**
+     *
+     * @param activityid
+     * @param callBack
+     * @return
+     */
+
     public Callback.Cancelable GetCurrentPaticipationStatus(String activityid,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/participator/member");
         request.addHeader("Authorization","Basic MToxMjM0NTY=");
@@ -504,6 +512,14 @@ public class NetHelper {
             }
         });
     }
+
+    /**
+     * 注册活动
+     * @param activityId
+     * @param message
+     * @param callBack
+     * @return
+     */
 
     public Callback.Cancelable RegisterOfflineActivity(String activityId,String message,final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/activityParticipator/");
@@ -540,6 +556,36 @@ public class NetHelper {
             }
         });
     }
+
+    public Callback.Cancelable GetCurrentUserInfo( final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/user/current");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+
+        return request.postobject(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.setUserBaseInfo(JSON.parseObject(dataObj.toString(), UserBaseInfo.class));
+                }
+                Log.e("UserBaseInfo", "success");
+                callBack.onSuccess(requestInfo, responseInfo);
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+            }
+        });
+    }
+
+
 
 
 

@@ -1,16 +1,347 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <FrameLayout
+        android:id="@+id/fl_mine_top_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="232dp">
 
-        <include layout="@layout/toolbar"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </android.support.design.widget.AppBarLayout>
+            <ImageView
+                android:id="@+id/iv_mine_top_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/white" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/transparent_black_50" />
+        </FrameLayout>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_mine_top_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher"
+            app:riv_border_width="2dp"
+            app:riv_border_color="@color/white"
+            app:riv_corner_radius="100dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="62dp"
+            android:text="等级"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="62dp"
+            android:text="积分"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_mine_top_credits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="23dp"
+            android:text="74734"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tv_mine_top_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="23dp"
+            android:text="74734"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/ll_mine_person_info"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_person_data"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="15sp"
+            android:textColor="#494949"
+            android:text="个人资料"
+            android:layout_gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_gravity="right|center"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_tab_arrow"
+            android:layout_height="22dp"
+            android:layout_marginLeft="12dp"/>
+
+        </LinearLayout>
+       <TextView
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/main_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_activities"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="15sp"
+            android:textColor="#494949"
+            android:text="我的活动"
+            android:layout_gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_gravity="right|center"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_tab_arrow"
+            android:layout_height="22dp"
+            android:layout_marginLeft="12dp"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/main_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_comments"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="15sp"
+            android:textColor="#494949"
+            android:text="我的评论"
+            android:layout_gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_gravity="right|center"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_tab_arrow"
+            android:layout_height="22dp"
+            android:layout_marginLeft="12dp"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/main_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_videos"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="15sp"
+            android:textColor="#494949"
+            android:text="我的视频"
+            android:layout_gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_gravity="right|center"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_tab_arrow"
+            android:layout_height="22dp"
+            android:layout_marginLeft="12dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_videos"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="15sp"
+            android:textColor="#494949"
+            android:text="我的积分"
+            android:layout_gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_gravity="right|center"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_tab_arrow"
+            android:layout_height="22dp"
+            android:layout_marginLeft="12dp"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/main_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_settings"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="15sp"
+            android:textColor="#494949"
+            android:text="系统设置"
+            android:layout_gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_gravity="right|center"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_tab_arrow"
+            android:layout_height="22dp"
+            android:layout_marginLeft="12dp"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/main_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_height="22dp"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_aboutus"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="15sp"
+            android:textColor="#494949"
+            android:text="关于我们"
+            android:layout_gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_gravity="right|center"
+            android:layout_width="22dp"
+            android:src="@mipmap/icon_mine_tab_arrow"
+            android:layout_height="22dp"
+            android:layout_marginLeft="12dp"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/main_line" />
+
+
 
 </LinearLayout>

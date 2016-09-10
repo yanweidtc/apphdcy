@@ -13,6 +13,7 @@ import com.hdcy.app.model.NewsCategory;
 import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
 import com.hdcy.app.model.Result;
+import com.hdcy.app.model.UserBaseInfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -41,9 +42,8 @@ public class NetResponseInfo {
     public Result resultinfo;
     public ActivityDetails activityDetails;
     public Replys replys;
-
-
     public RootListInfo rootListInfo;
+    public UserBaseInfo userBaseInfo;
 
 
     public String getCode() {
@@ -190,6 +190,16 @@ public class NetResponseInfo {
     public void setRootListInfo(RootListInfo rootListInfo) {
         this.rootListInfo = rootListInfo;
     }
+
+
+    public UserBaseInfo getUserBaseInfo() {
+        return userBaseInfo;
+    }
+
+    public void setUserBaseInfo(UserBaseInfo userBaseInfo) {
+        this.userBaseInfo = userBaseInfo;
+    }
+
 
 
 }

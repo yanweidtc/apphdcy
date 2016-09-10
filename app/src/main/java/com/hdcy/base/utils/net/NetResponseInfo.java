@@ -4,6 +4,7 @@ package com.hdcy.base.utils.net;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
+import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.Comments;
 import com.hdcy.app.model.CommentsContent;
@@ -44,6 +45,8 @@ public class NetResponseInfo {
     public Replys replys;
     public RootListInfo rootListInfo;
     public UserBaseInfo userBaseInfo;
+
+    public List<LeaderInfo> leaderInfo;
 
 
     public String getCode() {
@@ -199,6 +202,16 @@ public class NetResponseInfo {
     public void setUserBaseInfo(UserBaseInfo userBaseInfo) {
         this.userBaseInfo = userBaseInfo;
     }
+
+
+    public List<LeaderInfo> getLeaderInfo() {
+        return leaderInfo;
+    }
+
+    public void setLeaderInfo(List<LeaderInfo> leaderInfo) {
+        this.leaderInfo = leaderInfo;
+    }
+
 
 
 

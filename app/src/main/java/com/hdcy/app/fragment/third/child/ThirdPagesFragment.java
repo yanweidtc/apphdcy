@@ -222,8 +222,6 @@ public class ThirdPagesFragment extends BaseFragment implements BGARefreshLayout
                 isLast = rootListInfo.isLast();
                 Log.e("ActivityContentList",activityContentList.size()+"");
                 setData();
-
-
             }
 
             @Override

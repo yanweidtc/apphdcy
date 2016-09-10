@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.event.StartBrotherEvent;
+import com.hdcy.app.fragment.fourth.childpagers.PersonalActivityFragment;
 import com.hdcy.app.fragment.fourth.childpagers.PersonalInfoFragment;
 import com.hdcy.app.model.UserBaseInfo;
 import com.hdcy.base.BaseInfo;
@@ -44,6 +46,7 @@ public class FourthFragment extends BaseLazyMainFragment{
     private TextView tv_mine_credits;
 
     private LinearLayout ll_mine_person_info;
+    private LinearLayout ll_mine_person_activity;
 
     int width;
     int bg_img_height;
@@ -81,6 +84,13 @@ public class FourthFragment extends BaseLazyMainFragment{
 
             }
         });
+
+        ll_mine_person_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(PersonalActivityFragment.newInstance()));
+            }
+        });
     }
 
     private void initView(View view){
@@ -89,6 +99,7 @@ public class FourthFragment extends BaseLazyMainFragment{
         tv_mine_level = (TextView) view.findViewById(R.id.tv_mine_top_level);
         tv_mine_credits = (TextView) view.findViewById(R.id.tv_mine_top_credits);
         ll_mine_person_info =(LinearLayout) view.findViewById(R.id.ll_mine_person_info);
+        ll_mine_person_activity =(LinearLayout) view.findViewById(R.id.ll_mine_person_activity);
 
     }
 

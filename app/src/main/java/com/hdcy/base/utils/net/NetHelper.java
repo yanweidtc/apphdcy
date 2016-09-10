@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
+import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Content;
@@ -557,6 +558,12 @@ public class NetHelper {
         });
     }
 
+    /**
+     * 得到当前用户信息
+     * @param callBack
+     * @return
+     */
+
     public Callback.Cancelable GetCurrentUserInfo( final NetRequestCallBack callBack){
         NetRequest request = new NetRequest("/user/current");
         request.addHeader("Authorization","Basic MToxMjM0NTY=");
@@ -585,8 +592,79 @@ public class NetHelper {
         });
     }
 
+    /**
+     * 得到我的活动列表
+     * @param activityType
+     * @param pagecount
+     * @param callBack
+     * @return
+     */
 
+    public Callback.Cancelable GetMineActivityList(String activityType,int pagecount,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/participator/");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
 
+        request.addParam("page",pagecount);
+        request.addParam("enable","true");
+        request.addParam("actType",activityType);
+        request.addParam("size","10");
+        request.addParam("sort","createdTime,desc");
+        return request.postarray(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONArray dataObj = responseInfo.getDataArr();
+                JSONObject dataObj1 = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.setActivityContentList(JSON.parseArray(dataObj.toString(), ActivityContent.class));
+                    responseInfo.setRootListInfo(JSON.parseObject(dataObj1.toString(), RootListInfo.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("activity","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activity","onfailure");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activity","onfailure");
+
+            }
+        });
+    }
+
+    public Callback.Cancelable GetLeaderInfo(final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/leader/");
+        request.addParam("top","true");
+        return request.postarray(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONArray dataObj = responseInfo.getDataArr();
+
+                if (dataObj != null){
+                    responseInfo.setLeaderInfo(JSON.parseArray(dataObj.toString(), LeaderInfo.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("leaderinfo","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activity","onfailure");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activity","onfailure");
+
+            }
+        });
+    }
 
 
 

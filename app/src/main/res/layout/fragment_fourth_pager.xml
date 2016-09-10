@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -23,7 +26,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@color/transparent_black_50" />
+                android:src="@color/transparent_black_50"
+                android:id="@+id/imageView" />
         </FrameLayout>
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -116,6 +120,7 @@
         android:background="@color/main_line" />
 
     <LinearLayout
+        android:id="@+id/ll_mine_person_activity"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -223,8 +228,12 @@
             android:layout_height="22dp"
             android:layout_marginLeft="12dp"/>
 
-
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/main_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -342,6 +351,5 @@
         android:layout_marginLeft="15dp"
         android:background="@color/main_line" />
 
-
-
 </LinearLayout>
+    </ScrollView>

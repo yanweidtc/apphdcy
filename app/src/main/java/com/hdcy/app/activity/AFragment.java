@@ -1,7 +1,7 @@
 package com.hdcy.app.activity;
 
 /**
- * Created by WeiYanGeorge on 2016-08-12.
+ * Created by WeiYanGeorge on 2016-08-12. 22
  */
 
 import android.content.Context;

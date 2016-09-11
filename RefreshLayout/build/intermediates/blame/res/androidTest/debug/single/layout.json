@@ -12,11 +12,31 @@
         "source": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/build/intermediates/bundles/debug/res/layout/view_normal_refresh_footer.xml"
     },
     {
+        "merged": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/res/merged/androidTest/debug/layout/view_refresh_header_meituan.xml",
+        "source": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/bundles/debug/res/layout/view_refresh_header_meituan.xml"
+    },
+    {
+        "merged": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/res/merged/androidTest/debug/layout/view_refresh_header_normal.xml",
+        "source": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/bundles/debug/res/layout/view_refresh_header_normal.xml"
+    },
+    {
+        "merged": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/res/merged/androidTest/debug/layout/view_refresh_header_mooc_style.xml",
+        "source": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/bundles/debug/res/layout/view_refresh_header_mooc_style.xml"
+    },
+    {
         "merged": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/build/intermediates/res/merged/androidTest/debug/layout/view_refresh_header_normal.xml",
         "source": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/build/intermediates/bundles/debug/res/layout/view_refresh_header_normal.xml"
     },
     {
+        "merged": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/res/merged/androidTest/debug/layout/view_normal_refresh_footer.xml",
+        "source": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/bundles/debug/res/layout/view_normal_refresh_footer.xml"
+    },
+    {
         "merged": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/build/intermediates/res/merged/androidTest/debug/layout/view_refresh_header_stickiness.xml",
         "source": "/Users/WeiYanGeorge/Documents/apphdcy/RefreshLayout/build/intermediates/bundles/debug/res/layout/view_refresh_header_stickiness.xml"
+    },
+    {
+        "merged": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/res/merged/androidTest/debug/layout/view_refresh_header_stickiness.xml",
+        "source": "/Users/chiwenheng/apphdcy/RefreshLayout/build/intermediates/bundles/debug/res/layout/view_refresh_header_stickiness.xml"
     }
 ]

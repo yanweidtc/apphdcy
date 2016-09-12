@@ -1,29 +1,5 @@
 [
     {
-        "outputFile": "/Users/chiwenheng/apphdcy/library/build/intermediates/res/merged/androidTest/debug/values/values.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 3,
-                    "startColumn": 4,
-                    "startOffset": 2012,
-                    "endColumn": 47,
-                    "endOffset": 2055
-                },
-                "from": {
-                    "file": "/Users/chiwenheng/apphdcy/library/build/intermediates/bundles/debug/res/values/values.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 2012,
-                        "endColumn": 47,
-                        "endOffset": 2055
-                    }
-                }
-            }
-        ]
-    },
-    {
         "outputFile": "/Users/WeiYanGeorge/Documents/apphdcy/library/build/intermediates/res/merged/androidTest/debug/values/values.xml",
         "map": [
             {

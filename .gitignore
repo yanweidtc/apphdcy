@@ -4,18 +4,15 @@
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
-/build
 /captures
 
-build/
-.gradle/
-*/build/
+
 /library/build
 /fragmentation/build
 /app/build
 /multi-image-selector/build
 /RefreshLayout/build
-/apphdcy.iml
+/build
 
 
 # IDEA

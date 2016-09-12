@@ -33,7 +33,6 @@ import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.model.ArticleInfo;
-import com.hdcy.app.view.webview.MobileWebView;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -126,11 +125,11 @@ public class InfoDetailFragment extends BaseBackFragment {
         webSettings.setUseWideViewPort(true);
         webSettings.setSupportZoom(true);
         webSettings.setDomStorageEnabled(true);
+        myWebView.canGoBack();
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.setWebChromeClient(new WebChromeClient());
-
         myWebView.loadUrl(loadurl);
-        myWebView.reload();
+
     }
 
     private boolean checkData() {
@@ -143,6 +142,21 @@ public class InfoDetailFragment extends BaseBackFragment {
         super.onDestroyView();
         myWebView.clearCache(true);
         myWebView.removeAllViews();
+        myWebView.goBack();
+        myWebView.destroy();
+        myWebView =null;
+    }
+
+    @Override
+    public void onResume() {
+        myWebView.reload();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        myWebView.reload();
+        super.onPause();
     }
 
     /**
@@ -164,7 +178,7 @@ public class InfoDetailFragment extends BaseBackFragment {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new StartBrotherEvent(CommentListFragment.newInstance(articleInfo.getId() + "", "article")));
-                // ((SupportFragment) getParentFragment()).start(CommentListFragment.newInstance(articleInfo.getId()+""));
+                onResume();
             }
         });
 

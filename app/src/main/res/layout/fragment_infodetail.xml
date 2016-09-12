@@ -7,21 +7,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <include layout="@layout/toolbar"/>
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/scrollView"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:showIn="@layout/fragment_infodetail"
-            android:layout_weight="7">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="7">
 
                 <WebView
                     android:id="@+id/mywebview"
@@ -29,7 +20,6 @@
                     android:layout_width="match_parent" />
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/line_width"

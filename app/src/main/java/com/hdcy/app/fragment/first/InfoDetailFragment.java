@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +33,7 @@ import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.model.ArticleInfo;
+import com.hdcy.app.view.webview.MobileWebView;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -48,7 +50,7 @@ import static com.hdcy.base.BaseData.URL_BASE;
  */
 
 
-public  class InfoDetailFragment extends BaseBackFragment {
+public class InfoDetailFragment extends BaseBackFragment {
 
     WebView myWebView;
     TextView tv_comment_count;
@@ -61,7 +63,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
     AlertDialog alertDialog;
     LinearLayout ly_comment_button;
     private String targetId;
-    private String Url = URL_BASE +"/articleDetails.html?id=";
+    private String Url = URL_BASE + "/articleDetails.html?id=";
     private String loadurl;
     private Toolbar mToolbar;
     private boolean isEdit;
@@ -71,7 +73,6 @@ public  class InfoDetailFragment extends BaseBackFragment {
     private ArticleInfo articleInfo = new ArticleInfo();
 
 
-
     public static InfoDetailFragment newInstance(String id) {
         InfoDetailFragment fragment = new InfoDetailFragment();
         Bundle bundle = new Bundle();
@@ -79,46 +80,37 @@ public  class InfoDetailFragment extends BaseBackFragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_infodetail,container,false);
-        Bundle bundle= getArguments();
-        if (bundle !=null){
+        final View view = inflater.inflate(R.layout.fragment_infodetail, container, false);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
             targetId = bundle.getString("targetid");
         }
-        loadurl = Url+targetId;
-        myWebView = (WebView)view.findViewById(R.id.mywebview);
-
-        Log.e("WebUrl",loadurl);
-        WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setLoadsImagesAutomatically(true);
-        //webSettings.setDatabaseEnabled(true);
-        myWebView.setWebViewClient(mWebViewClientBase);
-        //myWebView.setWebChromeClient(mWebChromeClientBase);
-        myWebView.loadUrl(loadurl+"");
-        myWebView.onResume();
+        loadurl = Url + targetId + "&show=YES";
         initView(view);
         initData();
         setListener();
+        initWebview(view);
         return view;
     }
 
-    private void initView(View view){
+    private void initView(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         tv_comment_count = (TextView) view.findViewById(R.id.tv_comment_count);
         //editText = (EditText) view.findViewById(R.id.et_send);
         sendButton = (Button) view.findViewById(R.id.bt_send);
         title = (TextView) view.findViewById(R.id.toolbar_title);
-        ly_comment_button =(LinearLayout) view.findViewById(R.id.ly_comment_countimage);
+        ly_comment_button = (LinearLayout) view.findViewById(R.id.ly_comment_countimage);
 
         title.setText("资讯详情");
 
@@ -126,38 +118,59 @@ public  class InfoDetailFragment extends BaseBackFragment {
 
     }
 
-    private boolean checkData(){
+    private void initWebview(View view) {
+        myWebView = (WebView) view.findViewById(R.id.mywebview);
+        Log.e("WebUrl", loadurl);
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setDomStorageEnabled(true);
+        myWebView.setWebViewClient(new WebViewClient());
+        myWebView.setWebChromeClient(new WebChromeClient());
+
+        myWebView.loadUrl(loadurl);
+        myWebView.reload();
+    }
+
+    private boolean checkData() {
         content = editText.getText().toString();
         return true;
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        myWebView.clearCache(true);
+        myWebView.removeAllViews();
     }
 
     /**
      * 刷新控件数据
      */
-    private void resetViewData(){
+    private void resetViewData() {
         int fontcount = 200 - editText.length();
-        tv_limit.setText(fontcount+"");
+        tv_limit.setText(fontcount + "");
     }
 
-    private void initData(){
+    private void initData() {
         GetArticleInfo();
 
     }
 
-    private void setData(){
-        tv_comment_count.setText(articleInfo.getCommentCount()+"");
+    private void setData() {
+        tv_comment_count.setText(articleInfo.getCommentCount() + "");
         ly_comment_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(CommentListFragment.newInstance(articleInfo.getId()+"","article")));
-               // ((SupportFragment) getParentFragment()).start(CommentListFragment.newInstance(articleInfo.getId()+""));
+                EventBus.getDefault().post(new StartBrotherEvent(CommentListFragment.newInstance(articleInfo.getId() + "", "article")));
+                // ((SupportFragment) getParentFragment()).start(CommentListFragment.newInstance(articleInfo.getId()+""));
             }
         });
 
     }
 
-    private void setListener(){
+    private void setListener() {
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -173,11 +186,11 @@ public  class InfoDetailFragment extends BaseBackFragment {
      * 弹出输入框Dialog
      */
 
-    private void ShowInputDialog(){
+    private void ShowInputDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_edit_dialog,null);
+        View view = inflater.inflate(R.layout.fragment_edit_dialog, null);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -187,7 +200,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                isEdit = s.length() >0;
+                isEdit = s.length() > 0;
                 resetViewData();
             }
 
@@ -196,14 +209,14 @@ public  class InfoDetailFragment extends BaseBackFragment {
 
             }
         };
-        tv_limit =(TextView) view.findViewById(R.id.tv_limit);
+        tv_limit = (TextView) view.findViewById(R.id.tv_limit);
         tv_comment_submit = (TextView) view.findViewById(R.id.tv_submit_comment);
         tv_comment_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                     if(checkData()){
-                       PublishComment();
-                     }
+                if (checkData()) {
+                    PublishComment();
+                }
             }
         });
         tv_comment_cancel = (TextView) view.findViewById(R.id.tv_cancel);
@@ -213,7 +226,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
                 alertDialog.dismiss();
             }
         });
-        editText =(EditText) view.findViewById(R.id.edt_comment);
+        editText = (EditText) view.findViewById(R.id.edt_comment);
         editText.addTextChangedListener(textWatcher);
         editText.requestFocus();
         builder.setView(view);
@@ -230,7 +243,7 @@ public  class InfoDetailFragment extends BaseBackFragment {
         alertDialog.show();
     }
 
-    private void GetArticleInfo(){
+    private void GetArticleInfo() {
         NetHelper.getInstance().GetArticleInfo(targetId, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
@@ -249,23 +262,24 @@ public  class InfoDetailFragment extends BaseBackFragment {
             }
         });
     }
-    public void PublishComment(){
-        NetHelper.getInstance().PublishComments(targetId, content,"article",null,new NetRequestCallBack() {
+
+    public void PublishComment() {
+        NetHelper.getInstance().PublishComments(targetId, content, "article", null, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Toast.makeText(getActivity(),"评论发布成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "评论发布成功", Toast.LENGTH_LONG).show();
                 alertDialog.dismiss();
             }
 
             @Override
             public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("发布成功",targetId);
+                Log.e("发布成功", targetId);
 
             }
 
             @Override
             public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Toast.makeText(getContext(),"评论发布失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "评论发布失败", Toast.LENGTH_LONG).show();
 
 
             }

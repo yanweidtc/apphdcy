@@ -247,8 +247,8 @@ public class OfflineActivityFragment extends BaseBackFragment{
         tv_attend_count.setText(activityDetails.getHot()+"");
         tv_activity_sponsor.setText(activityDetails.getSponsor()+"df");
         SimpleDateFormat foramt = new SimpleDateFormat("yyyy年MM月dd日");
-        String dateformat1 = foramt.format(activityDetails.getStartTime()).toString();
-        String dateformat2 = foramt.format(activityDetails.getEndTime()).toString();
+        String dateformat1 = foramt.format(activityDetails.getSignStartTime()).toString();
+        String dateformat2 = foramt.format(activityDetails.getSignEndTime()).toString();
         tv_activity_starttime.setText(dateformat1);
         tv_activity_register_end.setText(dateformat2);
         tv_people_limits.setText(activityDetails.getPeopleLimit()+"");

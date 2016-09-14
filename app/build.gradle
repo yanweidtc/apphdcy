@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -10,6 +11,9 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilter 'armeabi-v7a' // 例如：abiFilter 'armeabi, x86'
+        }
     }
     buildTypes {
         release {
@@ -24,7 +28,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -61,7 +65,9 @@ dependencies {
     compile files('libs/jsoup-1.7.2.jar')
     //展开收起控件
     compile 'com.ms-square:expandableTextView:0.1.4'
-
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile project(':ulive_android_sdk2')
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+//    compile 'com.jakewharton:butterknife:7.0.1'
 }

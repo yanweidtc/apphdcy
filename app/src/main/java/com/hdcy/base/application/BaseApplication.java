@@ -61,6 +61,7 @@ public class BaseApplication extends MultiDexApplication {
         // 创建默认的ImageLoader配置参数
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(instance);
         ImageLoader.getInstance().init(configuration);
+
     }
 
     private void initDataThread() {

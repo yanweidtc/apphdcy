@@ -174,7 +174,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
                 }
 
                     Intent intent = new Intent();
-                    intent.setAction("ucloud.intent.action.uvod.example.demo1");
+                    intent.setAction("com.hdcy.app.uvod.impl.Activity4VedioDetail");
                     intent.putExtra("title","title");
                     intent.putExtra("videoPath", "http://mediademo.ufile.ucloud.com.cn/ucloud_promo_140s.mp4");
 //			intent.putExtra("videoPath", "http://ulive-record.ufile.ucloud.com.cn/101841470662011.m3u8");

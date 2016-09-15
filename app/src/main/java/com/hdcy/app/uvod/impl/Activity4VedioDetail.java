@@ -10,12 +10,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.hdcy.app.R;
+import com.hdcy.app.fragment.second.Fragment4TabComment;
+import com.hdcy.app.fragment.second.Fragment4TabVedioBrief;
 import com.hdcy.app.uvod.preference.Log2FileUtil;
 import com.hdcy.app.uvod.preference.Settings;
 import com.hdcy.app.uvod.ui.UPlayer;
@@ -23,14 +30,26 @@ import com.hdcy.app.uvod.ui.USettingMenuView;
 import com.hdcy.app.uvod.ui.base.UMenuItem;
 import com.ucloud.player.widget.v2.UVideoView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.yokeyword.fragmentation.SupportActivity;
+
 /**
  * 视频点播 需要的aciivty
  */
-public class Demo1Activity extends FragmentActivity implements USettingMenuView.Callback, UVideoView.Callback {
+public class Activity4VedioDetail extends SupportActivity implements USettingMenuView.Callback, UVideoView.Callback {
 	UPlayer mPlayer;
 	private String mUri;
 	Settings mSettings;
 	private static final int MSG_INIT_PLAY = 0;
+
+	private Toolbar mToolbar;
+	private TabLayout mTab;
+	private ViewPager mViewPager;
+
+	private List<Fragment> mFragments=new ArrayList<>();
+
 
 
 	private class UiHandler extends  Handler {
@@ -62,6 +81,26 @@ public class Demo1Activity extends FragmentActivity implements USettingMenuView.
 		mPlayer.setVideoPath(mUri);
 		mPlayer.setScreenOriention(UPlayer.SCREEN_ORIENTATION_SENSOR);
 		mPlayer.showNavigationBar(0);
+
+		initView();
+
+	}
+
+	private void initView() {
+
+		mTab = (TabLayout) this.findViewById(R.id.uvod_tab);
+		mViewPager = (ViewPager) this.findViewById(R.id.uvod_viewPager);
+
+		mTab.addTab(mTab.newTab());
+		mTab.addTab(mTab.newTab());
+
+		mFragments.add(Fragment4TabVedioBrief.newInstance("视频简介"));
+//		called with: tagId = [630240], target = [article]
+		mFragments.add(Fragment4TabComment.newInstance("630240","article"));
+
+		mViewPager.setAdapter(new ViewPageFragmentAdapter(getSupportFragmentManager()));
+		mTab.setupWithViewPager(mViewPager);
+
 	}
 
 	@Override
@@ -184,4 +223,41 @@ public class Demo1Activity extends FragmentActivity implements USettingMenuView.
 			}
 		}
 	};
+
+
+	//###################################非视频业务#####################################################
+
+
+	public class ViewPageFragmentAdapter extends FragmentPagerAdapter {
+
+
+
+		public ViewPageFragmentAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+
+			return mFragments.get(position);
+		}
+
+		@Override
+		public int getCount() {
+			return 2;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			if(position==0){
+				return "视频简介";
+			}else {
+				return "评论";
+			}
+		}
+
+
+	}
+
 }
+

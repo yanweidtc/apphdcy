@@ -1,4 +1,4 @@
-package com.hdcy.app.fragment.first;
+package com.hdcy.app.fragment.second;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,11 +23,11 @@ import android.widget.Toast;
 
 import com.hdcy.app.R;
 import com.hdcy.app.adapter.CommentListViewFragmentAdapter;
-import com.hdcy.app.basefragment.BaseBackFragment;
+import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.TabSelectedEvent;
-import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Replys;
+import com.hdcy.app.model.RootListInfo;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -44,11 +44,9 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 
 /**
- * Created by WeiYanGeorge on 2016-08-23.
+ * 视频 评论
  */
-
-public class CommentListFragment extends BaseBackFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
-    private static final String TAG = "CommentListFragment";
+public class Fragment4TabComment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
     private ListView mRecy;
     private BGARefreshLayout mRefreshLayout;
     private boolean mAtTop = true;
@@ -98,9 +96,8 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
     private boolean isLast;
 
 
-    public static CommentListFragment newInstance(String tagId ,String target) {
-        Log.d(TAG, "newInstance() called with: " + "tagId = [" + tagId + "], target = [" + target + "]");
-        CommentListFragment fragment = new CommentListFragment();
+    public static Fragment4TabComment newInstance(String tagId , String target) {
+        Fragment4TabComment fragment = new Fragment4TabComment();
         Bundle bundle = new Bundle();
         bundle.putString("param", tagId);
         bundle.putString("param1", target);
@@ -111,7 +108,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_commentlist, container, false);
+        View view = inflater.inflate(R.layout.fragment_second_tab_vedio_comment, container, false);
         EventBus.getDefault().register(this);
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -133,11 +130,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
         View headview = View.inflate(getContext(),R.layout.item_comment_top,null);
         mRecy.addHeaderView(headview);
 
-        title = (TextView) view.findViewById(R.id.toolbar_title);
-        title.setText("评论");
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        initToolbarNav(mToolbar);
 
         sendButton = (Button) view.findViewById(R.id.bt_send);
 
@@ -312,13 +305,13 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
         NetHelper.getInstance().GetCommentsList(tagId,target, pagecount, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                    List<CommentsContent> commentListFragmentListtemp = responseInfo.getCommentsContentList();
-                    commentsList.addAll(commentListFragmentListtemp);
-                    rootobjet = responseInfo.getRootListInfo();
-                    isLast = rootobjet.isLast();
-                    Log.e("CommentisLast",isLast+""+tagId);
-                    Log.e("CommentListsize", commentsList.size() + "");
-                    setData();
+                List<CommentsContent> Fragment4TabCommentListtemp = responseInfo.getCommentsContentList();
+                commentsList.addAll(Fragment4TabCommentListtemp);
+                rootobjet = responseInfo.getRootListInfo();
+                isLast = rootobjet.isLast();
+                Log.e("CommentisLast",isLast+""+tagId);
+                Log.e("CommentListsize", commentsList.size() + "");
+                setData();
             }
 
             @Override
@@ -374,6 +367,4 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
             }
         });
     }
-
-
 }

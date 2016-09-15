@@ -129,34 +129,7 @@ public class Fragment4TabComment extends BaseFragment implements BGARefreshLayou
 
         View headview = View.inflate(getContext(),R.layout.item_comment_top,null);
         mRecy.addHeaderView(headview);
-
-
-
         sendButton = (Button) view.findViewById(R.id.bt_send);
-
-    }
-
-    private void setListener() {
-
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replyid = null;
-                targetid = tagId;
-                ShowInputDialog();
-            }
-        });
-
-
-    }
-
-
-    private void initData() {
-        GetCommentsList();
-    }
-
-    private void setData() {
 
         mAdapter = new CommentListViewFragmentAdapter(getContext(),commentsList);
         mRecy.setAdapter(mAdapter);
@@ -181,6 +154,31 @@ public class Fragment4TabComment extends BaseFragment implements BGARefreshLayou
 
             }
         });
+
+    }
+
+    private void setListener() {
+
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replyid = null;
+                targetid = tagId;
+                ShowInputDialog();
+            }
+        });
+
+
+    }
+
+
+    private void initData() {
+        GetCommentsList();
+    }
+
+    private void setData() {
+        mAdapter.notifyDataSetChanged();
         mRefreshLayout.endLoadingMore();
 
     }

@@ -24,6 +24,7 @@ import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
+import com.hdcy.app.vedio.DemoMainActivity;
 import com.hdcy.app.view.NetworkImageHolderView;
 import com.hdcy.base.utils.SizeUtils;
 import com.hdcy.base.utils.net.NetHelper;
@@ -155,7 +156,6 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                showToast("position = "+position);
 
                 if(!SystemUtil.isNetworkConnected(getActivity())) {
                     Toast.makeText(getActivity(), "当前网络不可用.", Toast.LENGTH_SHORT).show();
@@ -173,6 +173,9 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
                         break;
                 }
 
+
+                if(position==1){
+                    showToast("position  = "+position +"  点播 ");
                     Intent intent = new Intent();
                     intent.setAction("com.hdcy.app.uvod.impl.Activity4VedioDetail");
                     intent.putExtra("title","title");
@@ -180,7 +183,15 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 //			intent.putExtra("videoPath", "http://ulive-record.ufile.ucloud.com.cn/101841470662011.m3u8");
 //			intent.putExtra("videoPath", "http://uc-hls.ufile.ucloud.cn/1470744319684927_05v3.m3u8");
                     startActivity(intent);
+                }else{
 
+                    // 开始直播
+                    Intent intent =new Intent();
+                    intent.setClass(getActivity(), DemoMainActivity.class);
+                    startActivity(intent);
+
+
+                }
 
             }
         });

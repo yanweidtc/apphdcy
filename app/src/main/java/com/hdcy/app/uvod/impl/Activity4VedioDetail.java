@@ -106,7 +106,7 @@ public class Activity4VedioDetail extends SupportActivity implements USettingMen
 	@Override
 	protected void onCreate(Bundle bundles) {
 		super.onCreate(bundles);
-		setContentView(R.layout.activity_video_demo1);
+		setContentView(R.layout.activity_video_detial);
 		mSettings = new Settings(this);
 
 		if (mSettings.isOpenLogRecoder()) {

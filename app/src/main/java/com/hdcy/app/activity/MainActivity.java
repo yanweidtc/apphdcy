@@ -25,6 +25,9 @@ public class MainActivity extends SupportActivity {
             loadRootFragment(R.id.fl_container_activity1, MainFragment.newInstance());
         }
 
+        //注册失败会抛出HyphenateException
+//        EMClient.getInstance().createAccount(username, pwd);//同步方法
+
     }
 
     @Override

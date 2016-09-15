@@ -13,7 +13,7 @@ import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.first.FirstFragment;
 import com.hdcy.app.fragment.fourth.FourthFragment;
 import com.hdcy.app.fragment.third.ThirdsFragment;
-import com.hdcy.app.fragment.third.second.SecondFragment;
+import com.hdcy.app.fragment.second.SecondFragment;
 import com.hdcy.app.view.BottomBar;
 import com.hdcy.app.view.BottomBarTab;
 

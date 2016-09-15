@@ -17,8 +17,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 
-public class Demo2 extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, UVideoView.Callback {
-	public static final String TAG = Demo2.class.getSimpleName();
+public class Demo2Activity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, UVideoView.Callback {
+	public static final String TAG = Demo2Activity.class.getSimpleName();
 
 	UVideoView mVideoView;
 	RadioGroup mDefinitionRadioGroup;
@@ -162,8 +162,8 @@ public class Demo2 extends AppCompatActivity implements RadioGroup.OnCheckedChan
 					} else if (decoder == UVideoView.DECODER_VOD_SW) {
 						mDecoderRadioGroup.check(R.id.sw_radio_button);
 					}
-					mDecoderRadioGroup.setOnCheckedChangeListener(Demo2.this);
-					mDefinitionRadioGroup.setOnCheckedChangeListener(Demo2.this);
+					mDecoderRadioGroup.setOnCheckedChangeListener(Demo2Activity.this);
+					mDefinitionRadioGroup.setOnCheckedChangeListener(Demo2Activity.this);
 				}
 //						mVideoView.setVolume(0,0);
 				break;

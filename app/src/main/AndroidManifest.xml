@@ -89,7 +89,7 @@
         </activity>
 
         <activity
-            android:name=".uvod.impl.Demo1"
+            android:name=".uvod.impl.Demo1Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -97,7 +97,7 @@
             android:theme="@style/FullscreenTheme" >
 
             <intent-filter>
-                <action android:name="ucloud.intent.action.uvod.example.demo1" />
+                <action android:name="com.hdcy.app.uvod.impl.Demo1Activity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -113,7 +113,7 @@
         </activity>
 
         <activity
-            android:name=".uvod.impl.Demo2"
+            android:name=".uvod.impl.Demo2Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -121,7 +121,7 @@
             android:theme="@style/FullscreenTheme" >
 
             <intent-filter>
-                <action android:name="ucloud.intent.action.uvod.example.demo2" />
+                <action android:name="com.hdcy.app.uvod.impl.Demo2Activity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 

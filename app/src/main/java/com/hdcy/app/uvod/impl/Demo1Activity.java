@@ -23,7 +23,10 @@ import com.hdcy.app.uvod.ui.USettingMenuView;
 import com.hdcy.app.uvod.ui.base.UMenuItem;
 import com.ucloud.player.widget.v2.UVideoView;
 
-public class Demo1 extends FragmentActivity implements USettingMenuView.Callback, UVideoView.Callback {
+/**
+ * 视频点播 需要的aciivty
+ */
+public class Demo1Activity extends FragmentActivity implements USettingMenuView.Callback, UVideoView.Callback {
 	UPlayer mPlayer;
 	private String mUri;
 	Settings mSettings;
@@ -58,6 +61,7 @@ public class Demo1 extends FragmentActivity implements USettingMenuView.Callback
 		mPlayer.setOnSettingMenuItemSelectedListener(this);
 		mPlayer.setVideoPath(mUri);
 		mPlayer.setScreenOriention(UPlayer.SCREEN_ORIENTATION_SENSOR);
+		mPlayer.showNavigationBar(0);
 	}
 
 	@Override

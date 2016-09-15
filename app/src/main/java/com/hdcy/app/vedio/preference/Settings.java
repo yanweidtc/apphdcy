@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.hdcy.app.R;
-import com.hdcy.app.vedio.AppContext;
+import com.hdcy.base.application.BaseApplication;
 import com.ucloud.live.UEasyStreaming;
 
 
@@ -133,7 +133,7 @@ public class Settings {
 
     public String getPusblishStreamId() {
         String key = "pref.video_publish_and_play_id";
-        return mSharedPreferences.getString(key, AppContext.getRandomStreamId() +"");
+        return mSharedPreferences.getString(key, BaseApplication.getRandomStreamId() +"");
     }
 
     @Override

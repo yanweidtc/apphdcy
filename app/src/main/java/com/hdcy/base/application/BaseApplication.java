@@ -6,12 +6,13 @@ import android.os.Message;
 import android.support.multidex.MultiDexApplication;
 
 import com.hdcy.base.utils.BaseUtils;
-import com.hdcy.base.utils.CrashHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.ucloud.live.UEasyStreaming;
 
-import org.xutils.common.util.LogUtil;
 import org.xutils.x;
+
+import java.util.Random;
 
 public class BaseApplication extends MultiDexApplication {
 
@@ -29,6 +30,10 @@ public class BaseApplication extends MultiDexApplication {
         super.onCreate();
         instance = this;
         initData();
+        // 视频播放
+        UEasyStreaming.initStreaming("publish3-key");
+        UEasyStreaming.syncMobileConfig(this, 3600 * 24);
+
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -102,6 +107,13 @@ public class BaseApplication extends MultiDexApplication {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public static int getRandomStreamId() {
+        Random random = new Random();
+        int randint =(int)Math.floor((random.nextDouble()*10000.0 + 10000.0));
+        return randint;
     }
 
 }

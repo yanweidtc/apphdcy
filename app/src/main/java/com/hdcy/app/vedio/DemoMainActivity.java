@@ -17,6 +17,7 @@ import com.hdcy.app.vedio.play.VideoActivity;
 import com.hdcy.app.vedio.preference.Settings;
 import com.hdcy.app.vedio.preference.SettingsActivity;
 import com.hdcy.app.vedio.upload.PublishDemo;
+import com.hdcy.base.application.BaseApplication;
 
 
 public class DemoMainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -36,7 +37,7 @@ public class DemoMainActivity extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(toolbar);
         initView();
         if (publishStreamEdtx != null && mSettings != null) {
-            String streamId = AppContext.getRandomStreamId() +"";
+            String streamId = BaseApplication.getRandomStreamId() +"";
            if (!TextUtils.isEmpty(streamId)) {
                 publishStreamEdtx.setText(streamId);
             }

@@ -5,7 +5,7 @@
         <item>demo2</item>
     </string-array>
     <string-array name="uvod_demoDirects">
-        <item>ucloud.intent.action.uvod.example.demo1</item>
-        <item>ucloud.intent.action.uvod.example.demo2</item>
+        <item>com.hdcy.app.uvod.impl.Demo1Activity</item>
+        <item>com.hdcy.app.uvod.impl.Demo2Activity</item>
     </string-array>
 </resources>

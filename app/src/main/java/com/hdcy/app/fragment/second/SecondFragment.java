@@ -184,7 +184,8 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 		}
 
         if(bean!=null){
-            if(!bean.live){// 是否为直播
+//            if(bean.live){// 是否为直播
+            if(bean.id==631533){// 让第一个条数据 进行直播
 				// 开始直播
                 Intent intent =new Intent();
 

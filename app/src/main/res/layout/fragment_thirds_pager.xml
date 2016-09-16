@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <include layout="@layout/toolbar"/>
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ListView
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFF4F4F4"
+            android:scrollbars="vertical">
+        <com.hdcy.app.view.NoScrollListView
             android:id="@+id/lv_mine_activity"
+            android:divider="@null"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:clipChildren="true"
-            android:overScrollMode="never"
+            android:clipChildren="false"
             android:paddingLeft="-12dp"
             android:paddingRight="-12dp"/>
+        </ScrollView>>
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>>
-
-</LinearLayout>
+</LinearLayout>>
+</FrameLayout>

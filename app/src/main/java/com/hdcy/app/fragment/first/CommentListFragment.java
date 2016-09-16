@@ -28,6 +28,7 @@ import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Replys;
+import com.hdcy.app.view.NoScrollListView;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -48,8 +49,9 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  */
 
 public class CommentListFragment extends BaseBackFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
+
+    private NoScrollListView mRecy;
     private static final String TAG = "CommentListFragment";
-    private ListView mRecy;
     private BGARefreshLayout mRefreshLayout;
     private boolean mAtTop = true;
 
@@ -125,7 +127,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
     }
 
     private void initView(View view) {
-        mRecy = (ListView) view.findViewById(R.id.recy);
+        mRecy = (NoScrollListView) view.findViewById(R.id.recy);
         mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refresh_layout);
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));

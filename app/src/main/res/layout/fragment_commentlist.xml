@@ -13,8 +13,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="7">
-
-        <ListView
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/ScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical">
+        <com.hdcy.app.view.NoScrollListView
             android:id="@+id/recy"
             android:divider="@null"
             android:layout_width="match_parent"
@@ -22,7 +26,9 @@
             android:layout_weight="1"
             android:clipChildren="false"
             android:paddingLeft="-12dp"
-            android:paddingRight="-12dp"/>
+            android:paddingRight="-12dp"
+            android:paddingBottom="12dp"/>
+            </ScrollView>>
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
     <LinearLayout

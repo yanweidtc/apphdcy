@@ -3,12 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include layout="@layout/toolbar"/>
+
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ListView
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFF4F4F4"
+            android:scrollbars="vertical">
+    <com.hdcy.app.view.NoScrollListView
         android:id="@+id/lv_mine_activity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,6 +24,7 @@
         android:overScrollMode="never"
         android:paddingLeft="-12dp"
         android:paddingRight="-12dp"/>
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>>
+        </ScrollView>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
 </LinearLayout>

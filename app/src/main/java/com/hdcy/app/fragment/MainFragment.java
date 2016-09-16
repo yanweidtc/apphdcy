@@ -57,7 +57,7 @@ public class MainFragment extends BaseFragment {
         if(savedInstanceState == null){
             mFragments[FIRST] = FirstFragment.newInstance();
             mFragments[SECOND] = SecondFragment.newInsatance();
-            mFragments[THIRD] = ThirdsFragment.newInsatance();
+            mFragments[THIRD] = ThirdsFragment.newInstance();
             mFragments[FOURTH] = FourthFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_tab_container,FIRST,mFragments[FIRST],
                     mFragments[SECOND],

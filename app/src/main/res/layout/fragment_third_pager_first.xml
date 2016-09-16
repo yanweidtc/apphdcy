@@ -60,7 +60,7 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
-            >
+
 
             <com.hdcy.app.view.NoScrollListView
                 android:id="@+id/lv_activity"

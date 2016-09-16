@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,14 +27,18 @@ import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.uvod.impl.Activity4VedioDetail;
 import com.hdcy.app.view.NetworkImageHolderView;
+import com.hdcy.base.BaseInfo;
+import com.hdcy.base.utils.DateUtil;
 import com.hdcy.base.utils.SizeUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
+import com.squareup.picasso.Picasso;
 import com.ucloud.common.util.SystemUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
@@ -118,6 +123,19 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
             @Override
             public void convert(ViewHolder holder, Bean4VedioBanner bean) {
 
+                holder.setText(R.id.tv_activity_title,bean.name);
+                Date date= new Date(bean.startTime);
+                holder.setText(R.id.tv_activity_desc, DateUtil.date2Str(date,"yyyy-MM-dd / HH:mm"));
+
+                ImageView iv=holder.getView(R.id.iv_activity_background);
+                Picasso.with(getActivity()).load(bean.image)
+                        .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
+                        .error(BaseInfo.PICASSO_ERROR)
+//                        .resize(240,240)
+//                        .centerCrop()
+                        .into(iv);
+
+
             }
         };
 
@@ -138,47 +156,47 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                if(!SystemUtil.isNetworkConnected(getActivity())) {
-                    Toast.makeText(getActivity(), "当前网络不可用.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                switch (SystemUtil.getConnectedType(getActivity())) {
-                    case ConnectivityManager.TYPE_MOBILE:
-                        Toast.makeText(getActivity(), "当前网络: mobile", Toast.LENGTH_SHORT).show();
-                        break;
-                    case ConnectivityManager.TYPE_ETHERNET:
-                        Toast.makeText(getActivity(), "当前网络: ehternet", Toast.LENGTH_SHORT).show();
-                        break;
-                    case ConnectivityManager.TYPE_WIFI:
-                        Toast.makeText(getActivity(), "当前网络: wifi", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
                 // 这里header为banner index 从1 开始
                 Bean4VedioBanner bean=mDatas4Contents.get(position-1);
-                if(bean!=null){
-//                    if(bean.live){// 是否为直播
-                    if(1==position){// test
-                        // 开始直播
-                        Intent intent =new Intent();
-//                        intent.setClass(getActivity(), DemoMainActivity.class);
-                        intent.setClass(getActivity(), Activity4Chat.class);
-                        startActivity(intent);
 
-
-                    }else{// 点播
-
-                        showToast("position  = "+position +"  点播 ");
-
-                        Activity4VedioDetail.getInstance(getActivity(),bean);
-
-                    }
-
-                }
+                goToOneDetail(bean);
 
             }
         });
+    }
+
+    private void goToOneDetail(Bean4VedioBanner bean) {
+        if(!SystemUtil.isNetworkConnected(getActivity())) {
+			Toast.makeText(getActivity(), "当前网络不可用.", Toast.LENGTH_SHORT).show();
+			return;
+		}
+        switch (SystemUtil.getConnectedType(getActivity())) {
+			case ConnectivityManager.TYPE_MOBILE:
+				Toast.makeText(getActivity(), "当前网络: mobile", Toast.LENGTH_SHORT).show();
+				break;
+			case ConnectivityManager.TYPE_ETHERNET:
+				Toast.makeText(getActivity(), "当前网络: ehternet", Toast.LENGTH_SHORT).show();
+				break;
+			case ConnectivityManager.TYPE_WIFI:
+				Toast.makeText(getActivity(), "当前网络: wifi", Toast.LENGTH_SHORT).show();
+				break;
+		}
+
+        if(bean!=null){
+            if(bean.live){// 是否为直播
+				// 开始直播
+				Intent intent =new Intent();
+//                        intent.setClass(getActivity(), DemoMainActivity.class);
+				intent.setClass(getActivity(), Activity4Chat.class);
+				startActivity(intent);
+
+
+			}else{// 点播
+				Activity4VedioDetail.getInstance(getActivity(),bean);
+
+			}
+
+		}
     }
 
     private void setData(){
@@ -303,12 +321,12 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
     @Override
     public void onItemClick(int position) {
         showToast(" banner  item  onclick");
+        goToOneDetail(mDatas4Banner.get(position));
+
     }
 
     public  void showToast(String content){
         Toast.makeText(getActivity(),content,Toast.LENGTH_SHORT).show();
-
-
 
 
     }

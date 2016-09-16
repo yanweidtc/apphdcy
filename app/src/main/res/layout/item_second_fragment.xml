@@ -27,7 +27,7 @@
         android:gravity="center_vertical"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:text="直播"
         android:textColor="#FFFFFF"/>
 
@@ -38,8 +38,8 @@
         android:gravity="center_vertical"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tv_activity_title"
-        android:layout_marginTop="20dp"
-        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
         android:text="desc"
         android:textColor="#FFFFFF"/>
 

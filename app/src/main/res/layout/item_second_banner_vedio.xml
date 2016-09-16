@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/banner_iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:src="@drawable/ic_default_adimage"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/banner_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="成长史"
+        android:gravity="center"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/banner_tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始时间：03:09"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="14sp"
+        android:gravity="center"
+        />
+
+
+
+</LinearLayout>

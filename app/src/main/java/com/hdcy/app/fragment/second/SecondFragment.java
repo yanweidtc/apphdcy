@@ -21,10 +21,10 @@ import com.hdcy.app.R;
 import com.hdcy.app.adapter.CommonAdapter;
 import com.hdcy.app.adapter.ViewHolder;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
+import com.hdcy.app.chat.Activity4Chat;
 import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.uvod.impl.Activity4VedioDetail;
-import com.hdcy.app.vedio.DemoMainActivity;
 import com.hdcy.app.view.NetworkImageHolderView;
 import com.hdcy.base.utils.SizeUtils;
 import com.hdcy.base.utils.net.NetHelper;
@@ -159,10 +159,12 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
                 // 这里header为banner index 从1 开始
                 Bean4VedioBanner bean=mDatas4Contents.get(position-1);
                 if(bean!=null){
-                    if(bean.live){// 是否为直播
+//                    if(bean.live){// 是否为直播
+                    if(1==position){// test
                         // 开始直播
                         Intent intent =new Intent();
-                        intent.setClass(getActivity(), DemoMainActivity.class);
+//                        intent.setClass(getActivity(), DemoMainActivity.class);
+                        intent.setClass(getActivity(), Activity4Chat.class);
                         startActivity(intent);
 
 

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.hdcy.app.R;
 import com.hdcy.app.fragment.MainFragment;
+import com.hdcy.base.utils.BaseUtils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
@@ -29,8 +30,8 @@ public class MainActivity extends SupportActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
-        String username="chiwenheng";
-        String pwd="123456";
+//        String username="chiwenheng";
+//        String pwd="123456";
 
 
         //注册失败会抛出HyphenateException
@@ -40,7 +41,7 @@ public class MainActivity extends SupportActivity {
 //            e.printStackTrace();
 //        }
 
-        EMClient.getInstance().login(username,pwd,new EMCallBack() {//回调
+        EMClient.getInstance().login(BaseUtils.userName,BaseUtils.userPwd,new EMCallBack() {//回调
             @Override
             public void onSuccess() {
                 EMClient.getInstance().groupManager().loadAllGroups();

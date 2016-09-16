@@ -6,12 +6,15 @@ import android.os.Message;
 import android.support.multidex.MultiDexApplication;
 
 import com.hdcy.base.utils.BaseUtils;
-import com.hdcy.base.utils.CrashHandler;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.ucloud.live.UEasyStreaming;
 
-import org.xutils.common.util.LogUtil;
 import org.xutils.x;
+
+import java.util.Random;
 
 public class BaseApplication extends MultiDexApplication {
 
@@ -29,12 +32,23 @@ public class BaseApplication extends MultiDexApplication {
         super.onCreate();
         instance = this;
         initData();
+        // 视频播放
+        UEasyStreaming.initStreaming("publish3-key");
+        UEasyStreaming.syncMobileConfig(this, 3600 * 24);
         handler.post(new Runnable() {
             @Override
             public void run() {
                 initDataThread();
             }
         });
+
+        EMOptions options = new EMOptions();
+        // 默认添加好友时，是不需要验证的，改成需要验证
+        options.setAcceptInvitationAlways(false);
+        //初始化
+        EMClient.getInstance().init(this, options);
+        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
+        EMClient.getInstance().setDebugMode(true);
     }
 
     private void initData() {
@@ -47,6 +61,7 @@ public class BaseApplication extends MultiDexApplication {
         // 创建默认的ImageLoader配置参数
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(instance);
         ImageLoader.getInstance().init(configuration);
+
     }
 
     private void initDataThread() {
@@ -102,6 +117,13 @@ public class BaseApplication extends MultiDexApplication {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    public static int getRandomStreamId() {
+        Random random = new Random();
+        int randint =(int)Math.floor((random.nextDouble()*10000.0 + 10000.0));
+        return randint;
     }
 
 }

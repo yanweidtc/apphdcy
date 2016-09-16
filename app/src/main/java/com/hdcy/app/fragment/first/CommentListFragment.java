@@ -51,6 +51,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 public class CommentListFragment extends BaseBackFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
 
     private NoScrollListView mRecy;
+    private static final String TAG = "CommentListFragment";
     private BGARefreshLayout mRefreshLayout;
     private boolean mAtTop = true;
 
@@ -100,6 +101,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
 
 
     public static CommentListFragment newInstance(String tagId ,String target) {
+        Log.d(TAG, "newInstance() called with: " + "tagId = [" + tagId + "], target = [" + target + "]");
         CommentListFragment fragment = new CommentListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("param", tagId);

@@ -47,7 +47,6 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
                                 ,OnItemClickListener
 {
 
-
     private static final String TAG = "SecondFragment";
 
     private Toolbar mToolbar;

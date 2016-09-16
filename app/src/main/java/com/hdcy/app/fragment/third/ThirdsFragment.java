@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,12 +17,15 @@ import android.widget.Toast;
 
 import com.hdcy.app.R;
 import com.hdcy.app.adapter.ThirdPageFragmentAdapter;
+import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.event.StartBrotherEvent;
+import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.fourth.FourthFragment;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
+import com.hdcy.app.view.NoScrollListView;
 import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.SizeUtils;
 import com.hdcy.base.utils.net.NetHelper;
@@ -31,6 +35,7 @@ import com.hdcy.base.utils.net.NetResponseInfo;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +47,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by WeiYanGeorge on 2016-09-10.
  */
 
-public class ThirdsFragment extends BaseLazyMainFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
+public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
 
     private Toolbar mToolbar;
     private TextView title;
@@ -51,7 +56,7 @@ public class ThirdsFragment extends BaseLazyMainFragment implements BGARefreshLa
 
     private ThirdPageFragmentAdapter mAdapter;
 
-    private ListView mListView;
+    private NoScrollListView mListView;
 
     private List<ActivityContent> activityContentList = new ArrayList<>();
     private RootListInfo rootListInfo = new RootListInfo();
@@ -67,7 +72,9 @@ public class ThirdsFragment extends BaseLazyMainFragment implements BGARefreshLa
     private ImageView iv_leader_background;
     private TextView tv_leader_name;
 
-    public static ThirdsFragment newInsatance(){
+    private boolean mAtTop = true;
+
+    public static ThirdsFragment newInstance(){
         Bundle args = new Bundle();
         ThirdsFragment fragment = new ThirdsFragment();
         fragment.setArguments(args);
@@ -81,16 +88,16 @@ public class ThirdsFragment extends BaseLazyMainFragment implements BGARefreshLa
         bgimgWidth = SizeUtils.getScreenWidth();
         bgimgHeight = SizeUtils.dpToPx(200);
         initView(view);
+
         initData();
         setListener();
         return view;
     }
 
     private void initView(View view){
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         title = (TextView) view.findViewById(R.id.toolbar_title);
         title.setText("活动");
-        mListView = (ListView) view.findViewById(R.id.lv_mine_activity);
+        mListView = (NoScrollListView) view.findViewById(R.id.lv_mine_activity);
         mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
@@ -106,22 +113,32 @@ public class ThirdsFragment extends BaseLazyMainFragment implements BGARefreshLa
     }
 
     private void setListener(){
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+/*        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(activityContentList.get(position).getType().equalsIgnoreCase("ACTIVITY")){
-                    String ActivityId = activityContentList.get(position).getId()+"";
-                    EventBus.getDefault().post(new StartBrotherEvent(OfflineActivityFragment.newInstance(ActivityId)));
-                }else {
-                    return;
-                }
+                    if(position == 0){
+                        return;
+                    }else {
+                        String ActivityId = activityContentList.get(position - 1).getId() + "";
+                        EventBus.getDefault().post(new StartBrotherEvent(OfflineActivityFragment.newInstance(ActivityId)));
+                    }
             }
-        });
+        });*/
+
+
     }
 
     private void setData(){
-        mAdapter = new ThirdPageFragmentAdapter(getActivity(), activityContentList);
+        mAdapter = new ThirdPageFragmentAdapter(getContext(), activityContentList);
         mListView.setAdapter(mAdapter);
+        mRefreshLayout.endLoadingMore();
+        mAdapter.setOnItemClickListener(new ThirdPageFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItem(int position) {
+                String ActivityId = activityContentList.get(position).getId() + "";
+                EventBus.getDefault().post(new StartBrotherEvent(OfflineActivityFragment.newInstance(ActivityId)));
+            }
+        });
         mRefreshLayout.endLoadingMore();
     }
     private void setData1(){
@@ -158,13 +175,30 @@ public class ThirdsFragment extends BaseLazyMainFragment implements BGARefreshLa
 
     }
 
+    @Subscribe
+    public void onTabSelectedEvent(TabSelectedEvent event) {
+        if (mAtTop) {
+            mRefreshLayout.beginRefreshing();
+        } else {
+
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mListView.setAdapter(null);
+
+    }
+
     private void GetActivityList(){
         NetHelper.getInstance().GetPaticipationList("ACTIVITY", pagecount, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 List<ActivityContent> activityContentstemp = responseInfo.getActivityContentList();
-                rootListInfo = responseInfo.getRootListInfo();
                 activityContentList.addAll(activityContentstemp);
+                rootListInfo = responseInfo.getRootListInfo();
                 isLast = rootListInfo.isLast();
                 Log.e("ActivityContentList",activityContentList.size()+"");
                 setData();
@@ -203,8 +237,4 @@ public class ThirdsFragment extends BaseLazyMainFragment implements BGARefreshLa
     }
 
 
-    @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
-
-    }
 }

@@ -133,7 +133,8 @@
         android:background="@color/gray"
         android:orientation="vertical"
         android:layout_marginRight="70px"
-        android:layout_marginLeft="100px">
+        android:layout_marginLeft="100px"
+        android:layout_marginBottom="20dp">
 
         <com.hdcy.app.view.AdaHeightListView
             android:id="@+id/lv_replys"

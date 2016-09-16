@@ -147,10 +147,9 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
         replysList = item.getReplys();
         Log.e("Replyssize", replysList.size() + "");
        // holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
-/*        if(replysList.isEmpty()){
+        if(replysList.isEmpty()){
             holder.lv_replys.setVisibility(View.GONE);
-        }*/
-
+        }
         replysAdapter = new ReplysAdapter(context, replysList);
         holder.lv_replys.setAdapter(replysAdapter);
 

@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hdcy.app.OnItemClickListener;
 import com.hdcy.app.R;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.Content;
@@ -38,6 +40,12 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
     private int width;
 
     private int imgheight;
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
 
     //WindowManager wm = (WindowManager) context.get
 
@@ -100,6 +108,18 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
             holder.iv_activity_status.setVisibility(View.GONE);
         }
         holder.tv_activity_persons_count.setText(item.getHot()+"");
+
+        holder.fl_item_activity_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int tag= (int) holder.getTag();
+                if(tag == position){
+                    if(onItemClickListener !=null){
+                        onItemClickListener.onItem(position);
+                    }
+                }
+            }
+        });
     }
 
     public class ViewHolder {
@@ -108,6 +128,7 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
 
         private TextView tv_activity_title, tv_activity_subtitle,tv_activity_persons_count;
         private ImageView iv_activity_background,iv_activity_status;
+        private FrameLayout fl_item_activity_list;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
 
@@ -116,6 +137,7 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
             iv_activity_background = (ImageView) view.findViewById(R.id.iv_activity_background);
             iv_activity_status =(ImageView) view.findViewById(R.id.iv_activity_status);
             tv_activity_persons_count =(TextView) view.findViewById(R.id.tv_activity_persons_count);
+            fl_item_activity_list =(FrameLayout) view.findViewById(R.id.fl_item_activity_list);
         }
 
         //@ViewInject(R.id.tv_content)
@@ -128,6 +150,14 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
             this.tag = tag;
         }
 
+    }
+
+    public interface OnItemClickListener{
+        void onItem(int position);
+    }
+
+    public void OnItemListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
     }
 
 }

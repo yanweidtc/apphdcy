@@ -21,8 +21,7 @@ import com.hdcy.app.R;
 import com.hdcy.app.adapter.CommonAdapter;
 import com.hdcy.app.adapter.ViewHolder;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
-import com.hdcy.app.model.ActivityContent;
-import com.hdcy.app.model.LeaderInfo;
+import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.vedio.DemoMainActivity;
 import com.hdcy.app.view.NetworkImageHolderView;
@@ -34,7 +33,6 @@ import com.hdcy.base.utils.net.NetResponseInfo;
 import com.ucloud.common.util.SystemUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
@@ -48,6 +46,9 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
                                 ,OnItemClickListener
 {
 
+
+    private static final String TAG = "SecondFragment";
+
     private Toolbar mToolbar;
     private TextView title;
 
@@ -57,12 +58,14 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 
     private ListView mListView;
 
-    private List<ActivityContent> activityContentList = new ArrayList<>();
+    private List<Bean4VedioBanner> mDatas4Contents = new ArrayList<>();
 
-    private List<String> mDatas = new ArrayList<>();
+    private List<Bean4VedioBanner> mDatas4Banner = new ArrayList<>();
+
+
+
 
     private RootListInfo rootListInfo = new RootListInfo();
-    private List<LeaderInfo> leaderInfoList = new ArrayList<>();
 
     private boolean isLast;
 
@@ -75,15 +78,6 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
     private ConvenientBanner convenientBanner;//顶部广告栏控件
 
     private ArrayList<Integer> localImages = new ArrayList<Integer>();
-    private List<String> networkImages;
-    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
-            "http://d.3987.com/sqmy_131219/001.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
-            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
-            "http://f.hiphotos.baidu.com/image/h%3D200/sign=1478eb74d5a20cf45990f9df460b4b0c/d058ccbf6c81800a5422e5fdb43533fa838b4779.jpg",
-            "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
-    };
 
 
 
@@ -118,23 +112,11 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
         View headview = View.inflate(getContext(),R.layout.item_headerview_second,null);
 
         convenientBanner = (ConvenientBanner) headview.findViewById(R.id.convenientBanner);
-        //网络加载
-        networkImages= Arrays.asList(images);
-        convenientBanner.setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
-            @Override
-            public NetworkImageHolderView createHolder() {
-                return new NetworkImageHolderView();
-            }
-        },networkImages)
-        //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-        .setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
-                //设置指示器的方向
-        .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
-        .setOnItemClickListener(SecondFragment.this);
 
-        mAdapter = new CommonAdapter<String>(getActivity(), mDatas,R.layout.item_second_fragment) {
+
+        mAdapter = new CommonAdapter<Bean4VedioBanner>(getActivity(), mDatas4Contents,R.layout.item_second_fragment) {
             @Override
-            public void convert(ViewHolder holder, String o) {
+            public void convert(ViewHolder holder, Bean4VedioBanner bean) {
 
             }
         };
@@ -147,8 +129,8 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
     }
 
     private void initData(){
-        GetActivityList();
-        GetLeaderInfo();
+        getBannerDatas();
+        getContentList();
     }
 
     private void setListener(){
@@ -198,10 +180,8 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
     }
 
     private void setData(){
-        for (int i = 0; i < 10; i++) {
-            mDatas.add("");
-        }
 
+        mAdapter.notifyDataSetChanged();
         mRefreshLayout.endLoadingMore();
     }
     private void setData1(){
@@ -231,9 +211,9 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        activityContentList.clear();
+        mDatas4Contents.clear();
         pagecount = 0;
-        initData();
+        getContentList();
         mRefreshLayout.endRefreshing();
     }
 
@@ -245,22 +225,33 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
             Toast.makeText(getActivity(), "没有更多的数据了", Toast.LENGTH_SHORT).show();
             return false;
         }else {
-            initData();
+            getContentList();
             return true;
         }
 
     }
-
-    private void GetActivityList(){
-        NetHelper.getInstance().GetPaticipationList("ACTIVITY", pagecount, new NetRequestCallBack() {
+    /** 获取轮播图的数据*/
+    private void getBannerDatas(){
+        NetHelper.getInstance().GetVedioTopBanner(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                List<ActivityContent> activityContentstemp = responseInfo.getActivityContentList();
-                rootListInfo = responseInfo.getRootListInfo();
-                activityContentList.addAll(activityContentstemp);
-                isLast = rootListInfo.isLast();
-                Log.e("ActivityContentList",activityContentList.size()+"");
-                setData();
+                List<Bean4VedioBanner> tempList = responseInfo.vedioBannerList;
+                mDatas4Banner.addAll(tempList);
+                Log.d(TAG,mDatas4Banner.size()+"");
+
+                //网络加载
+                convenientBanner.setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
+                    @Override
+                    public NetworkImageHolderView createHolder() {
+                        return new NetworkImageHolderView();
+                    }
+                },mDatas4Banner)
+                        //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                        .setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+                        //设置指示器的方向
+                        .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+                        .setOnItemClickListener(SecondFragment.this);
+
             }
 
             @Override
@@ -274,13 +265,17 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
             }
         });
     }
-
-    public void GetLeaderInfo(){
-        NetHelper.getInstance().GetLeaderInfo(new NetRequestCallBack() {
+    /** 获取列表的数据*/
+    private void getContentList(){
+        NetHelper.getInstance().getVedioListDatas(pagecount,new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                leaderInfoList = responseInfo.getLeaderInfo();
-                setData1();
+                List<Bean4VedioBanner> tempList = responseInfo.vedioBannerList;
+                rootListInfo = responseInfo.getRootListInfo();
+                mDatas4Contents.addAll(tempList);
+                isLast = rootListInfo.isLast();
+                Log.d(TAG,mDatas4Contents.size()+"");
+                setData();
             }
 
             @Override

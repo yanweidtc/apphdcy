@@ -6,13 +6,14 @@ import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.hdcy.app.R;
+import com.hdcy.app.model.Bean4VedioBanner;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by  chiwenheng
  * 网络图片加载
  */
-public class NetworkImageHolderView implements Holder<String> {
+public class NetworkImageHolderView implements Holder<Bean4VedioBanner> {
     private ImageView imageView;
     @Override
     public View createView(Context context) {
@@ -23,8 +24,10 @@ public class NetworkImageHolderView implements Holder<String> {
     }
 
     @Override
-    public void UpdateUI(Context context,int position, String data) {
+    public void UpdateUI(Context context,int position, Bean4VedioBanner data) {
+        // 先加载默认图片
         imageView.setImageResource(R.drawable.ic_default_adimage);
-        ImageLoader.getInstance().displayImage(data,imageView);
+
+        ImageLoader.getInstance().displayImage(data.image,imageView);
     }
 }

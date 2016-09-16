@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
+import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
@@ -400,6 +401,82 @@ public class NetHelper {
                 JSONArray dataObj = responseInfo.getDataArr();
                 if (dataObj != null){
                     responseInfo.setActivityContentList(JSON.parseArray(dataObj.toString(), ActivityContent.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("activityhot","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activityhot","onfailure");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activityhot","onfailure");
+
+            }
+        });
+    }
+    /**
+     * 得到-- 视频直播 页面 上面 轮播图信息
+     *
+     * @param callBack
+     * @return
+     */
+
+    public Callback.Cancelable GetVedioTopBanner( final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/video");
+//        request.addParam("page",0);
+//        request.addParam("enable","true");
+//        request.addParam("size","10");
+        request.addParam("sort","createdTime,desc");
+        request.addParam("top","true");
+        return request.getObj(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.vedioBannerList=JSON.parseArray(dataObj.opt("content").toString(), Bean4VedioBanner.class);
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("activityhot","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activityhot","onfailure");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("activityhot","onfailure");
+
+            }
+        });
+    }
+    /**
+     * 得到-- 视频直播 页面 下面的列表数据
+     *
+     * @param callBack
+     * @return
+     */
+
+    public Callback.Cancelable getVedioListDatas( int pageIndex, final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/video");
+        request.addParam("page",pageIndex);
+//        request.addParam("enable","false");
+//        request.addParam("size","10");
+//        request.addParam("sort","createdTime,desc");
+        request.addParam("top","false");
+        return request.getObj(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.vedioBannerList=JSON.parseArray(dataObj.optJSONArray("content").toString(), Bean4VedioBanner.class);
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
                 Log.e("activityhot","sucess");

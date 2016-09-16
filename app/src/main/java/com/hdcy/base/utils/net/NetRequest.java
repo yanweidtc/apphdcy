@@ -1,12 +1,9 @@
 package com.hdcy.base.utils.net;
 
-import android.content.Context;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.hdcy.app.model.RootListInfo;
 import com.hdcy.base.BaseData;
-import com.hdcy.base.BaseInfo;
-import com.hdcy.base.utils.BaseUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -165,12 +162,101 @@ public class NetRequest implements BaseData {
 
     /**
      * get请求
+     * 单一对象
+     * @param callBack
+     * @return
+     */
+    public Callback.Cancelable getObj(final NetRequestCallBack callBack) {
+        String str = netRequestInfo.getUrl();
+        netRequestInfo.setUrl(str.substring(0, str.length() - 1));
+        Log.e("testinfo",str);
+        return x.http().get(params, new Callback.ProgressCallback<String>() {
+
+            @Override
+            public void onStarted() {
+                LogUtil.e("onStart");
+                if (callBack != null) {
+                    callBack.onStart();
+                }
+            }
+
+            @Override
+            public void onWaiting() {
+                LogUtil.e("onWaiting");
+                callBack.onWaiting();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                LogUtil.e("onCancelled：" + cex.getMessage());
+                cex.printStackTrace();
+                callBack.onCancelled();
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isDownloading) {
+                LogUtil.e("onLoading：" + current + " - " + total + " == " + (int) ((current * 1.0f / total) * 100) + "%");
+                if (callBack != null) {
+                    callBack.onLoading(total, current, current * 1.0f / total, isDownloading);
+                }
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                netResponseInfo.setResult(result);
+                try {
+                    Log.e("Successmsg",result);
+                    JSONObject  obj = new JSONObject(result);
+                    Log.e("Successmsg1",obj.toString());
+                    Log.e("onSuccess1：" + netRequestInfo.getUrl(),"");
+                    Log.e("onSuccess1：" + netResponseInfo.getResult(),"");
+                    netResponseInfo.setDataObj(obj);
+                    netResponseInfo.rootListInfo=new RootListInfo();
+                    netResponseInfo.rootListInfo.setLast(obj.optBoolean("last"));
+                    netResponseInfo.rootListInfo.setFirst(obj.optBoolean("first"));
+
+                        if (callBack != null) {
+                            callBack.onSuccess(netRequestInfo, netResponseInfo);
+                    }
+                } catch (JSONException e) {
+                    LogUtil.e("onError：" + netRequestInfo.getUrl());
+                    LogUtil.e("onError：" + netResponseInfo.getMessage());
+                    LogUtil.e("onError：" + netResponseInfo.getResult());
+                    if (callBack != null) {
+                        callBack.onError(netRequestInfo, netResponseInfo);
+                    }
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                LogUtil.e("onFailure：" + netRequestInfo.getUrl());
+                LogUtil.e("onFailure：" + ex.getMessage());
+                Log.e("onFailure",netRequestInfo.getUrl());
+//                Log.e("onFailure",ex.getLocalizedMessage());
+                netResponseInfo.setMessage(ex.getMessage());
+                if (callBack != null) {
+                    callBack.onFailure(netRequestInfo, netResponseInfo);
+                }
+                ex.printStackTrace();
+            }
+
+            @Override
+            public void onFinished() {
+                LogUtil.e("onFinished");
+                if (callBack != null) {
+                    callBack.onFinished();
+                }
+            }
+        });
+    }
+    /**
+     * get请求
      * 单一数组
      * @param callBack
      * @return
      */
-
-
     public Callback.Cancelable getarray(final NetRequestCallBack callBack) {
         String str = netRequestInfo.getUrl();
         netRequestInfo.setUrl(str.substring(0, str.length() - 1));
@@ -324,7 +410,7 @@ public class NetRequest implements BaseData {
                 LogUtil.e("onFailure：" + netRequestInfo.getUrl());
                 LogUtil.e("onFailure：" + ex.getMessage());
                 Log.e("onFailure",netRequestInfo.getUrl());
-                Log.e("onFailure",ex.getLocalizedMessage());
+//                Log.e("onFailure",ex.getLocalizedMessage());
                 netResponseInfo.setMessage(ex.getMessage());
                 if (callBack != null) {
                     callBack.onFailure(netRequestInfo, netResponseInfo);

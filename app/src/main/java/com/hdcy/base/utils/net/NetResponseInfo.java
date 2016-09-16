@@ -4,6 +4,7 @@ package com.hdcy.base.utils.net;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
+import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.Comments;
@@ -45,8 +46,12 @@ public class NetResponseInfo {
     public Replys replys;
     public RootListInfo rootListInfo;
     public UserBaseInfo userBaseInfo;
-
     public List<LeaderInfo> leaderInfo;
+
+    /**  vedio banner Data */
+    public JSONArray content;
+    public List<Bean4VedioBanner> vedioBannerList;
+
 
 
     public String getCode() {

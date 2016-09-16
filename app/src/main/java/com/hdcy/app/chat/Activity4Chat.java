@@ -56,6 +56,11 @@ public class Activity4Chat extends Activity  implements View.OnClickListener{
 		mBtn4Send.setOnClickListener(this);
 		mlistview.setAdapter(mAdapter);
 
+		initIM();
+
+	}
+
+	private void initIM() {
 		//如果群开群是自由加入的，即group.isMembersOnly()为false，直接join
 		try {
 //			EMClient.getInstance().groupManager().joinGroup(groupid);//需异步处理
@@ -108,14 +113,6 @@ public class Activity4Chat extends Activity  implements View.OnClickListener{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
-		initIM();
-
-	}
-
-	private void initIM() {
-
 
 		EMConversation conversation = EMClient.getInstance().chatManager().getConversation(BaseUtils.userName);
 		if(conversation!=null){

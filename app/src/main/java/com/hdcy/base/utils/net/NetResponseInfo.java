@@ -5,6 +5,7 @@ import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Bean4VedioBanner;
+import com.hdcy.app.model.Bean4VedioDetail;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.Comments;
@@ -51,6 +52,8 @@ public class NetResponseInfo {
     /**  vedio banner Data */
     public JSONArray content;
     public List<Bean4VedioBanner> vedioBannerList;
+    /**  视频详情页面的信息*/
+    public Bean4VedioDetail mBean4VedioDetail;
 
 
 

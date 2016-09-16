@@ -39,4 +39,5 @@ public interface UPlayer extends BaseInterface {
 	void setOnSettingMenuItemSelectedListener(USettingMenuView.Callback l);
 	void setScreenOriention(int oriention);
 	void registerCallback(UVideoView.Callback callback);
+	void setTitle(String title);
 }

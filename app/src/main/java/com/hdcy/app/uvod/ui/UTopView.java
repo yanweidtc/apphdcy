@@ -83,4 +83,9 @@ public class UTopView extends RelativeLayout {
 			mTitleTxtv.setText(resid);
 		}
 	}
+	public void setTitle(String str) {
+		if (mTitleTxtv != null) {
+			mTitleTxtv.setText(str);
+		}
+	}
 }

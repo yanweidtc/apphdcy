@@ -7,6 +7,7 @@ import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Bean4VedioBanner;
+import com.hdcy.app.model.Bean4VedioDetail;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
@@ -27,6 +28,8 @@ import org.xutils.common.Callback;
  */
 
 public class NetHelper {
+
+    private static final String TAG = "NetHelper";
 
     private static class NetHelperHolder {
         private static final NetHelper instance = new NetHelper();
@@ -441,18 +444,18 @@ public class NetHelper {
                     responseInfo.vedioBannerList=JSON.parseArray(dataObj.opt("content").toString(), Bean4VedioBanner.class);
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
-                Log.e("activityhot","sucess");
+                Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
             }
 
             @Override
             public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("activityhot","onfailure");
+                Log.e(TAG, "onError() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
 
             }
 
             @Override
             public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("activityhot","onfailure");
+                Log.e(TAG, "onFailure() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
 
             }
         });
@@ -474,24 +477,53 @@ public class NetHelper {
         return request.getObj(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
                 JSONObject dataObj = responseInfo.getDataObj();
                 if (dataObj != null){
                     responseInfo.vedioBannerList=JSON.parseArray(dataObj.optJSONArray("content").toString(), Bean4VedioBanner.class);
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
-                Log.e("activityhot","sucess");
             }
 
             @Override
             public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("activityhot","onfailure");
-
+                Log.e(TAG, "onError() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
             }
 
             @Override
             public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.e("activityhot","onfailure");
+                Log.e(TAG, "onFailure() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
+            }
+        });
+    }
+    /**
+     * 得到-- 视频直播 详情页面的信息
+     *
+     * @param callBack
+     * @return
+     */
+    public Callback.Cancelable getOneVedioDetail(int vedioId,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/video/"+vedioId);
 
+        return request.getObj(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
+                JSONObject dataObj = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.mBean4VedioDetail=JSON.parseObject(dataObj.toString(), Bean4VedioDetail.class);
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e(TAG, "onError() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e(TAG, "onFailure() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
             }
         });
     }

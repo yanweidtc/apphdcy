@@ -17,17 +17,23 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.hdcy.app.R;
 import com.hdcy.app.fragment.second.Fragment4TabComment;
 import com.hdcy.app.fragment.second.Fragment4TabVedioBrief;
+import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.uvod.preference.Log2FileUtil;
 import com.hdcy.app.uvod.preference.Settings;
 import com.hdcy.app.uvod.ui.UPlayer;
 import com.hdcy.app.uvod.ui.USettingMenuView;
 import com.hdcy.app.uvod.ui.base.UMenuItem;
+import com.hdcy.base.utils.net.NetHelper;
+import com.hdcy.base.utils.net.NetRequestCallBack;
+import com.hdcy.base.utils.net.NetRequestInfo;
+import com.hdcy.base.utils.net.NetResponseInfo;
 import com.ucloud.player.widget.v2.UVideoView;
 
 import java.util.ArrayList;
@@ -39,6 +45,8 @@ import me.yokeyword.fragmentation.SupportActivity;
  * 视频点播 需要的aciivty
  */
 public class Activity4VedioDetail extends SupportActivity implements USettingMenuView.Callback, UVideoView.Callback {
+	private static final String TAG = "Activity4VedioDetail";
+
 	UPlayer mPlayer;
 	private String mUri;
 	Settings mSettings;
@@ -49,6 +57,24 @@ public class Activity4VedioDetail extends SupportActivity implements USettingMen
 	private ViewPager mViewPager;
 
 	private List<Fragment> mFragments=new ArrayList<>();
+
+	private Bean4VedioBanner mBean;
+
+	public  static void getInstance(Context context, Bean4VedioBanner bean){
+
+		Intent intent=new Intent();
+		intent.setAction("com.hdcy.app.uvod.impl.Activity4VedioDetail");
+		Bundle bundle=new Bundle();
+
+		bundle.putString("title",bean.name);
+		bundle.putString("videoPath", "http://mediademo.ufile.ucloud.com.cn/ucloud_promo_140s.mp4");
+		bundle.putSerializable("bean",bean);
+
+//			intent.putExtra("videoPath", "http://ulive-record.ufile.ucloud.com.cn/101841470662011.m3u8");
+//			intent.putExtra("videoPath", "http://uc-hls.ufile.ucloud.cn/1470744319684927_05v3.m3u8");
+		intent.putExtras(bundle);
+		context.startActivity(intent);
+	}
 
 
 
@@ -84,9 +110,14 @@ public class Activity4VedioDetail extends SupportActivity implements USettingMen
 
 		initView();
 
+		getDatas();
+
 	}
 
+
 	private void initView() {
+
+		mPlayer.setTitle(mBean.name);
 
 		mTab = (TabLayout) this.findViewById(R.id.uvod_tab);
 		mViewPager = (ViewPager) this.findViewById(R.id.uvod_viewPager);
@@ -116,11 +147,13 @@ public class Activity4VedioDetail extends SupportActivity implements USettingMen
 
 		mUri = getIntent().getStringExtra("videoPath");
 
+		mBean= (Bean4VedioBanner) getIntent().getSerializableExtra("bean");
 
 		String intentAction = getIntent().getAction();
 		if (!TextUtils.isEmpty(intentAction) && intentAction.equals(Intent.ACTION_VIEW)) {
 			mUri = getIntent().getDataString();
 		}
+
 		mPlayer = (UPlayer)findViewById(R.id.video_main_view);
 
 		mUri = Uri.decode(mUri);
@@ -128,6 +161,8 @@ public class Activity4VedioDetail extends SupportActivity implements USettingMen
 		filter.setPriority(1000);
 		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 		registerReceiver(mNetworkStateListener, filter);
+
+
 	}
 
 	@Override
@@ -226,8 +261,6 @@ public class Activity4VedioDetail extends SupportActivity implements USettingMen
 
 
 	//###################################非视频业务#####################################################
-
-
 	public class ViewPageFragmentAdapter extends FragmentPagerAdapter {
 
 
@@ -255,9 +288,44 @@ public class Activity4VedioDetail extends SupportActivity implements USettingMen
 				return "评论";
 			}
 		}
+	}
 
+
+
+	/** 获取视频详情 */
+	private void getDatas() {
+		if(mBean==null){
+			return;
+		}
+
+		NetHelper.getInstance().getOneVedioDetail(mBean.id,new NetRequestCallBack() {
+			@Override
+			public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+				Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
+
+				showToast(responseInfo.mBean4VedioDetail.toString());
+
+			}
+
+			@Override
+			public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+			}
+
+			@Override
+			public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
+			}
+		});
 
 	}
+
+	private void showToast(String s) {
+		Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
+
+	}
+
 
 }
 

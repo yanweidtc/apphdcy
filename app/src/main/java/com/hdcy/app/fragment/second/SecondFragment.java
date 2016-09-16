@@ -23,6 +23,7 @@ import com.hdcy.app.adapter.ViewHolder;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.RootListInfo;
+import com.hdcy.app.uvod.impl.Activity4VedioDetail;
 import com.hdcy.app.vedio.DemoMainActivity;
 import com.hdcy.app.view.NetworkImageHolderView;
 import com.hdcy.base.utils.SizeUtils;
@@ -155,23 +156,23 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
                         break;
                 }
 
+                // 这里header为banner index 从1 开始
+                Bean4VedioBanner bean=mDatas4Contents.get(position-1);
+                if(bean!=null){
+                    if(bean.live){// 是否为直播
+                        // 开始直播
+                        Intent intent =new Intent();
+                        intent.setClass(getActivity(), DemoMainActivity.class);
+                        startActivity(intent);
 
-                if(position==1){
-                    showToast("position  = "+position +"  点播 ");
-                    Intent intent = new Intent();
-                    intent.setAction("com.hdcy.app.uvod.impl.Activity4VedioDetail");
-                    intent.putExtra("title","title");
-                    intent.putExtra("videoPath", "http://mediademo.ufile.ucloud.com.cn/ucloud_promo_140s.mp4");
-//			intent.putExtra("videoPath", "http://ulive-record.ufile.ucloud.com.cn/101841470662011.m3u8");
-//			intent.putExtra("videoPath", "http://uc-hls.ufile.ucloud.cn/1470744319684927_05v3.m3u8");
-                    startActivity(intent);
-                }else{
 
-                    // 开始直播
-                    Intent intent =new Intent();
-                    intent.setClass(getActivity(), DemoMainActivity.class);
-                    startActivity(intent);
+                    }else{// 点播
 
+                        showToast("position  = "+position +"  点播 ");
+
+                        Activity4VedioDetail.getInstance(getActivity(),bean);
+
+                    }
 
                 }
 
@@ -300,8 +301,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
     //图片点击事件
     @Override
     public void onItemClick(int position) {
-
-        showToast("onclick");
+        showToast(" banner  item  onclick");
     }
 
     public  void showToast(String content){

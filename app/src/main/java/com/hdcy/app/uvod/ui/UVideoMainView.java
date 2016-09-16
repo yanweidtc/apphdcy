@@ -804,6 +804,14 @@ public class UVideoMainView extends FrameLayout implements UPlayer, UTopView.Cal
     }
 
     @Override
+    public void setTitle(String title) {
+
+        if(mTopView!=null){
+            mTopView.setTitle(title);
+        }
+    }
+
+    @Override
     public boolean onSettingMenuSelected(UMenuItem item) {
         boolean flag = false;
         if (mSettingMenuItemSelectedListener != null) {

@@ -43,14 +43,20 @@
         android:text="desc"
         android:textColor="#FFFFFF"/>
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/default_check"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="@color/color_white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="直播"
+        android:background="@drawable/bg_second_banner"
         />
 
 

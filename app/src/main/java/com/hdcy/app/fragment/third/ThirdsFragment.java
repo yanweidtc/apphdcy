@@ -56,7 +56,7 @@ public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGA
 
     private ThirdPageFragmentAdapter mAdapter;
 
-    private NoScrollListView mListView;
+    private ListView mListView;
 
     private List<ActivityContent> activityContentList = new ArrayList<>();
     private RootListInfo rootListInfo = new RootListInfo();
@@ -97,7 +97,7 @@ public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGA
     private void initView(View view){
         title = (TextView) view.findViewById(R.id.toolbar_title);
         title.setText("活动");
-        mListView = (NoScrollListView) view.findViewById(R.id.lv_mine_activity);
+        mListView = (ListView) view.findViewById(R.id.lv_mine_activity);
         mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
@@ -105,6 +105,15 @@ public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGA
         iv_leader_background =(ImageView) headview.findViewById(R.id.iv_leader_background);
         tv_leader_name = (TextView) headview.findViewById(R.id.tv_leader_name);
         mListView.addHeaderView(headview);
+        mAdapter = new ThirdPageFragmentAdapter(getContext(), activityContentList);
+        mListView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new ThirdPageFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItem(int position) {
+                String ActivityId = activityContentList.get(position).getId() + "";
+                EventBus.getDefault().post(new StartBrotherEvent(OfflineActivityFragment.newInstance(ActivityId)));
+            }
+        });
     }
 
     private void initData(){
@@ -129,16 +138,16 @@ public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGA
     }
 
     private void setData(){
-        mAdapter = new ThirdPageFragmentAdapter(getContext(), activityContentList);
+/*        mAdapter = new ThirdPageFragmentAdapter(getContext(), activityContentList);
         mListView.setAdapter(mAdapter);
-        mRefreshLayout.endLoadingMore();
         mAdapter.setOnItemClickListener(new ThirdPageFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItem(int position) {
                 String ActivityId = activityContentList.get(position).getId() + "";
                 EventBus.getDefault().post(new StartBrotherEvent(OfflineActivityFragment.newInstance(ActivityId)));
             }
-        });
+        });*/
+        mAdapter.notifyDataSetChanged();
         mRefreshLayout.endLoadingMore();
     }
     private void setData1(){

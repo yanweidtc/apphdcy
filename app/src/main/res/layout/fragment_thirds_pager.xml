@@ -11,13 +11,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/ScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFF4F4F4"
-            android:scrollbars="vertical">
-        <com.hdcy.app.view.NoScrollListView
+
+        <ListView
             android:id="@+id/lv_mine_activity"
             android:divider="@null"
             android:layout_width="match_parent"
@@ -26,7 +21,6 @@
             android:clipChildren="false"
             android:paddingLeft="-12dp"
             android:paddingRight="-12dp"/>
-        </ScrollView>>
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>>
 </LinearLayout>>
 </FrameLayout>

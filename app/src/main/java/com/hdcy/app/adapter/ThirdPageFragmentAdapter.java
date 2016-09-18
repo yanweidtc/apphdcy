@@ -75,7 +75,7 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        ViewHolder holder ;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_activity_list, null);
             holder = new ViewHolder(convertView);
@@ -104,7 +104,11 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
                     .config(Bitmap.Config.RGB_565)
                     .into(holder.iv_activity_background);
         }
-        if(item.getFinish()==false){
+        if(item.getFinish()==true){
+            Log.e("activitystatus",item.getFinish()+"1");
+            holder.iv_activity_status.setTag(position);
+            holder.iv_activity_status.setVisibility(View.VISIBLE);
+        }else {
             holder.iv_activity_status.setVisibility(View.GONE);
         }
         holder.tv_activity_persons_count.setText(item.getHot()+"");

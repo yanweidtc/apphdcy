@@ -47,7 +47,7 @@ public class PersonalActivityFragment extends BaseBackFragment implements BGARef
 
     private ThirdPageFragmentAdapter mAdapter;
 
-    private NoScrollListView mListView;
+    private ListView mListView;
 
 
     private List<ActivityContent> activityContentList = new ArrayList<>();
@@ -84,10 +84,20 @@ public class PersonalActivityFragment extends BaseBackFragment implements BGARef
         title = (TextView) view.findViewById(R.id.toolbar_title);
         title.setText("我的活动");
         initToolbarNav(mToolbar);
-        mListView = (NoScrollListView) view.findViewById(R.id.lv_mine_activity);
+        mListView = (ListView) view.findViewById(R.id.lv_mine_activity);
         mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refreshLayout);
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
+        mAdapter = new ThirdPageFragmentAdapter(getActivity(), activityContentList);
+        mListView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new ThirdPageFragmentAdapter.OnItemClickListener() {
+            @Override
+            public void onItem(int position) {
+                String ActivityId = activityContentList.get(position).getId()+"";
+                EventBus.getDefault().post(new StartBrotherEvent(OfflineActivityFragment.newInstance(ActivityId)));
+            }
+        });
+
 
     }
 
@@ -135,16 +145,7 @@ public class PersonalActivityFragment extends BaseBackFragment implements BGARef
     }
 
     private void setData(){
-        mAdapter = new ThirdPageFragmentAdapter(getActivity(), activityContentList);
-        mListView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new ThirdPageFragmentAdapter.OnItemClickListener() {
-            @Override
-            public void onItem(int position) {
-                String ActivityId = activityContentList.get(position).getId()+"";
-                EventBus.getDefault().post(new StartBrotherEvent(OfflineActivityFragment.newInstance(ActivityId)));
-            }
-        });
-
+        mAdapter.notifyDataSetChanged();
         mRefreshLayout.endLoadingMore();
     }
 

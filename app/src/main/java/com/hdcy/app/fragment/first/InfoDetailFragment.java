@@ -3,6 +3,7 @@ package com.hdcy.app.fragment.first;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -37,6 +39,10 @@ import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -95,7 +101,7 @@ public class InfoDetailFragment extends BaseBackFragment {
         if (bundle != null) {
             targetId = bundle.getString("targetid");
         }
-        loadurl = Url + targetId + "&show=YES";
+        loadurl = Url + targetId ;
         initView(view);
         initData();
         setListener();
@@ -110,11 +116,9 @@ public class InfoDetailFragment extends BaseBackFragment {
         sendButton = (Button) view.findViewById(R.id.bt_send);
         title = (TextView) view.findViewById(R.id.toolbar_title);
         ly_comment_button = (LinearLayout) view.findViewById(R.id.ly_comment_countimage);
-
         title.setText("资讯详情");
-
         initToolbarNav(mToolbar);
-
+        mToolbar.inflateMenu(R.menu.hierarchy);
     }
 
     private void initWebview(View view) {
@@ -191,6 +195,18 @@ public class InfoDetailFragment extends BaseBackFragment {
             @Override
             public void onClick(View v) {
                 ShowInputDialog();
+            }
+        });
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                new ShareAction(getActivity()).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .withTitle("好多车友")
+                        .withTargetUrl(loadurl)
+                        .setCallback(umShareListener)
+                        .open();
+
+                return true;
             }
         });
 
@@ -298,6 +314,39 @@ public class InfoDetailFragment extends BaseBackFragment {
 
             }
         });
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            com.umeng.socialize.utils.Log.d("plat","platform"+platform);
+            if(platform.name().equals("WEIXIN_FAVORITE")){
+                Toast.makeText(getActivity(),platform + " 收藏成功啦",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getActivity(), platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(getActivity(),platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            if(t!=null){
+                com.umeng.socialize.utils.Log.d("throw","throw:"+t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(getActivity(),platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /** attention to this below ,must add this**/
+        UMShareAPI.get(getContext()).onActivityResult(requestCode, resultCode, data);
+        com.umeng.socialize.utils.Log.d("result","onActivityResult");
     }
 
     private WebViewClientBase mWebViewClientBase = new WebViewClientBase();

@@ -22,7 +22,7 @@ public class BaseBackFragment extends BaseFragment {
             }
         });
 
-        initToolbarMenu(toolbar);
+        //initToolbarMenu(toolbar);
     }
 
     protected void initToolbarMenu(Toolbar toolbar) {

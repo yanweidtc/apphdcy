@@ -11,6 +11,7 @@ import com.hyphenate.chat.EMOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.ucloud.live.UEasyStreaming;
+import com.umeng.socialize.PlatformConfig;
 
 import org.xutils.x;
 
@@ -61,6 +62,9 @@ public class BaseApplication extends MultiDexApplication {
         // 创建默认的ImageLoader配置参数
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(instance);
         ImageLoader.getInstance().init(configuration);
+
+        //微信appid
+        PlatformConfig.setWeixin("wx6619f92e0cc550da","431c26c014b6ea3c4aab0b1d8016b2b9");
 
     }
 

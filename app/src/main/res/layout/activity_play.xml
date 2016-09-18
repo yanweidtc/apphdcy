@@ -1,21 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black">
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/black">
 
 
-    <com.ucloud.player.widget.v2.UVideoView
-        android:id="@+id/videoview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.ucloud.player.widget.v2.UVideoView
+            android:id="@+id/videoview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:background="@android:color/transparent"
+        >
+
+        <ListView
+            android:id="@+id/lv_data"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="#0000"
+            >"
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            >
+
+            <EditText
+                android:id="@+id/sendMsgEdt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="说点什么"
+                >
+            </EditText>
+
+            <Button
+                android:id="@+id/sendBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送"
+                ></Button>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/img_bt_close_record"
-        android:onClick="close"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_80"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/live_selecter_room_close_button" />
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right|top"
+        android:background="@drawable/live_selecter_room_close_button"
+        android:onClick="close"/>
 
-</RelativeLayout>
+</FrameLayout>

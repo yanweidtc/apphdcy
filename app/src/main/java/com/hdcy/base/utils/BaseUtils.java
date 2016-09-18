@@ -14,6 +14,11 @@ public class BaseUtils implements BaseData {
 
     private static long lastClickTime = 0;
 
+    public static String userName="chiwenheng";
+    public static String userPwd="123456";
+
+
+
     /**
      * String是否为空
      *

@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.hdcy.app.R;
@@ -20,6 +23,9 @@ public class Fragment4TabVedioBrief extends BaseFragment {
     private String mStr =null;
 
     private TextView mTvTitle;
+
+    private WebView mWebView;
+
 
     public static Fragment4TabVedioBrief newInstance(String str) {
 
@@ -47,6 +53,23 @@ public class Fragment4TabVedioBrief extends BaseFragment {
     private void initView(View view) {
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);
         mTvTitle.setText(mStr);
+        mWebView= (WebView) view.findViewById(R.id.wv_vedio_desc);
+        mWebView.loadUrl("http://baidu.com");
+
+        //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
+        mWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // TODO Auto-generated method stub
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
+                return true;
+            }
+        });
+
+        //启用支持javascript
+        WebSettings settings = mWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
     }
 
 }

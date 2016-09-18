@@ -21,7 +21,7 @@ public class Bean4VedioBanner implements Serializable {
     public int viewCount;
     public boolean live;
     public String start;
-    public int startTime;
+    public long startTime;
     public String length;
     public int commentCount;
 

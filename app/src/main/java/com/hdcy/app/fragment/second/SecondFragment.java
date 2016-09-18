@@ -207,7 +207,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 
 			}
 
-		}
+        }
     }
 
     private void setData(){

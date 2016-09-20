@@ -24,7 +24,7 @@ import com.hdcy.app.adapter.ViewHolder;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.RootListInfo;
-import com.hdcy.app.uvod.impl.Activity4VedioDetail;
+import com.hdcy.app.uvod.impl.Activity4VedioDetailV2;
 import com.hdcy.app.vedio.play.VideoActivity;
 import com.hdcy.app.vedio.preference.Settings;
 import com.hdcy.app.view.NetworkImageHolderView;
@@ -167,6 +167,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
     }
 
     private void goToOneDetail(Bean4VedioBanner bean) {
+
         if(!SystemUtil.isNetworkConnected(getActivity())) {
 			Toast.makeText(getActivity(), "当前网络不可用.", Toast.LENGTH_SHORT).show();
 			return;
@@ -203,7 +204,8 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 
 
 			}else{// 点播
-				Activity4VedioDetail.getInstance(getActivity(),bean);
+                showToast(" 点播 点播");
+				Activity4VedioDetailV2.getInstance(getActivity(),bean);
 
 			}
 

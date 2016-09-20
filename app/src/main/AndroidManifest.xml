@@ -201,6 +201,15 @@
             android:exported="true"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".uvod.impl.Activity4VedioDetailV2"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
+
+
         <!--umeng分享end-->
 
 

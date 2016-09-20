@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -45,6 +46,11 @@ import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jsoup.Jsoup;
@@ -57,6 +63,8 @@ import java.util.List;
 
 import it.sephiroth.android.library.widget.AdapterView;
 import it.sephiroth.android.library.widget.HListView;
+
+import static com.hdcy.base.BaseData.URL_BASE;
 
 /**
  * Created by WeiYanGeorge on 2016-09-03.
@@ -127,6 +135,9 @@ public class OfflineActivityFragment extends BaseBackFragment{
     private List<String> imgurls = new ArrayList<String>();
 
     private String htmlcontent;
+    private String Url = URL_BASE + "/activityDetails.html?id=";
+    private String loadurl;
+
 
     public static OfflineActivityFragment newInstance(String ActivityId){
         OfflineActivityFragment fragment = new OfflineActivityFragment();
@@ -141,9 +152,11 @@ public class OfflineActivityFragment extends BaseBackFragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_offline_activity, container, false);
         activityid = getArguments().getString("param");
+        loadurl = Url+activityid;
         initView(view);
         GetCommentsList();
         initData();
+        setListener();
         return view;
     }
 
@@ -152,6 +165,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
         title = (TextView) view.findViewById(R.id.toolbar_title);
         title.setText("活动详情");
         initToolbarNav(mToolbar);
+        mToolbar.inflateMenu(R.menu.hierarchy);
         lv_activity_comment = (NoScrollListView) view.findViewById(R.id.lv_activity_comment);
         lv_activity_comment.setFocusable(false);
         tv_actvity_title = (TextView) view.findViewById(R.id.tv_activity_detail_title);
@@ -170,6 +184,24 @@ public class OfflineActivityFragment extends BaseBackFragment{
         tv_more_comment =(TextView) view.findViewById(R.id.tv_more_comment);
         button_submit = (Button) view.findViewById(R.id.bt_send);
 
+
+    }
+    private void setListener() {
+
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                new ShareAction(getActivity()).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .withTitle(activityDetails.getName()+"")
+                        .withText("好多车友")
+                        .withTargetUrl(loadurl)
+                        .withMedia(new UMImage(getContext(),activityDetails.getImage()))
+                        .setListenerList(umShareListener)
+                        .open();
+
+                return false;
+            }
+        });
 
     }
 
@@ -231,13 +263,20 @@ public class OfflineActivityFragment extends BaseBackFragment{
             }
         });
 
+
+
         button_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(result.getContent() == false) {
+                if(result.getContent() == false && activityDetails.getFinish() ==false) {
                     ShowRegisterAlertDialog();
                 }else {
-                    Toast.makeText(getActivity(), "您已完成报名!", Toast.LENGTH_LONG).show();
+                    if(activityDetails.getFinish()==false){
+                        Toast.makeText(getActivity(), "您已完成报名!", Toast.LENGTH_LONG).show();
+
+                    }else {
+                        Toast.makeText(getActivity(), "活动已结束!", Toast.LENGTH_LONG).show();
+                    }
                     return;
                 }
             }
@@ -270,6 +309,10 @@ public class OfflineActivityFragment extends BaseBackFragment{
                 ActivityDetails temp = responseInfo.getActivityDetails();
                 activityDetails = temp;
                 Log.e("activityinfo", activityDetails.getId()+"");
+                if(activityDetails.getFinish() == true){
+                    button_submit.setBackgroundResource((R.color.main_font_gray_2));
+                    button_submit.setText("已结束");
+                }
                 setData();
             }
 
@@ -560,6 +603,35 @@ public class OfflineActivityFragment extends BaseBackFragment{
     private void resetViewData(){
         int fontcount = 50 - editText.length();
         tv_limit.setText(fontcount+"");
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            com.umeng.socialize.utils.Log.d("plat","platform"+platform);
+            Toast.makeText(getActivity(), platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(getActivity(),platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            if(t!=null){
+                com.umeng.socialize.utils.Log.d("throw","throw:"+t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(getActivity(),platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /** attention to this below ,must add this**/
+        UMShareAPI.get(getContext()).onActivityResult(requestCode, resultCode, data);
+        com.umeng.socialize.utils.Log.d("result","onActivityResult");
     }
 
 

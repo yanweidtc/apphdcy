@@ -1,12 +1,15 @@
 package com.hdcy.app.fragment;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hdcy.app.R;
+import com.hdcy.app.activity.MainActivity;
 import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
@@ -71,6 +74,8 @@ public class MainFragment extends BaseFragment {
         }
 
         initView(view);
+        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
+        ActivityCompat.requestPermissions(getActivity(),mPermissionList, 100);
         return view;
     }
 
@@ -82,7 +87,7 @@ public class MainFragment extends BaseFragment {
                 .addItem(new BottomBarTab(_mActivity, R.drawable.tab_icon_information_default, "资讯"))
                 .addItem(new BottomBarTab(_mActivity, R.drawable.tab_icon_topic_default, "话题"))
                 .addItem(new BottomBarTab(_mActivity, R.drawable.tab_icon_activity_default, "活动"))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.tab_icon_activity_default, "我的"));
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.tab_icon_user_default, "我的"));
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override

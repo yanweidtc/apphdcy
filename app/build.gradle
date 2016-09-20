@@ -67,7 +67,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.umeng.analytics:analytics:latest.integration'
     //轮播图依赖控件
-    compile 'com.android.support:support-v4:23.0.0'
+    compile 'com.android.support:support-v4:23.3.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile files('libs/jsoup-1.7.2.jar')

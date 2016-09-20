@@ -6,6 +6,7 @@ import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.Bean4VedioDetail;
+import com.hdcy.app.model.GiftContent;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.Comments;
@@ -54,6 +55,9 @@ public class NetResponseInfo {
     public List<Bean4VedioBanner> vedioBannerList;
     /**  视频详情页面的信息*/
     public Bean4VedioDetail mBean4VedioDetail;
+
+
+    public List<GiftContent> giftContent;
 
 
 
@@ -218,6 +222,14 @@ public class NetResponseInfo {
 
     public void setLeaderInfo(List<LeaderInfo> leaderInfo) {
         this.leaderInfo = leaderInfo;
+    }
+
+    public List<GiftContent> getGiftContent() {
+        return giftContent;
+    }
+
+    public void setGiftContent(List<GiftContent> giftContent) {
+        this.giftContent = giftContent;
     }
 
 

@@ -8,6 +8,7 @@ import com.hdcy.app.model.ActivityDetails;
 import com.hdcy.app.model.ArticleInfo;
 import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.Bean4VedioDetail;
+import com.hdcy.app.model.GiftContent;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
@@ -771,6 +772,41 @@ public class NetHelper {
             public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Log.e("activity","onfailure");
 
+            }
+        });
+
+
+    }
+
+    public Callback.Cancelable GetMineGiftList(int pagecount,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/gift/");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+
+        request.addParam("page",pagecount);
+        request.addParam("size","15");
+        request.addParam("sort","used,desc");
+        return request.postarray(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONArray dataObj = responseInfo.getDataArr();
+                JSONObject dataObj1 = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.setGiftContent(JSON.parseArray(dataObj.toString(), GiftContent.class));
+                    responseInfo.setRootListInfo(JSON.parseObject(dataObj1.toString(),RootListInfo.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("gift","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("gift","error");
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("gift","failure");
             }
         });
     }

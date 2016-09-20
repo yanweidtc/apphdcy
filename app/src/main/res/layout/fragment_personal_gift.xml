@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/toolbar"/>
+        <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ListView
+                android:id="@+id/lv_mine_gift"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipChildren="true"
+                android:overScrollMode="never"
+                android:paddingLeft="-12dp"
+                android:paddingRight="-12dp"
+                />
+            </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+        </LinearLayout>
+
+</FrameLayout>

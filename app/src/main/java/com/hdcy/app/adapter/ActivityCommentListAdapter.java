@@ -46,7 +46,11 @@ public class ActivityCommentListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return  data == null ? 0 : data.size();
+        if(data.size() >3 ){
+            return 3;
+        }else {
+           return data.size();
+        }
     }
 
     @Override

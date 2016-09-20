@@ -6,7 +6,7 @@
 .DS_Store
 /captures
 
-
+/app/app-release.apk
 /library/build
 /fragmentation/build
 /app/build

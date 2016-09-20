@@ -17,6 +17,7 @@ import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.fragment.fourth.childpagers.PersonalActivityFragment;
+import com.hdcy.app.fragment.fourth.childpagers.PersonalGiftFragment;
 import com.hdcy.app.fragment.fourth.childpagers.PersonalInfoFragment;
 import com.hdcy.app.model.UserBaseInfo;
 import com.hdcy.base.BaseInfo;
@@ -47,6 +48,7 @@ public class FourthFragment extends BaseLazyMainFragment{
 
     private LinearLayout ll_mine_person_info;
     private LinearLayout ll_mine_person_activity;
+    private LinearLayout ll_mine_person_gift;
 
     int width;
     int bg_img_height;
@@ -91,6 +93,13 @@ public class FourthFragment extends BaseLazyMainFragment{
                 EventBus.getDefault().post(new StartBrotherEvent(PersonalActivityFragment.newInstance()));
             }
         });
+
+        ll_mine_person_gift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(PersonalGiftFragment.newInstance()));
+            }
+        });
     }
 
     private void initView(View view){
@@ -100,6 +109,7 @@ public class FourthFragment extends BaseLazyMainFragment{
         tv_mine_credits = (TextView) view.findViewById(R.id.tv_mine_top_credits);
         ll_mine_person_info =(LinearLayout) view.findViewById(R.id.ll_mine_person_info);
         ll_mine_person_activity =(LinearLayout) view.findViewById(R.id.ll_mine_person_activity);
+        ll_mine_person_gift = (LinearLayout) view.findViewById(R.id.ll_mine_person_gift);
 
     }
 

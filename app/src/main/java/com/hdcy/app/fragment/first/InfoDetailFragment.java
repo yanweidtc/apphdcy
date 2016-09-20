@@ -1,14 +1,17 @@
 package com.hdcy.app.fragment.first;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,10 +42,12 @@ import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
 import com.hdcy.base.utils.net.NetResponseInfo;
+import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -89,8 +94,6 @@ public class InfoDetailFragment extends BaseBackFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
@@ -106,6 +109,8 @@ public class InfoDetailFragment extends BaseBackFragment {
         initData();
         setListener();
         initWebview(view);
+        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
+        ActivityCompat.requestPermissions(getActivity(),mPermissionList, 100);
         return view;
     }
 
@@ -201,12 +206,14 @@ public class InfoDetailFragment extends BaseBackFragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 new ShareAction(getActivity()).setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
-                        .withTitle("好多车友")
-                        .withTargetUrl(loadurl)
-                        .setCallback(umShareListener)
+                        .withTitle(articleInfo.getTitle()+"")
+                        .withText("好多车友")
+                        .withTargetUrl(loadurl+"&show=YES")
+                        .withMedia(new UMImage(getContext(),articleInfo.getImage()))
+                        .setListenerList(umShareListener)
                         .open();
 
-                return true;
+                return false;
             }
         });
 
@@ -320,11 +327,7 @@ public class InfoDetailFragment extends BaseBackFragment {
         @Override
         public void onResult(SHARE_MEDIA platform) {
             com.umeng.socialize.utils.Log.d("plat","platform"+platform);
-            if(platform.name().equals("WEIXIN_FAVORITE")){
-                Toast.makeText(getActivity(),platform + " 收藏成功啦",Toast.LENGTH_SHORT).show();
-            }else{
                 Toast.makeText(getActivity(), platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
-            }
         }
 
         @Override

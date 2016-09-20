@@ -64,7 +64,7 @@ public class BaseApplication extends MultiDexApplication {
         ImageLoader.getInstance().init(configuration);
 
         //微信appid
-        PlatformConfig.setWeixin("wx6619f92e0cc550da","431c26c014b6ea3c4aab0b1d8016b2b9");
+         PlatformConfig.setWeixin("wx6619f92e0cc550da","431c26c014b6ea3c4aab0b1d8016b2b9");
 
     }
 

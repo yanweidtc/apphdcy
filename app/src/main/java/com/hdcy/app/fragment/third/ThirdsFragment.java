@@ -22,6 +22,7 @@ import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.fourth.FourthFragment;
+import com.hdcy.app.fragment.fourth.SuperBrowserFragment;
 import com.hdcy.app.model.ActivityContent;
 import com.hdcy.app.model.LeaderInfo;
 import com.hdcy.app.model.RootListInfo;
@@ -133,6 +134,12 @@ public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGA
                     }
             }
         });*/
+        iv_leader_background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(SuperBrowserFragment.newInstance(2,leaderInfoList.get(0).getId()+"","大咖详情")));
+            }
+        });
 
 
     }

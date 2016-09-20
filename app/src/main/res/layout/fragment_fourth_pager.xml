@@ -236,6 +236,7 @@
         android:background="@color/main_line" />
 
     <LinearLayout
+        android:id="@+id/ll_mine_person_gift"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -243,7 +244,7 @@
         <ImageView
             android:layout_height="22dp"
             android:layout_width="22dp"
-            android:src="@mipmap/icon_mine_videos"
+            android:src="@mipmap/icon_personal_mine_credits"
             android:layout_marginLeft="12dp"
             android:layout_gravity="center"/>
         <TextView

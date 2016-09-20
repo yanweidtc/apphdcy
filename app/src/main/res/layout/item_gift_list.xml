@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="450px">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_gift_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            />
+        <LinearLayout
+            android:layout_height="80px"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="2"
+                android:textSize="36px"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="小米手环2"
+                android:id="@+id/textView" />
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="28px"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal"
+                android:text="兑换积分"/>
+                <TextView
+                    android:id="@+id/tv_gift_point"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textSize="28px"
+                    android:textColor="@color/white"
+                    android:gravity="top|center_horizontal"
+                    android:text="1000"
+                     />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textSize="28px"
+                    android:textColor="@color/white"
+                    android:gravity="center_horizontal"
+                    android:text="剩余数量"/>
+
+                <TextView
+                    android:id="@+id/tv_gift_stock"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:textSize="28px"
+                    android:textColor="@color/white"
+                    android:gravity="top|center_horizontal"
+                    android:text="1000"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

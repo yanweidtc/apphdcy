@@ -50,7 +50,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 public class CommentListFragment extends BaseBackFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
 
-    private NoScrollListView mRecy;
+    private ListView mRecy;
     private static final String TAG = "CommentListFragment";
     private BGARefreshLayout mRefreshLayout;
     private boolean mAtTop = true;
@@ -127,7 +127,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
     }
 
     private void initView(View view) {
-        mRecy = (NoScrollListView) view.findViewById(R.id.recy);
+        mRecy = (ListView) view.findViewById(R.id.recy);
         mRefreshLayout = (BGARefreshLayout) view.findViewById(R.id.refresh_layout);
         mRefreshLayout.setDelegate(this);
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
@@ -141,34 +141,13 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
 
         initToolbarNav(mToolbar);
 
+        mAdapter = new CommentListViewFragmentAdapter(getContext(),commentsList);
+        mRecy.setAdapter(mAdapter);
         sendButton = (Button) view.findViewById(R.id.bt_send);
 
     }
 
     private void setListener() {
-
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replyid = null;
-                targetid = tagId;
-                ShowInputDialog();
-            }
-        });
-
-
-    }
-
-
-    private void initData() {
-        GetCommentsList();
-    }
-
-    private void setData() {
-
-        mAdapter = new CommentListViewFragmentAdapter(getContext(),commentsList);
-        mRecy.setAdapter(mAdapter);
         mAdapter.setOnAvatarClickListener(new CommentListViewFragmentAdapter.OnAvatarClickListener() {
             @Override
             public void onAvatar(int position) {
@@ -190,6 +169,30 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
 
             }
         });
+
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replyid = null;
+                targetid = tagId;
+                ShowInputDialog();
+            }
+        });
+
+
+    }
+
+
+    private void initData() {
+        GetCommentsList();
+    }
+
+    private void setData() {
+        mAdapter.notifyDataSetChanged();
+
+
+
         mRefreshLayout.endLoadingMore();
 
     }

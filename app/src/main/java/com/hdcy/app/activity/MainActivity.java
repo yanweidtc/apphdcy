@@ -1,11 +1,17 @@
 package com.hdcy.app.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.hdcy.app.R;
+import com.hdcy.app.fragment.BootFragment;
 import com.hdcy.app.fragment.MainFragment;
 import com.hdcy.base.utils.BaseUtils;
 import com.hyphenate.EMCallBack;
@@ -13,6 +19,7 @@ import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.util.NetUtils;
+import com.umeng.socialize.PlatformConfig;
 
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
@@ -25,6 +32,15 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 public class MainActivity extends SupportActivity {
 
     private static final String TAG = "MainActivity";
+
+    private  final static int WAIT_TIME = 500; //启动页加载完成等待时间
+
+
+    private Handler handler = new Handler(){
+        public void handleMessage(android.os.Message msg){
+
+        }
+    };
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,12 +80,23 @@ public class MainActivity extends SupportActivity {
         //注册一个监听连接状态的listener
         EMClient.getInstance().addConnectionListener(new MyConnectionListener());
 
+        //umeng
 
+        PlatformConfig.setWeixin("wx6619f92e0cc550da","431c26c014b6ea3c4aab0b1d8016b2b9");
         if (savedInstanceState == null) {
-            loadRootFragment(R.id.fl_container_activity1, MainFragment.newInstance());
+            loadRootFragment(R.id.fl_container_activity1, BootFragment.newInstance());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadRootFragment(R.id.fl_container_activity1, MainFragment.newInstance());
+                }
+            }, 3000);
+
+           // loadRootFragment(R.id.fl_container_activity1, MainFragment.newInstance());
         }
 
     }
+
 
     @Override
     public void onBackPressedSupport() {

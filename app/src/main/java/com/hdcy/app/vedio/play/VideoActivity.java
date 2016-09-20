@@ -11,17 +11,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.easemob.chat.EMMessage;
 import com.hdcy.app.R;
 import com.hdcy.app.chat.ChatAdapter;
 import com.hdcy.app.chat.Message;
 import com.hdcy.app.vedio.preference.Settings;
 import com.hdcy.base.utils.BaseUtils;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.EMGroupChangeListener;
-import com.hyphenate.EMMessageListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMMessage;
 import com.ucloud.common.logger.L;
 import com.ucloud.player.widget.v2.UVideoView;
 
@@ -80,73 +75,7 @@ public class VideoActivity extends AppCompatActivity implements UVideoView.Callb
     }
 
     private void initIM() {
-        //如果群开群是自由加入的，即group.isMembersOnly()为false，直接join
-        try {
-//			EMClient.getInstance().groupManager().joinGroup(groupid);//需异步处理
-//			//需要申请和验证才能加入的，即group.isMembersOnly()为true，调用下面方法
-//			EMClient.getInstance().groupManager().applyJoinToGroup(groupid, "求加入");//需异步处理
 
-            EMClient.getInstance().groupManager().addGroupChangeListener(new EMGroupChangeListener() {
-                @Override
-                public void onUserRemoved(String groupId, String groupName) {
-                    //当前用户被管理员移除出群组
-                }
-
-                @Override
-                public void onGroupDestroyed(String s, String s1) {
-
-                }
-
-                @Override
-                public void onAutoAcceptInvitationFromGroup(String s, String s1, String s2) {
-
-                }
-
-                @Override
-                public void onInvitationReceived(String groupId, String groupName, String inviter, String reason) {
-                    //收到加入群组的邀请
-                }
-                @Override
-                public void onInvitationDeclined(String groupId, String invitee, String reason) {
-                    //群组邀请被拒绝
-                }
-                @Override
-                public void onApplicationReceived(String groupId, String groupName, String applyer, String reason) {
-                    //收到加群申请
-                }
-                @Override
-                public void onApplicationAccept(String groupId, String groupName, String accepter) {
-                    //加群申请被同意
-                }
-                @Override
-                public void onApplicationDeclined(String groupId, String groupName, String decliner, String reason) {
-                    // 加群申请被拒绝
-                }
-
-                @Override
-                public void onInvitationAccepted(String s, String s1, String s2) {
-
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(BaseUtils.userName);
-        if(conversation!=null){
-            //获取此会话的所有消息
-            List<EMMessage> messages = conversation.getAllMessages();
-            //SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
-            //获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
-//		List<EMMessage> messages = conversation.loadMoreMsgFromDB(startMsgId, 20);
-            if(messages!=null){
-                updateView(messages);
-            }
-        }
-
-
-        EMClient.getInstance().chatManager().addMessageListener(msgListener);
 
 
     }
@@ -161,77 +90,12 @@ public class VideoActivity extends AppCompatActivity implements UVideoView.Callb
                 return;
             }
             etInput.setText("");
-            //创建一条文本消息，content为消息文字内容，toChatUsername为对方用户或者群聊的id，后文皆是如此
-            EMMessage message = EMMessage.createTxtSendMessage(content, "chiwenheng");
-            //如果是群聊，设置chattype，默认是单聊
-//			if (chatType == CHATTYPE_GROUP)
-//				message.setChatType(ChatType.GroupChat);
-            message.setMessageStatusCallback(new EMCallBack(){
-                @Override
-                public void onSuccess() {
-                    Log.d(TAG, "onSuccess() called with: " + "");
-                }
-
-                @Override
-                public void onError(int i, String s) {
-
-                    Log.d(TAG, "onError() called with: " + "i = [" + i + "], s = [" + s + "]");
-                }
-
-                @Override
-                public void onProgress(int i, String s) {
-                    Log.d(TAG, "onProgress() called with: " + "i = [" + i + "], s = [" + s + "]");
-
-                }
-            });
-            //发送消息
-            EMClient.getInstance().chatManager().sendMessage(message);
 
         }
 
     }
 
 
-    private EMMessageListener msgListener = new EMMessageListener() {
-
-        @Override
-        public void onMessageReceived(final  List<EMMessage> messages) {
-            Log.d(TAG, "onMessageReceived() called with: " + "messages = [" + messages + "]");
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    updateView(messages);
-
-                }
-            });
-
-
-        }
-
-        @Override
-        public void onCmdMessageReceived(List<EMMessage> messages) {
-            //收到透传消息
-            Log.d(TAG, "onCmdMessageReceived() called with: " + "messages = [" + messages + "]");
-        }
-
-        @Override
-        public void onMessageReadAckReceived(List<EMMessage> messages) {
-            //收到已读回执
-            Log.d(TAG, "onMessageReadAckReceived() called with: " + "messages = [" + messages + "]");
-        }
-
-        @Override
-        public void onMessageDeliveryAckReceived(List<EMMessage> message) {
-            //收到已送达回执
-            Log.d(TAG, "onMessageDeliveryAckReceived() called with: " + "message = [" + message + "]");
-        }
-
-        @Override
-        public void onMessageChanged(EMMessage message, Object change) {
-            //消息状态变动
-            Log.d(TAG, "onMessageChanged() called with: " + "message = [" + message + "], change = [" + change + "]");
-        }
-    };
 
     private void updateView(List<EMMessage> messages) {
         //收到消息
@@ -262,7 +126,6 @@ public class VideoActivity extends AppCompatActivity implements UVideoView.Callb
             mVideoView.stopPlayback();
             mVideoView.release(true);
         }
-        EMClient.getInstance().chatManager().removeMessageListener(msgListener);
     }
 
     @Override

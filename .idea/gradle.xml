@@ -17,18 +17,7 @@
             <option value="$PROJECT_DIR$/ulive_android_sdk2" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/RefreshLayout" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/easeui-im" />
-            <option value="$PROJECT_DIR$/fragmentation" />
-            <option value="$PROJECT_DIR$/library" />
-            <option value="$PROJECT_DIR$/multi-image-selector" />
-            <option value="$PROJECT_DIR$/ulive_android_sdk2" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

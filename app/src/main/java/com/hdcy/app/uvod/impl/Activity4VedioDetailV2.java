@@ -122,7 +122,7 @@ public class Activity4VedioDetailV2 extends SupportActivity {
 		mTab.addTab(mTab.newTab());
 		mTab.addTab(mTab.newTab());
 
-		mFragments.add(Fragment4TabVedioBrief.newInstance("视频简介"));
+		mFragments.add(Fragment4TabVedioBrief.newInstance(mBean.desc));
 //		called with: tagId = [630240], target = [article]
 		mFragments.add(Fragment4TabComment.newInstance("630240","article"));
 

@@ -25,7 +25,7 @@ public class Bean4VedioBanner implements Serializable {
     public long startTime;
     public String length;
     public int commentCount;
-    public String desd;
+    public String desc;
 
 
     @Override
@@ -45,7 +45,7 @@ public class Bean4VedioBanner implements Serializable {
                 ", startTime=" + startTime +
                 ", length='" + length + '\'' +
                 ", commentCount=" + commentCount +
-                ", desd='" + desd + '\'' +
+                ", desd='" + desc + '\'' +
                 '}';
     }
 }

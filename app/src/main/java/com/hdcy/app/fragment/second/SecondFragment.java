@@ -64,7 +64,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 
     private ListView mListView;
 
-    private List<Bean4VedioBanner> mDatas4Contents = new ArrayList<>();
+    private List<Bean4VedioBanner> mDatas4ListView = new ArrayList<>();
 
     private List<Bean4VedioBanner> mDatas4Banner = new ArrayList<>();
 
@@ -120,7 +120,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
         convenientBanner = (ConvenientBanner) headview.findViewById(R.id.convenientBanner);
 
 
-        mAdapter = new CommonAdapter<Bean4VedioBanner>(getActivity(), mDatas4Contents,R.layout.item_second_fragment) {
+        mAdapter = new CommonAdapter<Bean4VedioBanner>(getActivity(), mDatas4ListView,R.layout.item_second_fragment) {
             @Override
             public void convert(ViewHolder holder, Bean4VedioBanner bean) {
 
@@ -158,7 +158,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 // 这里header为banner index 从1 开始
-                Bean4VedioBanner bean=mDatas4Contents.get(position-1);
+                Bean4VedioBanner bean=mDatas4ListView.get(position-1);
 
                 goToOneDetail(bean);
 
@@ -244,7 +244,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        mDatas4Contents.clear();
+        mDatas4ListView.clear();
         pagecount = 0;
         getContentList();
         mRefreshLayout.endRefreshing();
@@ -305,9 +305,9 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 List<Bean4VedioBanner> tempList = responseInfo.vedioBannerList;
                 rootListInfo = responseInfo.getRootListInfo();
-                mDatas4Contents.addAll(tempList);
+                mDatas4ListView.addAll(tempList);
                 isLast = rootListInfo.isLast();
-                Log.d(TAG,mDatas4Contents.size()+"");
+                Log.d(TAG,mDatas4ListView.size()+"");
                 setData();
             }
 

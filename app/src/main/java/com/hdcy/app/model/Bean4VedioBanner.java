@@ -14,6 +14,7 @@ public class Bean4VedioBanner implements Serializable {
     public int id;
     public String name;
     public String url;
+    public String url2;
     public boolean top;
     public boolean enable;
     public String image;
@@ -24,6 +25,7 @@ public class Bean4VedioBanner implements Serializable {
     public long startTime;
     public String length;
     public int commentCount;
+    public String desd;
 
 
     @Override
@@ -32,6 +34,7 @@ public class Bean4VedioBanner implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", url2='" + url2 + '\'' +
                 ", top=" + top +
                 ", enable=" + enable +
                 ", image='" + image + '\'' +
@@ -42,6 +45,7 @@ public class Bean4VedioBanner implements Serializable {
                 ", startTime=" + startTime +
                 ", length='" + length + '\'' +
                 ", commentCount=" + commentCount +
+                ", desd='" + desd + '\'' +
                 '}';
     }
 }

@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -62,7 +63,12 @@ public class Activity4VedioDetailV2 extends SupportActivity {
 		Bundle bundle=new Bundle();
 
 		bundle.putString("title",bean.name);
-		bundle.putString("videoPath", "http://mediademo.ufile.ucloud.com.cn/ucloud_promo_140s.mp4");
+		if(TextUtils.isEmpty(bean.url2)){// 这里暂时用  一个默认地址
+			bundle.putString("videoPath", "http://mediademo.ufile.ucloud.com.cn/ucloud_promo_140s.mp4");
+		}else{
+			bundle.putString("videoPath", bean.url2);
+
+		}
 		bundle.putSerializable("bean",bean);
 
 //			intent.putExtra("videoPath", "http://ulive-record.ufile.ucloud.com.cn/101841470662011.m3u8");
@@ -83,10 +89,16 @@ public class Activity4VedioDetailV2 extends SupportActivity {
 	private void initView() {
 
 		jcVideoPlayerStandard = (MyPlayView) findViewById(R.id.custom_videoplayer_standard);
-		jcVideoPlayerStandard.setUp("http://mediademo.ufile.ucloud.com.cn/ucloud_promo_140s.mp4"
-				, JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "点播视频");
+		// 临时的视频地址
+		String url4Vedio="http://mediademo.ufile.ucloud.com.cn/ucloud_promo_140s.mp4";
+		if(!TextUtils.isEmpty(mBean.url2)){
+			url4Vedio=mBean.url2;
+		}
 
-		ImageLoader.getInstance().displayImage("http://a.hiphotos.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=0794b85e8a82b90129a0cb6112e4c212/96dda144ad3459827adf76eb0cf431adcbef8476.jpg",
+		jcVideoPlayerStandard.setUp(url4Vedio
+				, JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, mBean.name);
+
+		ImageLoader.getInstance().displayImage(mBean.image,
 				jcVideoPlayerStandard.thumbImageView);
 
 		jcVideoPlayerStandard.backButton.setVisibility(View.VISIBLE);
@@ -123,9 +135,9 @@ public class Activity4VedioDetailV2 extends SupportActivity {
 	protected void onCreate(Bundle bundles) {
 		super.onCreate(bundles);
 		setContentView(R.layout.activity_video_detial_v2);
-		init();
 		mBean= (Bean4VedioBanner) getIntent().getSerializableExtra("bean");
 		String intentAction = getIntent().getAction();
+		init();
 
 		IntentFilter filter = new IntentFilter();
 		filter.setPriority(1000);

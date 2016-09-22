@@ -46,7 +46,7 @@ public class VideoActivity extends AppCompatActivity implements UVideoView.Callb
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
+        setContentView(R.layout.activity_play_v2);
         mVideoView = (UVideoView) findViewById(R.id.videoview);
 
         mSettings = new Settings(this);

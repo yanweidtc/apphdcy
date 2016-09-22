@@ -22,11 +22,10 @@ import com.hdcy.app.R;
 import com.hdcy.app.adapter.CommonAdapter;
 import com.hdcy.app.adapter.ViewHolder;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
+import com.hdcy.app.chat.Activity4Chat;
 import com.hdcy.app.model.Bean4VedioBanner;
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.uvod.impl.Activity4VedioDetailV2;
-import com.hdcy.app.vedio.play.VideoActivity;
-import com.hdcy.app.vedio.preference.Settings;
 import com.hdcy.app.view.NetworkImageHolderView;
 import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.DateUtil;
@@ -195,17 +194,13 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
             if(bean.id==631533){// 让第一个条数据 进行直播
 				// 开始直播
                 Intent intent =new Intent();
+                String streamId="12345";// 这里视频聊天的窗口固定死
+                Activity4Chat.getInstance(getActivity(),streamId);
 
-				/*
-//              intent.setClass(getActivity(), DemoMainActivity.class);
-				intent.setClass(getActivity(), Activity4Chat.class);
-				startActivity(intent);*/
-
-                String streamId="12345";
-                Settings mSettings = new Settings(getActivity());
-                mSettings.setPublishStreamId(streamId);
-                intent.setClass(getActivity(),VideoActivity.class);
-                startActivity(intent);
+//                Settings mSettings = new Settings(getActivity());
+//                mSettings.setPublishStreamId(streamId);
+//                intent.setClass(getActivity(),VideoActivity.class);
+//                startActivity(intent);
 
 
 

@@ -30,6 +30,7 @@ import it.sephiroth.android.library.widget.ExpandableHListView;
 public class ReplysAdapter extends BaseAdapter {
     private Context context;
     private List<Replys> data;
+    int itemCount =2 ;
 
     public OnItemsClickListeners onItemsClickListeners;
 
@@ -49,7 +50,7 @@ public class ReplysAdapter extends BaseAdapter {
             return itemCount;
         }else {*/
             return data.size();
-
+/*        }*/
     }
 
     @Override
@@ -77,6 +78,7 @@ public class ReplysAdapter extends BaseAdapter {
         setView(position, holder);
         return convertView;
     }
+
 
     private void setView(final int position, final ViewHolder holder) {
         Replys temp = getItem(position);
@@ -123,9 +125,10 @@ public class ReplysAdapter extends BaseAdapter {
 
     }
 
-/*    public void addItemNum(int number){
+    public void addItemNum(int number){
         itemCount = number;
-    }*/
+        getCount();
+    }
 
     public interface OnItemsClickListeners{
         void onFrameLayout(int position);

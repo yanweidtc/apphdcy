@@ -80,13 +80,13 @@ public class GiftFragmentAdapter extends BaseAdapter {
             Picasso.with(context).load(cover)
                     .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
                     .resize(width, imgheight)
-                    .centerCrop()
                     .tag(holder.getTag())
                     .config(Bitmap.Config.RGB_565)
                     .into(holder.iv_gift_bg);
         }
         holder.tv_gift_point.setText(item.getPoint()+"");
         holder.tv_gift_stock.setText(item.getStock()+"");
+        holder.tv_gift_name.setText(item.getName()+"");
     }
 
 
@@ -102,13 +102,14 @@ public class GiftFragmentAdapter extends BaseAdapter {
         }
 
         private ImageView iv_gift_bg;
-        private TextView tv_gift_point, tv_gift_stock;
+        private TextView tv_gift_point, tv_gift_stock,tv_gift_name;
 
         ViewHolder(View view){
             ButterKnife.bind(this,view);
             iv_gift_bg = (ImageView) view.findViewById(R.id.iv_gift_background);
             tv_gift_point = (TextView) view.findViewById(R.id.tv_gift_point);
             tv_gift_stock = (TextView) view.findViewById(R.id.tv_gift_stock);
+            tv_gift_name = (TextView) view.findViewById(R.id.tv_gift_name);
         }
 
     }

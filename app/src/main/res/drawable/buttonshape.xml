@@ -7,7 +7,7 @@
 
     <stroke
         android:width="@dimen/line_width"
-        android:color="@color/main_font_gray_1" />
+        android:color="@color/main_font_gray_2" />
 
 
 </shape>

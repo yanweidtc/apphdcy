@@ -81,7 +81,7 @@ public class NetHelper {
         NetRequest request = new NetRequest("/article/");
         request.addParam("enable","true");
         request.addParam("page",pagecount);
-        request.addParam("size",10);
+        request.addParam("size",20);
         request.addParam("sort","pagecount");
         return request.postarray(new NetRequestCallBack() {
             @Override

@@ -15,6 +15,7 @@ import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.model.UserBaseInfo;
 import com.hdcy.base.BaseInfo;
+import com.hdcy.base.utils.BaseUtils;
 import com.hdcy.base.utils.SizeUtils;
 import com.squareup.picasso.Picasso;
 
@@ -103,10 +104,17 @@ public class PersonalInfoFragment extends BaseBackFragment {
         }
         tv_mine_personalinfo_password.setText("********");
         tv_mine_personalinfo_name.setText(userBaseInfo.getRealname()+"");
-        tv_mine_personalinfo_address.setText(userBaseInfo.getAddress()+"");
-        tv_mine_personalinfo_phone.setText(userBaseInfo.getMobile()+"");
+        String address = userBaseInfo.getAddress();
+        if(BaseUtils.isEmptyString(address)){
+            tv_mine_personalinfo_address.setText("");
+        }else {
+            tv_mine_personalinfo_address.setText(address+"");
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        }
+        String secretphone = userBaseInfo.getMobile().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        tv_mine_personalinfo_phone.setText(secretphone+"");
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
         String date = format.format(userBaseInfo.getBirthday());
         tv_mine_personalinfo_birthday.setText(date);
         tv_mine_personalinfo_cartype.setText(userBaseInfo.getCar());

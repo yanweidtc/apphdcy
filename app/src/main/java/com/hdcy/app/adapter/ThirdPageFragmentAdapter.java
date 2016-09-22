@@ -18,12 +18,17 @@ import com.hdcy.app.model.Content;
 import com.hdcy.app.model.Replys;
 import com.hdcy.base.BaseInfo;
 import com.hdcy.base.utils.BaseUtils;
+import com.hdcy.base.utils.RelativeTimeUtils;
 import com.hdcy.base.utils.SizeUtils;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.zhy.autolayout.utils.AutoUtils;
 
+import org.jsoup.Connection;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -92,18 +97,34 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
     private void setView(final int position, final ViewHolder holder) {
         ActivityContent item = data.get(position);
         holder.tv_activity_title.setText(item.getName()+"");
-        holder.tv_activity_subtitle.setText(item.getAddress()+"");
+        SimpleDateFormat foramt = new SimpleDateFormat("yyyy-MM-dd日");
+        Date startTime = item.getStartTime();
+        String dateformat1 = "";
+        if(!BaseUtils.isEmptyString(startTime.toString())) {
+             dateformat1 = foramt.format(startTime);
+        }
+        String subtitle = item.getAddress() +"/"+ dateformat1;
+        Log.e("activitytime",item.getStartTime().toGMTString());
+        holder.tv_activity_subtitle.setText(subtitle);
         if(!BaseUtils.isEmptyString(item.getImage())) {
             String cover = item.getImage();
             Picasso.with(context).load(cover)
                     .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
                     .resize(width,imgheight)
-                    .centerCrop()
-                    .memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE)
+                    //.centerCrop()
                     .tag(holder.getTag())
                     .config(Bitmap.Config.RGB_565)
                     .into(holder.iv_activity_background);
         }
+        if(!BaseUtils.isEmptyString(item.getSponsorImage())){
+            String sponsor = item.getSponsorImage();
+            Picasso.with(context).load(sponsor)
+                    .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
+                    .tag(holder.getTag())
+                    .config(Bitmap.Config.RGB_565)
+                    .into(holder.iv_activity_sponsor);
+        }
+
         if(item.getFinish()==true){
             Log.e("activitystatus",item.getFinish()+"1");
             holder.iv_activity_status.setTag(position);
@@ -131,7 +152,7 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
 
 
         private TextView tv_activity_title, tv_activity_subtitle,tv_activity_persons_count;
-        private ImageView iv_activity_background,iv_activity_status;
+        private ImageView iv_activity_background,iv_activity_status,iv_activity_sponsor;
         private FrameLayout fl_item_activity_list;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -142,6 +163,7 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
             iv_activity_status =(ImageView) view.findViewById(R.id.iv_activity_status);
             tv_activity_persons_count =(TextView) view.findViewById(R.id.tv_activity_persons_count);
             fl_item_activity_list =(FrameLayout) view.findViewById(R.id.fl_item_activity_list);
+            iv_activity_sponsor = (ImageView) view.findViewById(R.id.iv_activity_sponsor);
         }
 
         //@ViewInject(R.id.tv_content)

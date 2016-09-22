@@ -85,7 +85,7 @@ public class MainFragment extends BaseFragment {
 
         mBottomBar
                 .addItem(new BottomBarTab(_mActivity, R.drawable.tab_icon_information_default, "资讯"))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.tab_icon_topic_default, "话题"))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.tab_icon_topic_default, "视频"))
                 .addItem(new BottomBarTab(_mActivity, R.drawable.tab_icon_activity_default, "活动"))
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.tab_icon_user_default, "我的"));
 

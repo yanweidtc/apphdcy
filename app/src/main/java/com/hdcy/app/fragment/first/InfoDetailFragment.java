@@ -38,6 +38,7 @@ import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseBackFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.model.ArticleInfo;
+import com.hdcy.base.utils.BaseUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -143,6 +144,11 @@ public class InfoDetailFragment extends BaseBackFragment {
 
     private boolean checkData() {
         content = editText.getText().toString();
+        content.trim();
+        if (BaseUtils.isEmptyString(content)||content.trim().isEmpty()) {
+            Toast.makeText(getActivity(), "请输入你要发布的文字", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 
@@ -172,7 +178,7 @@ public class InfoDetailFragment extends BaseBackFragment {
      * 刷新控件数据
      */
     private void resetViewData() {
-        int fontcount = 200 - editText.length();
+        int fontcount = 250 - editText.length();
         tv_limit.setText(fontcount + "");
     }
 

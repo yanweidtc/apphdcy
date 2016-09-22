@@ -29,6 +29,7 @@ import com.hdcy.app.model.RootListInfo;
 import com.hdcy.app.model.CommentsContent;
 import com.hdcy.app.model.Replys;
 import com.hdcy.app.view.NoScrollListView;
+import com.hdcy.base.utils.BaseUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
 import com.hdcy.base.utils.net.NetRequestInfo;
@@ -162,7 +163,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
         mAdapter.setOnReplyClickListener(new CommentListViewFragmentAdapter.OnReplyClickListener() {
             @Override
             public void onReplyClick(int position, Replys reply) {
-                Toast.makeText(getContext(), "点击的位置" + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "点击的位置" + position, Toast.LENGTH_SHORT).show();
                 replyid = reply.getId()+"";
                 targetid = reply.getTargetId()+"";
                 ShowInputDialog();
@@ -245,6 +246,10 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
 
     private boolean checkData() {
         content = editText.getText().toString();
+        if (BaseUtils.isEmptyString(content)||content.trim().isEmpty()) {
+            Toast.makeText(getActivity(), "请输入你要发布的文字", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 
@@ -252,7 +257,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
      * 刷新控件数据
      */
     private void resetViewData() {
-        int fontcount = 200 - editText.length();
+        int fontcount = 250 - editText.length();
         tv_limit.setText(fontcount + "");
     }
 
@@ -361,7 +366,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
                 mAdapter.notifyDataSetChanged();
                 setData();
 
-                Toast.makeText(getActivity(), "评论发布成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "发布成功", Toast.LENGTH_LONG).show();
 
             }
 

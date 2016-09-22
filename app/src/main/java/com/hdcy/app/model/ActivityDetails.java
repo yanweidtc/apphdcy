@@ -42,7 +42,9 @@ public class ActivityDetails implements Serializable {
 
     private int sponsorId;
 
-    private String sponsor;
+    private String sponsorName;
+
+    private String sponsorImage;
 
     private int browseval;
 
@@ -169,12 +171,7 @@ public class ActivityDetails implements Serializable {
     public int getSponsorId(){
         return this.sponsorId;
     }
-    public void setSponsor(String sponsor){
-        this.sponsor = sponsor;
-    }
-    public String getSponsor(){
-        return this.sponsor;
-    }
+
     public void setBrowseval(int browseval){
         this.browseval = browseval;
     }
@@ -277,6 +274,20 @@ public class ActivityDetails implements Serializable {
     }
     public Date getSignEndTime(){
         return this.signEndTime;
+    }
+    public String getSponsorName() {
+        return sponsorName;
+    }
+
+    public void setSponsorName(String sponsorName) {
+        this.sponsorName = sponsorName;
+    }
+    public String getSponsorImage() {
+        return sponsorImage;
+    }
+
+    public void setSponsorImage(String sponsorImage) {
+        this.sponsorImage = sponsorImage;
     }
 }
 

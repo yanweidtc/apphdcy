@@ -58,6 +58,10 @@ public class ActivityContent implements Serializable {
 
     private int weighting;
 
+    private String sponsorName;
+
+    private String sponsorImage;
+
     public void setId(int id){
         this.id = id;
     }
@@ -196,5 +200,24 @@ public class ActivityContent implements Serializable {
     public int getWeighting(){
         return this.weighting;
     }
+
+    public String getSponsorImage() {
+        return sponsorImage;
+    }
+
+    public void setSponsorImage(String sponsorImage) {
+        this.sponsorImage = sponsorImage;
+    }
+
+
+    public String getSponsorName() {
+        return sponsorName;
+    }
+
+    public void setSponsorName(String sponsorName) {
+        this.sponsorName = sponsorName;
+    }
+
+
 
 }

@@ -89,8 +89,12 @@ public class FirsPagersFragmentAdapter extends RecyclerView.Adapter<FirsPagersFr
                holder.tv_info_tag.setText(item.getTagInfos().get(0).getName()+"");
             }
         }
-        if(item.getBusiness() ==true){
+        if(item.getBusiness() ==true && item.getTop()==true){
             holder.tv_info_tag.setText("置顶");
+            holder.tv_info_update.setVisibility(View.GONE);
+        }
+        if(item.getBusiness() == true && item.getTop() ==false){
+            holder.tv_info_tag.setText("");
             holder.tv_info_update.setVisibility(View.GONE);
         }
 

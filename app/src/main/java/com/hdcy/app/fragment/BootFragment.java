@@ -52,14 +52,13 @@ public class BootFragment extends BaseBackFragment{
         iv_boot_bg = (ImageView) view.findViewById(R.id.img_boot);
         screenWidth = SizeUtils.getScreenWidth();
         screenHeight = SizeUtils.getScreenHeight();
-        Glide.with(getContext()).load(R.mipmap.bg_boot).fitCenter()
-                .into(iv_boot_bg);
-/*        Picasso.with(getContext()).load("http://img.haoduocheyou.com/721f6927-521e-4db5-a9bb-3ce215a8005c.png")
+/*        Glide.with(getContext()).load(R.mipmap.bg_boot)
+                .into(iv_boot_bg);*/
+        Picasso.with(getContext()).load(R.mipmap.bg_boot)
                 .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
                 .resize(screenWidth,screenHeight)
-                .centerCrop()
                 .config(Bitmap.Config.RGB_565)
-                .into(iv_boot_bg);*/
+                .into(iv_boot_bg);
 
         doFinish();
         return view;

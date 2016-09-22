@@ -162,7 +162,7 @@ public class CommentListFragment extends BaseBackFragment implements BGARefreshL
         mAdapter.setOnReplyClickListener(new CommentListViewFragmentAdapter.OnReplyClickListener() {
             @Override
             public void onReplyClick(int position, Replys reply) {
-                Toast.makeText(getContext(), "点击的位置" + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "点击的位置" + position, Toast.LENGTH_SHORT).show();
                 replyid = reply.getId()+"";
                 targetid = reply.getTargetId()+"";
                 ShowInputDialog();

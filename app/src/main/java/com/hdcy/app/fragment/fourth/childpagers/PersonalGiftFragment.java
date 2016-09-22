@@ -92,7 +92,7 @@ public class PersonalGiftFragment extends BaseBackFragment implements BGARefresh
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EventBus.getDefault().post(new StartBrotherEvent(SuperBrowserFragment.newInstance(1,giftContentList.get(position).getId()+"","礼物详情")));
+                EventBus.getDefault().post(new StartBrotherEvent(SuperBrowserFragment.newInstance(1,giftContentList.get(position).getId()+"","积分兑换")));
             }
         });
     }

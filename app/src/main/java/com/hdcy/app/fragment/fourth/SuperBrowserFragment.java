@@ -83,7 +83,7 @@ public class SuperBrowserFragment extends BaseBackFragment {
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true);
-        webSettings.setSupportZoom(true);
+       // webSettings.setSupportZoom(true);
         webSettings.setDomStorageEnabled(true);
         myWebView.canGoBack();
         myWebView.setWebViewClient(new WebViewClient());

@@ -88,6 +88,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
     private ImageView iv_activity_phone;
     private ImageView iv_activity_comment;
     private TextView tv_more_comment;
+    private TextView tv_activity_comment_status;
 
     //客服dialog
     private TextView tv_activity_waiter;
@@ -178,6 +179,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
         tv_people_limits =(TextView) view.findViewById(R.id.tv_people_limits);
         tv_activity_fee = (TextView) view.findViewById(R.id.tv_activity_fee);
         tv_activity_address =(TextView) view.findViewById(R.id.tv_activity_address);
+        tv_activity_comment_status = (TextView) view.findViewById(R.id.tv_activity_comment_status);
 
         iv_activity_phone =(ImageView) view.findViewById(R.id.iv_activity_phone);
         iv_activity_comment = (ImageView) view.findViewById(R.id.iv_activity_comment);
@@ -284,7 +286,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
 
         //填充数据
         tv_attend_count.setText(activityDetails.getHot()+"");
-        tv_activity_sponsor.setText(activityDetails.getSponsor()+"df");
+        tv_activity_sponsor.setText(activityDetails.getSponsorName()+"");
         SimpleDateFormat foramt = new SimpleDateFormat("yyyy年MM月dd日");
         String dateformat1 = foramt.format(activityDetails.getSignStartTime()).toString();
         String dateformat2 = foramt.format(activityDetails.getSignEndTime()).toString();
@@ -298,6 +300,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
 
         mAdapter = new ActivityCommentListAdapter(getContext(),commentsList);
         lv_activity_comment.setAdapter(mAdapter);
+
 
 
     }
@@ -390,6 +393,11 @@ public class OfflineActivityFragment extends BaseBackFragment{
                     List<CommentsContent> commentListFragmentListtemp = responseInfo.getCommentsContentList();
                     commentsList.addAll(commentListFragmentListtemp);
                     Log.e("CommentListsize", commentsList.size() + "");
+                }
+                if(commentsList.size() > 0){
+                    tv_activity_sponsor.setVisibility(View.VISIBLE);
+                }else {
+                    tv_activity_sponsor.setVisibility(View.GONE);
                 }
                 setData();
             }

@@ -149,10 +149,15 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
        // holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
         if(replysList.isEmpty()){
             holder.lv_replys.setVisibility(View.GONE);
+        }else {
+            holder.lv_replys.setVisibility(View.VISIBLE);
+
         }
+        View footview = View.inflate(context,R.layout.item_replys_showmore,null);
+        holder.lv_replys.addFooterView(footview);
+        final TextView tv_more = (TextView) footview.findViewById(R.id.tv_more);
         replysAdapter = new ReplysAdapter(context, replysList);
         holder.lv_replys.setAdapter(replysAdapter);
-
         replysAdapter.setOnItemsClickListeners(new ReplysAdapter.OnItemsClickListeners() {
             @Override
             public void onFrameLayout(int replyposition) {
@@ -165,9 +170,27 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
                 targetid = replysList.get(replyposition).getTargetId() + "";
                 //Toast.makeText(context, "点击的位置" + replyid, Toast.LENGTH_SHORT).show();
                 ShowInputDialog();
-
             }
         });
+
+/*        if(replysList.size() > 2){
+            tv_more.setVisibility(View.VISIBLE);
+            tv_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int tag = (int) holder.getTag();
+                    if (tag == position){
+                        replysList =data.get(position).getReplys();
+                    }
+                    Toast.makeText(context, replysList.size()+"", Toast.LENGTH_SHORT).show();
+                    replysAdapter.addItemNum(replysList.size());
+                    replysAdapter.notifyDataSetChanged();
+                    tv_more.setVisibility(View.GONE);
+                }
+            });
+        }else {
+            tv_more.setVisibility(View.GONE);
+        }*/
 
 
         holder.tv_name.setText(item.getCreaterName() + "");
@@ -240,10 +263,10 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
                 }
             }
         });
-        holder.iv_avatar.setOnClickListener(new View.OnClickListener() {
+        holder.layout_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "点击的位置" + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "点击的位置" + position, Toast.LENGTH_SHORT).show();
                 int tag = (int) holder.getTag();
                 if (tag == position) {
                     if (onAvatarClickListener != null) {
@@ -259,7 +282,7 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
         private ImageView iv_praise;
         private TextView tv_name, tv_praise_count, tv_time, tv_comment_content;
         private ListView lv_replys;
-        private LinearLayout ly_sub_replys;
+        private LinearLayout ly_sub_replys,layout_root;
         private TextView tv_more;
 
         private Object tag;
@@ -276,7 +299,7 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
 
             ButterKnife.bind(this, itemView);
 
-
+            layout_root =(LinearLayout) itemView.findViewById(R.id.layout_root);
             iv_avatar = (ImageView) itemView.findViewById(R.id.iv_avatar);
             iv_praise = (ImageView) itemView.findViewById(R.id.iv_praise);
             tv_name = (TextView) itemView.findViewById(R.id.tv_name);
@@ -284,7 +307,6 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             ly_sub_replys = (LinearLayout) itemView.findViewById(R.id.ly_sub_reply);
             lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
-            tv_more = (TextView) itemView.findViewById(R.id.tv_more);
 
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 

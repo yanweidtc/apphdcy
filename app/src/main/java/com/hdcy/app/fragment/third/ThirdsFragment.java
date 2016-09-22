@@ -161,7 +161,6 @@ public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGA
         Picasso.with(getContext()).load(leaderInfoList.get(0).getTopImage())
                 .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
                 .resize(bgimgWidth,bgimgHeight)
-                .centerCrop()
                 .config(Bitmap.Config.RGB_565)
                 .into(iv_leader_background);
         tv_leader_name.setText(leaderInfoList.get(0).getNickname()+"");

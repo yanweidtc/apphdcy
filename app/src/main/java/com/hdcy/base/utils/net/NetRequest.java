@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.hdcy.app.model.RootListInfo;
 import com.hdcy.base.BaseData;
+import com.hdcy.base.utils.logger.LogF;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -205,11 +206,14 @@ public class NetRequest implements BaseData {
             public void onSuccess(String result) {
                 netResponseInfo.setResult(result);
                 try {
-                    Log.e("Successmsg",result);
+//                    Log.e("Successmsg",result);
                     JSONObject  obj = new JSONObject(result);
-                    Log.e("Successmsg1",obj.toString());
-                    Log.e("onSuccess1：" + netRequestInfo.getUrl(),"");
-                    Log.e("onSuccess1：" + netResponseInfo.getResult(),"");
+//                    Log.e("Successmsg1",obj.toString());
+//                    Log.e("onSuccess1：" + netRequestInfo.getUrl(),"");
+//                    Log.e("onSuccess1：" + netResponseInfo.getResult(),"");
+
+                    LogF.t(netRequestInfo.getUrl()).json(netResponseInfo.getResult());
+
                     netResponseInfo.setDataObj(obj);
                     netResponseInfo.rootListInfo=new RootListInfo();
                     netResponseInfo.rootListInfo.setLast(obj.optBoolean("last"));
@@ -231,9 +235,9 @@ public class NetRequest implements BaseData {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                LogUtil.e("onFailure：" + netRequestInfo.getUrl());
-                LogUtil.e("onFailure：" + ex.getMessage());
+//                LogUtil.e("onFailure：" + netRequestInfo.getUrl());
                 Log.e("onFailure",netRequestInfo.getUrl());
+                LogUtil.e("onFailure：" + ex.getMessage());
 //                Log.e("onFailure",ex.getLocalizedMessage());
                 netResponseInfo.setMessage(ex.getMessage());
                 if (callBack != null) {

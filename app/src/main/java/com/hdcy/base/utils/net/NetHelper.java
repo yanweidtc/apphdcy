@@ -447,13 +447,11 @@ public class NetHelper {
                     responseInfo.vedioBannerList=JSON.parseArray(dataObj.opt("content").toString(), Bean4VedioBanner.class);
                 }
                 callBack.onSuccess(requestInfo, responseInfo);
-                Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
             }
 
             @Override
             public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Log.e(TAG, "onError() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
-
             }
 
             @Override
@@ -480,7 +478,6 @@ public class NetHelper {
         return request.getObj(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
                 JSONObject dataObj = responseInfo.getDataObj();
                 LogF.json(dataObj.toString());//LOG
                 if (dataObj != null){
@@ -512,7 +509,6 @@ public class NetHelper {
         return request.getObj(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
                 JSONObject dataObj = responseInfo.getDataObj();
                 LogF.json(dataObj.toString());//LOG
 

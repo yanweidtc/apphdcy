@@ -136,6 +136,12 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 //                        .centerCrop()
                         .into(iv);
 
+                // 是否直播的标志
+                holder.setVisible(R.id.tv_is_live,bean.live);//是直播的标志
+
+
+
+
 
             }
         };

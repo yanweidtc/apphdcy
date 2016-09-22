@@ -90,6 +90,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
     private TextView tv_more_comment;
     private TextView tv_activity_comment_status;
 
+
     //客服dialog
     private TextView tv_activity_waiter;
     private TextView tv_activity_waiter_phone;
@@ -106,6 +107,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
     TextView tv_comment_cancel;
     TextView tv_limit;
     EditText editText;
+    TextView tv_dialog_title;
     private String content;
     private boolean isEdit;
     private String targetId;
@@ -254,6 +256,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
             public void onClick(View v) {
                 targetId = activityDetails.getId()+"";
                 ShowInputDialog();
+                tv_dialog_title.setText("写留言");
 
             }
         });
@@ -288,7 +291,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
         tv_attend_count.setText(activityDetails.getHot()+"");
         tv_activity_sponsor.setText(activityDetails.getSponsorName()+"");
         SimpleDateFormat foramt = new SimpleDateFormat("yyyy年MM月dd日");
-        String dateformat1 = foramt.format(activityDetails.getSignStartTime()).toString();
+        String dateformat1 = foramt.format(activityDetails.getStartTime()).toString();
         String dateformat2 = foramt.format(activityDetails.getSignEndTime()).toString();
         tv_activity_starttime.setText(dateformat1);
         tv_activity_register_end.setText(dateformat2);
@@ -300,6 +303,12 @@ public class OfflineActivityFragment extends BaseBackFragment{
 
         mAdapter = new ActivityCommentListAdapter(getContext(),commentsList);
         lv_activity_comment.setAdapter(mAdapter);
+
+        if(commentsList.isEmpty()){
+            tv_activity_comment_status.setVisibility(View.VISIBLE);
+        }else {
+            tv_activity_comment_status.setVisibility(View.GONE);
+        }
 
 
 
@@ -339,7 +348,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
         NetHelper.getInstance().PublishComments(activityid, content, "activity", null, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
-                Toast.makeText(getActivity(), "评论发布成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "留言发布成功", Toast.LENGTH_LONG).show();
                 alertDialog.dismiss();
             }
 
@@ -394,11 +403,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
                     commentsList.addAll(commentListFragmentListtemp);
                     Log.e("CommentListsize", commentsList.size() + "");
                 }
-                if(commentsList.size() > 0){
-                    tv_activity_sponsor.setVisibility(View.VISIBLE);
-                }else {
-                    tv_activity_sponsor.setVisibility(View.GONE);
-                }
+
                 setData();
             }
 
@@ -547,6 +552,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_edit_dialog,null);
+        tv_dialog_title =(TextView) view.findViewById(R.id.tv_dialog_title);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -557,7 +563,7 @@ public class OfflineActivityFragment extends BaseBackFragment{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isEdit = s.length() >0;
-                resetViewData();
+                resetViewData1();
             }
 
             @Override
@@ -601,6 +607,10 @@ public class OfflineActivityFragment extends BaseBackFragment{
 
     private boolean checkData(){
         content = editText.getText().toString();
+        if (BaseUtils.isEmptyString(content)||content.trim().isEmpty()) {
+            Toast.makeText(getActivity(), "请输入你要发布的文字", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
 
     }
@@ -609,7 +619,12 @@ public class OfflineActivityFragment extends BaseBackFragment{
      * 刷新控件数据
      */
     private void resetViewData(){
-        int fontcount = 50 - editText.length();
+        int fontcount = 70 - editText.length();
+        tv_limit.setText(fontcount+"");
+    }
+
+    private void resetViewData1(){
+        int fontcount = 250 - editText.length();
         tv_limit.setText(fontcount+"");
     }
 

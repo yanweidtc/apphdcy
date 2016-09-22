@@ -1,5 +1,6 @@
 package me.yokeyword.fragmentation;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
@@ -7,6 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.widget.PopupWindow;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -268,4 +274,6 @@ public class SupportActivity extends AppCompatActivity implements ISupport {
     public void logFragmentStackHierarchy(String TAG) {
         mFragmentation.logFragmentRecords(TAG);
     }
+
+
 }

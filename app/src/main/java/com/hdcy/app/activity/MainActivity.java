@@ -1,8 +1,10 @@
 package com.hdcy.app.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.easemob.EMConnectionListener;
@@ -11,7 +13,11 @@ import com.easemob.util.NetUtils;
 import com.hdcy.app.R;
 import com.hdcy.app.fragment.BootFragment;
 import com.hdcy.app.fragment.MainFragment;
+import com.hdcy.app.view.SFProgressDialog;
 import com.umeng.socialize.PlatformConfig;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
@@ -105,5 +111,92 @@ public class MainActivity extends SupportActivity {
             });
         }
     }
+
+    private final static long LOADING_WAITING_TIME = 2000;// 网络加载对话框出现等待时间
+    private boolean isNeedShowProgress;// 是否需要显示加载对话框
+    private SFProgressDialog mProgressDialog;
+    private Timer timer;
+    private Toast mToast;
+    private Dialog mDialog;
+    private Dialog pwdDialog;
+    private PopupWindow pop;
+
+
+    /**
+     * 显示等待框
+     *
+     * @param str
+     * @param isTouchHide
+     * @param isNeedWait  是否需要等待一段时间再显示等待框(默认true)
+     */
+    public void showProgressDialog(String str, boolean isTouchHide,
+                                   boolean isNeedWait) {
+        isNeedShowProgress = true;
+        if (mProgressDialog == null) {
+            try {
+                mProgressDialog = SFProgressDialog.createProgressDialog(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+        if (timer == null) {
+            timer = new Timer();
+        }
+        mProgressDialog.setMessage(str);
+        mProgressDialog.setCanceledOnTouchOutside(isTouchHide);
+        if (!mProgressDialog.isShowing() && !isFinishing()) {
+            if (isNeedWait) {
+                timer.schedule(new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (isNeedShowProgress) {
+                                    mProgressDialog.show();
+                                }
+                            }
+                        });
+                    }
+                }, LOADING_WAITING_TIME);
+            } else {
+                if (isNeedShowProgress) {
+                    mProgressDialog.show();
+                }
+            }
+        }
+    }
+
+    /**
+     * 隐藏等待框
+     */
+    public void dismissProgressDialog() {
+        isNeedShowProgress = false;
+        if (mProgressDialog != null) {
+            if (mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+
+        }
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    /**
+     * 销毁等待框
+     */
+    public void cancelProgressDialog() {
+        dismissProgressDialog();
+        if (mProgressDialog != null) {
+            mProgressDialog.cancel();
+            mProgressDialog = null;
+        }
+    }
+
 
 }

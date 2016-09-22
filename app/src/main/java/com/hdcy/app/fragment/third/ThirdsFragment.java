@@ -21,6 +21,7 @@ import com.hdcy.app.basefragment.BaseFragment;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
 import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
+import com.hdcy.app.fragment.first.FirstFragment;
 import com.hdcy.app.fragment.fourth.FourthFragment;
 import com.hdcy.app.fragment.fourth.SuperBrowserFragment;
 import com.hdcy.app.model.ActivityContent;
@@ -48,7 +49,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by WeiYanGeorge on 2016-09-10.
  */
 
-public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
+public class ThirdsFragment extends BaseLazyMainFragment implements BGARefreshLayout.BGARefreshLayoutDelegate{
 
     private Toolbar mToolbar;
     private TextView title;
@@ -80,6 +81,11 @@ public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGA
         ThirdsFragment fragment = new ThirdsFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected void initLazyView(@Nullable Bundle savedInstanceState) {
+
     }
 
     @Nullable
@@ -211,6 +217,7 @@ public class ThirdsFragment extends BaseFragment implements BGARefreshLayout.BGA
         NetHelper.getInstance().GetPaticipationList("ACTIVITY", pagecount, new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+
                 List<ActivityContent> activityContentstemp = responseInfo.getActivityContentList();
                 activityContentList.addAll(activityContentstemp);
                 rootListInfo = responseInfo.getRootListInfo();

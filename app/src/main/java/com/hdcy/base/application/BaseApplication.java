@@ -5,9 +5,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.multidex.MultiDexApplication;
 
+import com.baidu.mapapi.SDKInitializer;
+import com.easemob.easeui.controller.EaseUI;
 import com.hdcy.base.utils.BaseUtils;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
+import com.hdcy.base.utils.logger.AndroidLogTool;
+import com.hdcy.base.utils.logger.LogF;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.ucloud.live.UEasyStreaming;
@@ -16,6 +18,7 @@ import com.umeng.socialize.PlatformConfig;
 import org.xutils.x;
 
 import java.util.Random;
+
 
 public class BaseApplication extends MultiDexApplication {
 
@@ -43,13 +46,27 @@ public class BaseApplication extends MultiDexApplication {
             }
         });
 
-        EMOptions options = new EMOptions();
-        // 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-        //初始化
-        EMClient.getInstance().init(this, options);
-        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);
+//        EMOptions options = new EMOptions();
+//        // 默认添加好友时，是不需要验证的，改成需要验证
+//        options.setAcceptInvitationAlways(false);
+//        //初始化
+//        EMClient.getInstance().init(this, options);
+//        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
+//        EMClient.getInstance().setDebugMode(true);
+
+        EaseUI.getInstance().init(this);
+
+        SDKInitializer.initialize(getApplicationContext());
+
+        LogF
+                .init("car-app")                 // default PRETTYLOGGER or use just init()
+                .methodCount(2)                 // default 2
+                .hideThreadInfo()               // default shown
+//				.logLevel(LogLevel.NONE)        // default LogLevel.FULL//正式发版本将此行代码打开
+                .methodOffset(2)                // default 0
+                .logTool(new AndroidLogTool()); // custom log tool, optional
+
+
     }
 
     private void initData() {

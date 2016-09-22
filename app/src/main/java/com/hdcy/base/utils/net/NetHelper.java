@@ -18,6 +18,7 @@ import com.hdcy.app.model.PraiseResult;
 import com.hdcy.app.model.Replys;
 import com.hdcy.app.model.Result;
 import com.hdcy.app.model.UserBaseInfo;
+import com.hdcy.base.utils.logger.LogF;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -441,6 +442,7 @@ public class NetHelper {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 JSONObject dataObj = responseInfo.getDataObj();
+                LogF.json(dataObj.toString());//LOG
                 if (dataObj != null){
                     responseInfo.vedioBannerList=JSON.parseArray(dataObj.opt("content").toString(), Bean4VedioBanner.class);
                 }
@@ -480,6 +482,7 @@ public class NetHelper {
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
                 JSONObject dataObj = responseInfo.getDataObj();
+                LogF.json(dataObj.toString());//LOG
                 if (dataObj != null){
                     responseInfo.vedioBannerList=JSON.parseArray(dataObj.optJSONArray("content").toString(), Bean4VedioBanner.class);
                 }
@@ -511,6 +514,8 @@ public class NetHelper {
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Log.d(TAG, "onSuccess() called with: " + "requestInfo = [" + requestInfo + "], responseInfo = [" + responseInfo + "]");
                 JSONObject dataObj = responseInfo.getDataObj();
+                LogF.json(dataObj.toString());//LOG
+
                 if (dataObj != null){
                     responseInfo.mBean4VedioDetail=JSON.parseObject(dataObj.toString(), Bean4VedioDetail.class);
                 }

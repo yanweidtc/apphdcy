@@ -44,11 +44,12 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     //底部导航栏
     compile 'com.makeramen:roundedimageview:2.2.1'
-    compile 'com.android.support:appcompat-v7:23.3.0'
+//    compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.jakewharton:butterknife:8.2.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'org.xutils:xutils:3.3.36'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'fm.jiecao:jiecaovideoplayer:4.6.3'
     compile 'com.zhy:autolayout:1.4.3'
     compile 'com.alibaba:fastjson:1.2.14'
     compile 'it.sephiroth.android.library.horizontallistview:hlistview:1.3.1'
@@ -69,13 +70,15 @@ dependencies {
     //轮播图依赖控件
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+//    compile 'com.github.bumptech.glide:glide:3.7.0'
     compile files('libs/jsoup-1.7.2.jar')
     //展开收起控件
     compile 'com.ms-square:expandableTextView:0.1.4'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
-//    compile 'com.bigkoo:convenientbanner:2.0.5'
+    //    compile 'com.bigkoo:convenientbanner:2.0.5'
     compile project(':ulive_android_sdk2')
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     //    compile 'com.jakewharton:butterknife:7.0.1'
+    compile project(':easeui-im')
+
 }

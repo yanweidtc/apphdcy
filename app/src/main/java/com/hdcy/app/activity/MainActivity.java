@@ -1,24 +1,16 @@
 package com.hdcy.app.activity;
 
-import android.Manifest;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.easemob.EMConnectionListener;
+import com.easemob.EMError;
+import com.easemob.util.NetUtils;
 import com.hdcy.app.R;
 import com.hdcy.app.fragment.BootFragment;
 import com.hdcy.app.fragment.MainFragment;
-import com.hdcy.base.utils.BaseUtils;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.EMConnectionListener;
-import com.hyphenate.EMError;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.util.NetUtils;
 import com.umeng.socialize.PlatformConfig;
 
 import me.yokeyword.fragmentation.SupportActivity;
@@ -48,37 +40,6 @@ public class MainActivity extends SupportActivity {
         setContentView(R.layout.activity_main1);
 //        String username="chiwenheng";
 //        String pwd="123456";
-
-
-        //注册失败会抛出HyphenateException
-//        try {
-//            EMClient.getInstance().createAccount(username, pwd);//同步方法
-//        } catch (HyphenateException e) {
-//            e.printStackTrace();
-//        }
-
-        EMClient.getInstance().login(BaseUtils.userName,BaseUtils.userPwd,new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                Log.d(TAG, "登录聊天服务器成功！");
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                Log.d(TAG, "onError() called with: " + "code = [" + code + "], message = [" + message + "]");
-                Log.d(TAG, "登录聊天服务器失败！");
-            }
-        });
-
-        //注册一个监听连接状态的listener
-        EMClient.getInstance().addConnectionListener(new MyConnectionListener());
 
         //umeng
 
@@ -128,9 +89,9 @@ public class MainActivity extends SupportActivity {
                     if(error == EMError.USER_REMOVED){
                         // 显示帐号已经被移除
                         showToast("显示帐号已经被移除");
-                    }else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                        // 显示帐号在其他设备登录
-                        showToast("显示帐号在其他设备登录");
+//                    }else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
+//                        // 显示帐号在其他设备登录
+//                        showToast("显示帐号在其他设备登录");
                     } else {
                         if (NetUtils.hasNetwork(MainActivity.this)) {
                             //连接不到聊天服务器

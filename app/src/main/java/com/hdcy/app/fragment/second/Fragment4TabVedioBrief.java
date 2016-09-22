@@ -52,9 +52,12 @@ public class Fragment4TabVedioBrief extends BaseFragment {
 
     private void initView(View view) {
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);
-        mTvTitle.setText(mStr);
+        mTvTitle.setText("视频简介");
         mWebView= (WebView) view.findViewById(R.id.wv_vedio_desc);
-        mWebView.loadUrl("http://baidu.com");
+//        mWebView.loadUrl("http://baidu.com");
+        mWebView.loadDataWithBaseURL(null, mStr, "text/html", "utf-8", null);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+
 
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
         mWebView.setWebViewClient(new WebViewClient(){

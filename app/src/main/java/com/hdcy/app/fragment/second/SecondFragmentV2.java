@@ -18,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
+import com.easemob.exceptions.EaseMobException;
 import com.hdcy.app.R;
 import com.hdcy.app.adapter.CommonAdapter;
 import com.hdcy.app.adapter.ViewHolder;
@@ -72,7 +75,6 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
     private List<Bean4VedioBanner> mDatas4Banner = new ArrayList<>();
 
 
-//    int[] imgRes = {R.drawable.a,R.drawable.b,R.drawable.c};
 
     private ViewPager mViewPager;
     private PagerAdapter mAdapter4Banner;
@@ -86,7 +88,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
     int bgimgWidth;
     int bgimgHeight;
 
-
+    String mGroupId;
 
     public static SecondFragmentV2 newInsatance(){
         Bundle args = new Bundle();
@@ -104,6 +106,22 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
         initView(view);
         initData();
         setListener();
+
+
+        //前面三个参数和创建私有群一致
+//needApprovalRequired: 如果创建的公开群用需要户自由加入，就传false。否则需要申请，等群主批准后才能加入，传true
+        try {
+            EMGroup group =EMGroupManager.getInstance().createPublicGroup("chate", "desc", null, false);//需异步处理
+            mGroupId =group.getGroupId();
+
+            Log.e("group",group.toString());
+            Log.e("group",mGroupId);
+
+        } catch (EaseMobException e) {
+            e.printStackTrace();
+        }
+
+
         return view;
     }
 
@@ -207,7 +225,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
             @Override
             public int getCount()
             {
-                return  4;
+                return  mDatas4Banner.size();
             }
 
             @Override
@@ -267,7 +285,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
 				// 开始直播
                 Intent intent =new Intent();
                 String streamId="12345";// 这里视频聊天的窗口固定死
-                Activity4Chat.getInstance(getActivity(),streamId);
+                Activity4Chat.getInstance(getActivity(),streamId,mGroupId);
 
 //                Settings mSettings = new Settings(getActivity());
 //                mSettings.setPublishStreamId(streamId);
@@ -341,7 +359,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                 mDatas4Banner.addAll(tempList);
                 Log.d(TAG,mDatas4Banner.size()+"");
 
-//                initHeadBanner();// 初始化banner
+                initHeadBanner();// 初始化banner
 
 
             }

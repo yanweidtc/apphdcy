@@ -195,7 +195,7 @@ public class SecondFragment extends BaseLazyMainFragment implements BGARefreshLa
 				// 开始直播
                 Intent intent =new Intent();
                 String streamId="12345";// 这里视频聊天的窗口固定死
-                Activity4Chat.getInstance(getActivity(),streamId);
+                Activity4Chat.getInstance(getActivity(),streamId,"123");
 
 //                Settings mSettings = new Settings(getActivity());
 //                mSettings.setPublishStreamId(streamId);

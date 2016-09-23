@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import it.sephiroth.android.library.widget.HListView;
 
 /**
- * Created by WeiYanGeorge on 2016-09-04.
+ * banner
  */
 
 public class NoScrollHListView extends HListView{

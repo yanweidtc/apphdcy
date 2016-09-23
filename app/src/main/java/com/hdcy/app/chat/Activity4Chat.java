@@ -14,6 +14,7 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.easeui.EaseConstant;
 import com.easemob.easeui.ui.EaseChatFragment;
+import com.easemob.exceptions.EaseMobException;
 import com.hdcy.app.R;
 import com.hdcy.app.vedio.preference.Settings;
 import com.ucloud.common.logger.L;
@@ -106,12 +107,21 @@ public class Activity4Chat extends AppCompatActivity implements View.OnClickList
 			}
 		});
 
+		String groudId="1474647524640";
+
+		//如果群开群是自由加入的，即group.isMembersOnly()为false，直接join
+		try {
+			EMGroupManager.getInstance().joinGroup(groudId);//需异步处理
+		} catch (EaseMobException e) {
+			e.printStackTrace();
+		}
+
 		//new出EaseChatFragment或其子类的实例
 		EaseChatFragment chatFragment = new EaseChatFragment();
-//传入参数
+		//传入参数
 		Bundle args = new Bundle();
 		args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_GROUP);
-		args.putString(EaseConstant.EXTRA_USER_ID, "zw123");
+		args.putString(EaseConstant.EXTRA_USER_ID, groudId);
 		chatFragment.setArguments(args);
 		getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
 

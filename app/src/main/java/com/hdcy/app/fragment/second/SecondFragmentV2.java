@@ -44,6 +44,8 @@ import java.util.List;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
+import static com.hdcy.base.utils.DateUtil.date2Str;
+
 /**
  * Created by Chiwenheng on 2016-09-12.
  *
@@ -70,7 +72,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
     private List<Bean4VedioBanner> mDatas4Banner = new ArrayList<>();
 
 
-    int[] imgRes = {R.drawable.a,R.drawable.b,R.drawable.c};
+//    int[] imgRes = {R.drawable.a,R.drawable.b,R.drawable.c};
 
     private ViewPager mViewPager;
     private PagerAdapter mAdapter4Banner;
@@ -116,7 +118,9 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
         mRefreshLayout.setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(),true));
         View headview = View.inflate(getContext(),R.layout.item_headerview_second_v2,null);
 
-        initHeadBanner(headview);
+        mViewPager = (ViewPager) headview.findViewById(R.id.id_viewpager);
+
+        initHeadBanner();
 
 
         mAdapter = new CommonAdapter<Bean4VedioBanner>(getActivity(), mDatas4ListView,R.layout.item_second_fragment) {
@@ -125,7 +129,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
 
                 holder.setText(R.id.tv_activity_title,bean.name);
                 Date date= new Date(bean.startTime);
-                holder.setText(R.id.tv_activity_desc, DateUtil.date2Str(date,"yyyy-MM-dd / HH:mm"));
+                holder.setText(R.id.tv_activity_desc, "播放时间:"+date2Str(date,"yyyy-MM-dd / HH:mm"));
 
                 ImageView iv=holder.getView(R.id.iv_activity_background);
                 Picasso.with(getActivity()).load(bean.image)
@@ -150,26 +154,47 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
 
     }
 
-    private void initHeadBanner(View view) {
+    private void initHeadBanner() {
 
-        mViewPager = (ViewPager) view.findViewById(R.id.id_viewpager);
 
         mViewPager.setPageMargin(40);
         mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setAdapter(mAdapter4Banner = new PagerAdapter()
+        mAdapter4Banner = new PagerAdapter()
         {
             @Override
             public Object instantiateItem(ViewGroup container, int position)
             {
-                ImageView view = new ImageView(getActivity());
+
+                Bean4VedioBanner bean =mDatas4Banner.get(position);
+
+                View view=View.inflate(getActivity(),R.layout.item_banner_top,null);
 //                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 //                view.setLayoutParams(lp);
-//                view.setText(position + ":" + view);
-                view.setScaleType(ImageView.ScaleType.FIT_XY);
-//                view.setBackgroundColor(Color.parseColor("#44ff0000"));
-                view.setImageResource(imgRes[position]);
                 container.addView(view);
-//                view.setAdjustViewBounds(true);
+                TextView tvName= (TextView) view.findViewById(R.id.tv_activity_title);
+                tvName.setText(bean.name);
+//                R.id.tv_activity_title,bean.name);
+                Date date= new Date(bean.startTime);
+                TextView tvDate= (TextView) view.findViewById(R.id.tv_activity_desc);
+
+                tvDate.setText("播放时间:"+DateUtil.date2Str(date,"yyyy-MM-dd / HH:mm"));
+                ImageView iv= (ImageView) view.findViewById(R.id.iv_activity_background);
+                iv.setScaleType(ImageView.ScaleType.FIT_XY);
+                Picasso.with(getActivity()).load(bean.image)
+                        .placeholder(BaseInfo.PICASSO_PLACEHOLDER)
+                        .error(BaseInfo.PICASSO_ERROR)
+//                        .resize(240,240)
+//                        .centerCrop()
+                        .into(iv);
+
+                // 是否直播的标志
+                View view4Live=view.findViewById(R.id.tv_is_live);
+                if(bean.live){
+                    view4Live.setVisibility(View.VISIBLE);
+                }else{
+                    view4Live.setVisibility(View.GONE);
+                }
+
                 return view;
             }
 
@@ -182,7 +207,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
             @Override
             public int getCount()
             {
-                return imgRes.length;
+                return  4;
             }
 
             @Override
@@ -190,7 +215,9 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
             {
                 return view == o;
             }
-        });
+        };
+
+        mViewPager.setAdapter(mAdapter4Banner);
 
         mViewPager.setPageTransformer(true, new ScaleInTransformer());
 
@@ -314,7 +341,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                 mDatas4Banner.addAll(tempList);
                 Log.d(TAG,mDatas4Banner.size()+"");
 
-
+//                initHeadBanner();// 初始化banner
 
 
             }

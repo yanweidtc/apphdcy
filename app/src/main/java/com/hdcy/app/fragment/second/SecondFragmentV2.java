@@ -213,6 +213,18 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                     view4Live.setVisibility(View.GONE);
                 }
 
+                view.setTag(bean);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bean4VedioBanner bean= (Bean4VedioBanner) v.getTag();
+                        if(bean!=null){
+                            goToOneDetail(bean);
+                        }
+                    }
+                });
+
+
                 return view;
             }
 
@@ -292,10 +304,8 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
 //                intent.setClass(getActivity(),VideoActivity.class);
 //                startActivity(intent);
 
-
-
 			}else{// 点播
-                showToast(" 点播 点播");
+
 				Activity4VedioDetailV2.getInstance(getActivity(),bean);
 
 			}

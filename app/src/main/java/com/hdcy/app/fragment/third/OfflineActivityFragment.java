@@ -350,6 +350,8 @@ public class OfflineActivityFragment extends BaseBackFragment{
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Toast.makeText(getActivity(), "留言发布成功", Toast.LENGTH_LONG).show();
                 alertDialog.dismiss();
+                button_submit.setBackgroundResource((R.color.main_font_gray_2));
+                button_submit.setText("已报名");
             }
 
             @Override

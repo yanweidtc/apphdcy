@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hdcy.app.R;
@@ -84,7 +85,10 @@ public class ReplysAdapter extends BaseAdapter {
         Replys temp = getItem(position);
         String fromUser = temp.getCreaterName()+"";
         String toUser = temp.getReplyToName()+"";
-        String content = fromUser +" 回复 " +toUser +": "+ temp.getContent();
+        String content =  temp.getContent();
+
+        holder.tv_from.setText(fromUser);
+        holder.tv_to.setText(toUser);
         holder.tv_content.setText(content);
 
         holder.fy_item_replys.setOnClickListener(new View.OnClickListener() {
@@ -104,13 +108,15 @@ public class ReplysAdapter extends BaseAdapter {
         private Object tag;
 
 
-        public TextView tv_content;
-        public FrameLayout fy_item_replys;
+        public TextView tv_content ,tv_from, tv_to;
+        public LinearLayout fy_item_replys;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
-            fy_item_replys = (FrameLayout) view.findViewById(R.id.ry_item_reply);
+            fy_item_replys = (LinearLayout) view.findViewById(R.id.ry_item_reply);
             tv_content =(TextView) view.findViewById(R.id.tv_content);
+            tv_from = (TextView) view.findViewById(R.id.tv_from);
+            tv_to = (TextView) view.findViewById(R.id.tv_to);
         }
 
         //@ViewInject(R.id.tv_content)

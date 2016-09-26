@@ -82,7 +82,7 @@ public class NetHelper {
         request.addParam("enable","true");
         request.addParam("page",pagecount);
         request.addParam("size",20);
-        request.addParam("sort","pagecount");
+        request.addParam("sort","createdTime,desc");
         return request.postarray(new NetRequestCallBack() {
             @Override
             public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
@@ -122,7 +122,7 @@ public class NetHelper {
         request.addParam("enable","true");
         request.addParam("page",pagecount);
         request.addParam("size","20");
-        request.addParam("sort","pagecount");
+        request.addParam("sort","createdTime,desc");
         request.addParam("tagId",tagId);
         return request.postarray(new NetRequestCallBack() {
             @Override
@@ -808,6 +808,42 @@ public class NetHelper {
             @Override
             public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
                 Log.e("gift","failure");
+            }
+        });
+    }
+
+    public Callback.Cancelable GetCommentPraiseStatus(int pagecount,final NetRequestCallBack callBack){
+        NetRequest request = new NetRequest("/comment/praise/");
+        request.addHeader("Authorization","Basic MToxMjM0NTY=");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+
+        request.addParam("enable","true");
+        request.addParam("page",pagecount);
+        request.addParam("size",20);
+        request.addParam("sort","pagecount");
+        return request.postarray(new NetRequestCallBack() {
+            @Override
+            public void onSuccess(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                JSONArray dataObj = responseInfo.getDataArr();
+                JSONObject dataObj1 = responseInfo.getDataObj();
+                if (dataObj != null){
+                    responseInfo.setContentList(JSON.parseArray(dataObj.toString(), Content.class));
+                    responseInfo.setRootListInfo(JSON.parseObject(dataObj1.toString(),RootListInfo.class));
+                }
+                callBack.onSuccess(requestInfo, responseInfo);
+                Log.e("article2","sucess");
+            }
+
+            @Override
+            public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("article2","onfailure");
+
+            }
+
+            @Override
+            public void onFailure(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Log.e("article2","onfailure");
+
             }
         });
     }

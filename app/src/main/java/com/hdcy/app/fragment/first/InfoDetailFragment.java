@@ -316,6 +316,7 @@ public class InfoDetailFragment extends BaseBackFragment {
 
             @Override
             public void onError(NetRequestInfo requestInfo, NetResponseInfo responseInfo) {
+                Toast.makeText(getActivity(), "评论发布失败", Toast.LENGTH_LONG).show();
                 Log.e("发布成功", targetId);
 
             }

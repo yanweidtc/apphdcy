@@ -16,7 +16,7 @@
         android:hint="有什么想对主办方说的吗?(选填)"
         android:lineSpacingExtra="@dimen/main_font_body_line_space"
         android:lines="5"
-        android:maxLength="50"
+        android:maxLength="70"
         android:paddingBottom="@dimen/main_padding_bottom"
         android:paddingLeft="@dimen/main_padding_left"
         android:paddingRight="@dimen/main_padding_right"

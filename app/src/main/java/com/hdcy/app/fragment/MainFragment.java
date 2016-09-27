@@ -14,7 +14,6 @@ import com.hdcy.app.event.StartBrotherEvent;
 import com.hdcy.app.event.TabSelectedEvent;
 import com.hdcy.app.fragment.first.FirstFragment;
 import com.hdcy.app.fragment.fourth.FourthFragment;
-import com.hdcy.app.fragment.second.SecondFragment;
 import com.hdcy.app.fragment.second.SecondFragmentV2;
 import com.hdcy.app.fragment.third.ThirdsFragment;
 import com.hdcy.app.view.BottomBar;
@@ -59,7 +58,7 @@ public class MainFragment extends BaseFragment {
 
         if(savedInstanceState == null){
             mFragments[FIRST] = FirstFragment.newInstance();
-            mFragments[SECOND] = SecondFragment.newInsatance();
+            mFragments[SECOND] = SecondFragmentV2.newInsatance();
             mFragments[THIRD] = ThirdsFragment.newInstance();
             mFragments[FOURTH] = FourthFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_tab_container,FIRST,mFragments[FIRST],
@@ -68,7 +67,7 @@ public class MainFragment extends BaseFragment {
                     mFragments[FOURTH]);
         }else {
             mFragments[FIRST] = findChildFragment(FirstFragment.class);
-            mFragments[SECOND] = findChildFragment(SecondFragment.class);
+            mFragments[SECOND] = findChildFragment(SecondFragmentV2.class);
             mFragments[THIRD] = findChildFragment(ThirdsFragment.class);
             mFragments[FOURTH] = findChildFragment(FourthFragment.class);
         }

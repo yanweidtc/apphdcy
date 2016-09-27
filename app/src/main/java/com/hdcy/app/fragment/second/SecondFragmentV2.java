@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
-import com.easemob.exceptions.EaseMobException;
 import com.hdcy.app.R;
 import com.hdcy.app.adapter.CommonAdapter;
 import com.hdcy.app.adapter.ViewHolder;
@@ -111,13 +110,13 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
         //前面三个参数和创建私有群一致
 //needApprovalRequired: 如果创建的公开群用需要户自由加入，就传false。否则需要申请，等群主批准后才能加入，传true
         try {
-            EMGroup group =EMGroupManager.getInstance().createPublicGroup("chate", "desc", null, false);//需异步处理
+            EMGroup group = EMGroupManager.getInstance().createPublicGroup("chate", "desc", null, false);//需异步处理
             mGroupId =group.getGroupId();
 
             Log.e("group",group.toString());
             Log.e("group",mGroupId);
 
-        } catch (EaseMobException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -281,13 +280,13 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
 		}
         switch (SystemUtil.getConnectedType(getActivity())) {
 			case ConnectivityManager.TYPE_MOBILE:
-				Toast.makeText(getActivity(), "当前网络: mobile", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getActivity(), "当前网络: mobile", Toast.LENGTH_SHORT).show();
 				break;
 			case ConnectivityManager.TYPE_ETHERNET:
-				Toast.makeText(getActivity(), "当前网络: ehternet", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getActivity(), "当前网络: ehternet", Toast.LENGTH_SHORT).show();
 				break;
 			case ConnectivityManager.TYPE_WIFI:
-				Toast.makeText(getActivity(), "当前网络: wifi", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getActivity(), "当前网络: wifi", Toast.LENGTH_SHORT).show();
 				break;
 		}
 
@@ -420,7 +419,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
     //图片点击事件
     @Override
     public void onItemClick(int position) {
-        showToast(" banner  item  onclick");
+//        showToast(" banner  item  onclick");
         goToOneDetail(mDatas4Banner.get(position));
 
     }

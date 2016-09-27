@@ -78,7 +78,7 @@
     <application
         android:name="com.hdcy.base.application.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launchers"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 

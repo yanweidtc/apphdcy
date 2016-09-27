@@ -97,7 +97,7 @@ public class ThirdPageFragmentAdapter extends BaseAdapter {
     private void setView(final int position, final ViewHolder holder) {
         ActivityContent item = data.get(position);
         holder.tv_activity_title.setText(item.getName()+"");
-        SimpleDateFormat foramt = new SimpleDateFormat("yyyy-MM-dd日");
+        SimpleDateFormat foramt = new SimpleDateFormat("yyyy-MM-dd");
         Date startTime = item.getStartTime();
         String dateformat1 = "";
         if(!BaseUtils.isEmptyString(startTime.toString())) {

@@ -109,7 +109,6 @@ public class PersonalInfoFragment extends BaseBackFragment {
             tv_mine_personalinfo_address.setText("");
         }else {
             tv_mine_personalinfo_address.setText(address+"");
-
         }
         String secretphone = userBaseInfo.getMobile().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
         tv_mine_personalinfo_phone.setText(secretphone+"");

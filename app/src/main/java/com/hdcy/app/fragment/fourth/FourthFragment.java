@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hdcy.app.R;
 import com.hdcy.app.basefragment.BaseLazyMainFragment;
@@ -21,6 +22,7 @@ import com.hdcy.app.fragment.fourth.childpagers.PersonalGiftFragment;
 import com.hdcy.app.fragment.fourth.childpagers.PersonalInfoFragment;
 import com.hdcy.app.model.UserBaseInfo;
 import com.hdcy.base.BaseInfo;
+import com.hdcy.base.utils.BaseUtils;
 import com.hdcy.base.utils.SizeUtils;
 import com.hdcy.base.utils.net.NetHelper;
 import com.hdcy.base.utils.net.NetRequestCallBack;
@@ -114,7 +116,14 @@ public class FourthFragment extends BaseLazyMainFragment{
     }
 
     private void setData(){
-        tv_mine_level.setText("lv"+userBaseInfo.getLevel());
+        String level = userBaseInfo.getLevel();
+
+        if (BaseUtils.isEmptyString(level)){
+            tv_mine_level.setText("lv 0");
+        }else
+        {
+            tv_mine_level.setText("lv" + userBaseInfo.getLevel());
+        }
         tv_mine_credits.setText(userBaseInfo.getPoint()+"");
 
         Picasso.with(getContext()).load(userBaseInfo.getHeadimgurl())

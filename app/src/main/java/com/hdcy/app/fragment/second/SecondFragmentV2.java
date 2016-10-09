@@ -291,11 +291,11 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
 		}
 
         if(bean!=null){
-//            if(bean.live){// 是否为直播
-            if(bean.id==631533){// 让第一个条数据 进行直播
+            if(bean.live){// 是否为直播
+//            if(bean.id==631533){// 让第一个条数据 进行直播
 				// 开始直播
                 Intent intent =new Intent();
-                String streamId="12345";// 这里视频聊天的窗口固定死
+                String streamId=bean.steamId;// 这里视频聊天的窗口固定死
                 Activity4Chat.getInstance(getActivity(),streamId,mGroupId);
 
 //                Settings mSettings = new Settings(getActivity());

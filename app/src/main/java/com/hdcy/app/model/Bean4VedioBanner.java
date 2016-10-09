@@ -26,7 +26,8 @@ public class Bean4VedioBanner implements Serializable {
     public String length;
     public int commentCount;
     public String desc;
-
+    /**  直播流的ID */
+    public String steamId;
 
     @Override
     public String toString() {
@@ -45,7 +46,8 @@ public class Bean4VedioBanner implements Serializable {
                 ", startTime=" + startTime +
                 ", length='" + length + '\'' +
                 ", commentCount=" + commentCount +
-                ", desd='" + desc + '\'' +
+                ", desc='" + desc + '\'' +
+                ", steamId='" + steamId + '\'' +
                 '}';
     }
 }

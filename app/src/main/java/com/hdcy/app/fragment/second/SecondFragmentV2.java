@@ -159,6 +159,16 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                 // 是否直播的标志
                 holder.setVisible(R.id.tv_is_live,bean.live);//是直播的标志
 
+                if(bean.live){
+                    if(bean.liveState.equals("直播中")){
+                        holder.setText(R.id.tv_activity_desc, "观看人数:"+bean.viewCount);
+                    }else if(bean.liveState.equals("未开始")){
+                        holder.setText(R.id.tv_activity_desc, "播放时间:"+date2Str(date,"yyyy-MM-dd / HH:mm"));
+                    }else if(bean.liveState.equals("点播")){
+                        holder.setText(R.id.tv_activity_desc, "观看次数:"+bean.viewCountPlus+"／时长 "+bean.length);
+                    }
+                }
+
 
 
             }
@@ -208,9 +218,19 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                 View view4Live=view.findViewById(R.id.tv_is_live);
                 if(bean.live){
                     view4Live.setVisibility(View.VISIBLE);
+                    if(bean.liveState.equals("直播中")){
+                        tvDate.setText( "观看人数:"+bean.viewCount);
+                    }else if(bean.liveState.equals("未开始")){
+                        tvDate.setText("播放时间:"+date2Str(date,"yyyy-MM-dd / HH:mm"));
+                    }else if(bean.liveState.equals("点播")){
+                        tvDate.setText("观看次数:"+bean.viewCountPlus+"／时长 "+bean.length);
+                    }
                 }else{
                     view4Live.setVisibility(View.GONE);
                 }
+
+
+
 
                 view.setTag(bean);
                 view.setOnClickListener(new View.OnClickListener() {

@@ -29,6 +29,14 @@ public class Bean4VedioBanner implements Serializable {
     /**  直播流的ID */
     public String steamId;
 
+	/**
+     * 增加liveState直播状态，string型
+     未开始：显示开始时间——开始时间：2016－9-12 12:32
+     直播中：显示观看人数 —— 观看人数：100
+     点播：观看次数／时长
+     */
+    public String liveState;
+
     @Override
     public String toString() {
         return "Bean4VedioBanner{" +
@@ -48,6 +56,7 @@ public class Bean4VedioBanner implements Serializable {
                 ", commentCount=" + commentCount +
                 ", desc='" + desc + '\'' +
                 ", steamId='" + steamId + '\'' +
+                ", liveState='" + liveState + '\'' +
                 '}';
     }
 }

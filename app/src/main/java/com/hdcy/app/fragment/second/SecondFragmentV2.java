@@ -165,7 +165,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                     }else if(bean.liveState.equals("未开始")){
                         holder.setText(R.id.tv_activity_desc, "播放时间:"+date2Str(date,"yyyy-MM-dd / HH:mm"));
                     }else if(bean.liveState.equals("点播")){
-                        holder.setText(R.id.tv_activity_desc, "观看次数:"+bean.viewCountPlus+"／时长 "+bean.length);
+                        holder.setText(R.id.tv_activity_desc, "观看次数:"+bean.viewCount+"／时长 "+bean.length);
                     }
                 }
 
@@ -223,7 +223,7 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                     }else if(bean.liveState.equals("未开始")){
                         tvDate.setText("播放时间:"+date2Str(date,"yyyy-MM-dd / HH:mm"));
                     }else if(bean.liveState.equals("点播")){
-                        tvDate.setText("观看次数:"+bean.viewCountPlus+"／时长 "+bean.length);
+                        tvDate.setText("观看次数:"+bean.viewCount+"／时长 "+bean.length);
                     }
                 }else{
                     view4Live.setVisibility(View.GONE);

@@ -95,6 +95,7 @@ public class ActivityCommentListAdapter extends BaseAdapter {
         holder.tv_praise_count.setVisibility(View.GONE);
         holder.iv_praise.setVisibility(View.GONE);
         holder.lv_replys.setVisibility(View.GONE);
+        holder.ly_sub_replys.setVisibility(View.GONE);
 
 
     }
@@ -105,7 +106,6 @@ public class ActivityCommentListAdapter extends BaseAdapter {
         private TextView tv_name, tv_praise_count, tv_time, tv_comment_content;
         private ListView lv_replys;
         private LinearLayout ly_sub_replys;
-        private TextView tv_more;
 
         private Object tag;
 
@@ -129,7 +129,6 @@ public class ActivityCommentListAdapter extends BaseAdapter {
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             ly_sub_replys = (LinearLayout) itemView.findViewById(R.id.ly_sub_reply);
             lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
-            tv_more = (TextView) itemView.findViewById(R.id.tv_more);
 
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 

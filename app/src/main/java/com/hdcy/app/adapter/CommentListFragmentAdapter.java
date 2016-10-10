@@ -39,6 +39,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.sephiroth.android.library.widget.ExpandableHListView;
+
 /**
  * Created by WeiYanGeorge on 2016-08-23.
  */
@@ -137,9 +139,11 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
         holder.setTag(mItems.get(position).getId());
         final CommentsContent item = mItems.get(position);
         replysList = item.getReplys();
+        holder.ly_sub_replys.setTag(position);
         if(BaseUtils.isEmptyList(replysList)){
             holder.ly_sub_replys.setVisibility(View.GONE);
         }else {
+            holder.ly_sub_replys.setVisibility(View.VISIBLE);
             Log.e("Replyssize",replysList.size()+"");
             replysAdapter = new ReplysAdapter(context,replysList);
             holder.lv_replys.setAdapter(replysAdapter);
@@ -153,18 +157,21 @@ public class CommentListFragmentAdapter extends RecyclerView.Adapter<CommentList
                 }
             });
             final int size = replysList.size();
-/*            if(replysList.size() >2){
+            holder.tv_more.setTag(position);
+            if(replysList.size() >2){
                 holder.tv_more.setVisibility(View.VISIBLE);
                 holder.tv_more.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int size = replysList.size();
                         replysAdapter.addItemNum(size);
                         replysAdapter.notifyDataSetChanged();
                         holder.tv_more.setVisibility(View.GONE);
                     }
                 });
-            }*/
-
+            }else {
+                holder.tv_more.setVisibility(View.GONE);
+            }
         }
         holder.tv_name.setText(item.getCreaterName()+"");
         Picasso.with(context).load(item.getCreaterHeadimgurl())

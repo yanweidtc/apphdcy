@@ -54,7 +54,9 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
 
     private List<CommentsContent> data = new ArrayList<>();
     List<Replys> replysList = new ArrayList<>();
+    List<Replys> tempreplys = new ArrayList<>();
     private Replys replys;
+
 
     private LayoutInflater mInflater;
     private Context context;
@@ -122,23 +124,29 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
-        if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_comments,null);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-            AutoUtils.autoSize(convertView);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+        convertView = View.inflate(context, R.layout.item_comments,null);
+        holder = new ViewHolder(convertView);
+        convertView.setTag(holder);
+        AutoUtils.autoSize(convertView);
         holder.setTag(position);
         ((SupportActivity)context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 setView(position, holder);
-
             }
         });
         return convertView;
+    }
+
+    private void ChangeView(){
+        Toast.makeText(context, replysList.size()+"", Toast.LENGTH_SHORT).show();
+        //replysAdapter.addItemNum(replysList.size());
+        replysList.add(0,replysList.get(2));
+        ShowInputDialog();
+       // alertDialog.dismiss();
+
+        replysAdapter.notifyDataSetChanged();
+
     }
 
 
@@ -146,17 +154,25 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
         final CommentsContent item = getItem(position);
         replysList = item.getReplys();
         Log.e("Replyssize", replysList.size() + "");
-       // holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
+        // holder.lv_replys.setAdapter(new ReplysAdapter(context,replysList));
         if(replysList.isEmpty()){
             holder.lv_replys.setVisibility(View.GONE);
         }else {
             holder.lv_replys.setVisibility(View.VISIBLE);
-
         }
-        View footview = View.inflate(context,R.layout.item_replys_showmore,null);
+
+/*        View footview = View.inflate(context,R.layout.item_replys_showmore,null);
         holder.lv_replys.addFooterView(footview);
-        final TextView tv_more = (TextView) footview.findViewById(R.id.tv_more);
+        final TextView tv_more = (TextView) footview.findViewById(R.id.tv_more);*/
+       // holder.tv_more.setVisibility(View.GONE);
+
         replysAdapter = new ReplysAdapter(context, replysList);
+        /*if(replysList.size()>2){
+            replysAdapter.addItemNum(2);
+        }else{
+            replysAdapter.addItemNum(replysList.size());
+        }*/
+        holder.lv_replys.setTag(replysList);// set tags
         holder.lv_replys.setAdapter(replysAdapter);
         replysAdapter.setOnItemsClickListeners(new ReplysAdapter.OnItemsClickListeners() {
             @Override
@@ -173,24 +189,22 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
             }
         });
 
-/*        if(replysList.size() > 2){
-            tv_more.setVisibility(View.VISIBLE);
-            tv_more.setOnClickListener(new View.OnClickListener() {
+        holder.tv_more.setTag(replysList);
+        if(replysList.size() > 2){
+            holder.tv_more.setVisibility(View.VISIBLE);
+            holder.tv_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int tag = (int) holder.getTag();
-                    if (tag == position){
-                        replysList =data.get(position).getReplys();
-                    }
-                    Toast.makeText(context, replysList.size()+"", Toast.LENGTH_SHORT).show();
+                    replysList=(ArrayList<Replys>)v.getTag();
+                    replysAdapter = new ReplysAdapter(context, replysList);
+                    holder.lv_replys.setAdapter(replysAdapter);
                     replysAdapter.addItemNum(replysList.size());
                     replysAdapter.notifyDataSetChanged();
-                    tv_more.setVisibility(View.GONE);
                 }
             });
         }else {
-            tv_more.setVisibility(View.GONE);
-        }*/
+            holder.tv_more.setVisibility(View.GONE);
+        }
 
 
         holder.tv_name.setText(item.getCreaterName() + "");
@@ -307,7 +321,7 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             ly_sub_replys = (LinearLayout) itemView.findViewById(R.id.ly_sub_reply);
             lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
-
+            tv_more = (TextView)itemView.findViewById(R.id.tv_more);
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 
         }

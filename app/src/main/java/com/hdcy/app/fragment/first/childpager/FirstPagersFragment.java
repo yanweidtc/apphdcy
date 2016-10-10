@@ -56,7 +56,6 @@ public class FirstPagersFragment extends BaseFragment implements BGARefreshLayou
 
     //加载更多页数,默认第一页为0
     private int pagecount = 0;
-    private int morepagecount =0;
 
     public static FirstPagersFragment newInstance(int tagId) {
 

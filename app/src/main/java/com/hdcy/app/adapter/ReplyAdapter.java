@@ -1,37 +1,25 @@
 package com.hdcy.app.adapter;
 
+
 import android.content.Context;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ExpandableListAdapter;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hdcy.app.R;
 import com.hdcy.app.model.Replys;
-import com.zhy.autolayout.utils.AutoUtils;
-
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
-import it.sephiroth.android.library.widget.ExpandableHListView;
 
 /**
- * Created by WeiYanGeorge on 2016-08-24.
+ * Created by WeiYanGeorge on 2016-09-29.
  */
 
-public class ReplysAdapter extends BaseAdapter {
-    private Context context;
-    private List<Replys> data;
-    int itemCount =2 ;
+public class ReplyAdapter extends ReplysAdpterV2<Replys> {
 
     public OnItemsClickListeners onItemsClickListeners;
 
@@ -39,47 +27,25 @@ public class ReplysAdapter extends BaseAdapter {
         this.onItemsClickListeners =onItemsClickListeners;
     }
 
-    public ReplysAdapter(Context context, List<Replys> data) {
-        super();
-        this.context = context;
-        this.data = data;
-    }
 
-    @Override
-    public int getCount() {
-       if(data.size()>2){
-            return itemCount;
-        }else {
-        return data.size();
-        }
-    }
+    public ReplyAdapter(Context context, ListView mListView) {
+        super(context,mListView);
 
-    @Override
-    public Replys getItem(int position) {
-        return data.get(position);
     }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_reply, null);
+            convertView = View.inflate(mContext, R.layout.item_reply, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-            AutoUtils.autoSize(convertView);
+            //AutoUtils.autoSize(convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.setTag(position);
         setView(position, holder);
         return convertView;
     }
-
 
     private void setView(final int position, final ViewHolder holder) {
         Replys temp = getItem(position);
@@ -131,16 +97,18 @@ public class ReplysAdapter extends BaseAdapter {
 
     }
 
-    public void addItemNum(int number){
+/*    public void addItemNum(int number){
         itemCount = number;
-        getCount();
+        notifyDataSetChanged();
     }
+
+    public void addItem(Replys replys){
+        data.add(replys);
+        notifyDataSetChanged();
+    }*/
 
     public interface OnItemsClickListeners{
         void onFrameLayout(int position);
     }
 
-    public void OnItemsClickListeners(OnItemsClickListeners onItemsClickListeners) {
-        this.onItemsClickListeners = onItemsClickListeners;
-    }
 }

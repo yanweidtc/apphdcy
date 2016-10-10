@@ -18,6 +18,8 @@ public class Content implements Serializable {
 
     private String tagId;
 
+    private String tagName;
+
     private Date createdTime;
 
     private Date modifyTime;
@@ -28,6 +30,10 @@ public class Content implements Serializable {
 
     private boolean top;
 
+    private boolean linkOut;
+
+    private String outLink;
+
     private String title;
 
     private String content;
@@ -37,6 +43,8 @@ public class Content implements Serializable {
     private String image2;
 
     private int readCount;
+
+    private int readCountPlus;
 
     private int commentCount;
 
@@ -140,4 +148,39 @@ public class Content implements Serializable {
     public List<TagInfos> getTagInfos(){
         return this.tagInfos;
     }
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    public boolean isLinkOut() {
+        return linkOut;
+    }
+
+    public void setLinkOut(boolean linkOut) {
+        this.linkOut = linkOut;
+    }
+
+
+    public String getOutLink() {
+        return outLink;
+    }
+
+    public void setOutLink(String outLink) {
+        this.outLink = outLink;
+    }
+
+    public int getReadCountPlus() {
+        return readCountPlus;
+    }
+
+    public void setReadCountPlus(int readCountPlus) {
+        this.readCountPlus = readCountPlus;
+    }
+
+
+
 }

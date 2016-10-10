@@ -59,7 +59,6 @@ public class MainActivity extends SupportActivity {
                 }
             }, 3000);
 
-           // loadRootFragment(R.id.fl_container_activity1, MainFragment.newInstance());
         }
 
     }

@@ -64,6 +64,7 @@ import com.easemob.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
 
+import static com.baidu.location.b.g.T;
 import static org.jivesoftware.smack.packet.PrivacyItem.Type.group;
 
 /**
@@ -223,7 +224,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
             }
 
         }
-        if (chatType != EaseConstant.CHATTYPE_CHATROOM) {
+        if (chatType != EaseConstant.CHATTYPE_CHATROOM && !TextUtils.isEmpty(toChatUsername)) {
             onConversationInit();
             onMessageListInit();
         }

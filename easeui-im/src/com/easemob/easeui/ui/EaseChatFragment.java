@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.text.ClipboardManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -208,9 +209,9 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
             if (chatType == EaseConstant.CHATTYPE_GROUP) {
                 EMGroupManager temp=EMGroupManager.getInstance();
                 EMGroup group=null;
-                if(temp!=null){
+                if(temp!=null && !TextUtils.isEmpty(toChatUsername)){
                     // 群聊
-                     group= EMGroupManager.getInstance().getGroup(toChatUsername);
+                     group= temp.getGroup(toChatUsername);
                     if (group != null)
                         titleBar.setTitle(group.getGroupName());
                     // 监听当前会话的群聊解散被T事件

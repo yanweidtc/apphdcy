@@ -472,8 +472,8 @@ public class NetHelper {
         NetRequest request = new NetRequest("/video");
         request.addParam("page",pageIndex);
 //        request.addParam("enable","false");
-//        request.addParam("size","10");
-//        request.addParam("sort","createdTime,desc");
+        request.addParam("size","10");
+        request.addParam("sort","createdTime,desc");
         request.addParam("top","false");
         return request.getObj(new NetRequestCallBack() {
             @Override

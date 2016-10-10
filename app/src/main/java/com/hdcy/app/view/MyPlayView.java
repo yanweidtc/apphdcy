@@ -20,6 +20,8 @@ public class MyPlayView extends JCVideoPlayerStandard {
 
 	private Context mContext;
 
+	public View view4Back;
+
 	public MyPlayView(Context context) {
 		super(context);
 		mContext=context;
@@ -41,9 +43,10 @@ public class MyPlayView extends JCVideoPlayerStandard {
 		Log.d(TAG, "init() called with: " + "context = [" + context + "]");
 		super.init(context);
 		view4Share=this.findViewById(R.id.iv_share);
+		view4Back=this.findViewById(R.id.back);
+		view4Back.setOnClickListener(this);
 		view4Share.setOnClickListener(this);
 
-		backButton.setOnClickListener(this);
 	}
 
 	@Override
@@ -54,7 +57,8 @@ public class MyPlayView extends JCVideoPlayerStandard {
 
 			showToast("share");
 		}else if(id == R.id.back){
-			showToast("back");
+//			showToast("back");
+			backPress();
 		}else{
 			super.onClick(v);
 		}
@@ -63,8 +67,11 @@ public class MyPlayView extends JCVideoPlayerStandard {
 	}
 
 	public void showToast(String content){
-		Toast.makeText(mContext,content,Toast.LENGTH_SHORT);
+		Toast.makeText(mContext,content,Toast.LENGTH_SHORT).show();
 	}
+
+
+
 
 
 

@@ -63,6 +63,8 @@ import com.easemob.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
 
+import static org.jivesoftware.smack.packet.PrivacyItem.Type.group;
+
 /**
  * 可以直接new出来使用的聊天对话页面fragment，
  * 使用时需调用setArguments方法传入chatType(会话类型)和userId(用户或群id)
@@ -204,13 +206,17 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
         } else {
         	titleBar.setRightImageResource(R.drawable.ease_to_group_details_normal);
             if (chatType == EaseConstant.CHATTYPE_GROUP) {
-                // 群聊
-                EMGroup group = EMGroupManager.getInstance().getGroup(toChatUsername);
-                if (group != null)
-                    titleBar.setTitle(group.getGroupName());
-                // 监听当前会话的群聊解散被T事件
-                groupListener = new GroupListener();
-                EMGroupManager.getInstance().addGroupChangeListener(groupListener);
+                EMGroupManager temp=EMGroupManager.getInstance();
+                EMGroup group=null;
+                if(temp!=null){
+                    // 群聊
+                     group= EMGroupManager.getInstance().getGroup(toChatUsername);
+                    if (group != null)
+                        titleBar.setTitle(group.getGroupName());
+                    // 监听当前会话的群聊解散被T事件
+                    groupListener = new GroupListener();
+                    EMGroupManager.getInstance().addGroupChangeListener(groupListener);
+                }
             } else {
                 onChatRoomViewCreation();
             }
@@ -445,7 +451,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
                 if (locationAddress != null && !locationAddress.equals("")) {
                     sendLocationMessage(latitude, longitude, locationAddress);
                 } else {
-                    Toast.makeText(getActivity(), R.string.unable_to_get_loaction, 0).show();
+                    Toast.makeText(getActivity(), R.string.unable_to_get_loaction, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -818,7 +824,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
         }
         //大于10M不让发送
         if (file.length() > 10 * 1024 * 1024) {
-            Toast.makeText(getActivity(), R.string.The_file_is_not_greater_than_10_m, 0).show();
+            Toast.makeText(getActivity(), R.string.The_file_is_not_greater_than_10_m, Toast.LENGTH_SHORT).show();
             return;
         }
         sendFileMessage(filePath);

@@ -159,6 +159,16 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                 // 是否直播的标志
                 holder.setVisible(R.id.tv_is_live,bean.live);//是直播的标志
 
+                if(bean.live){
+                    if(bean.liveState.equals("直播中")){
+                        holder.setText(R.id.tv_activity_desc, "观看人数:"+bean.viewCount);
+                    }else if(bean.liveState.equals("未开始")){
+                        holder.setText(R.id.tv_activity_desc, "播放时间:"+date2Str(date,"yyyy-MM-dd / HH:mm"));
+                    }else if(bean.liveState.equals("点播")){
+                        holder.setText(R.id.tv_activity_desc, "观看次数:"+bean.viewCount+"／时长 "+bean.length);
+                    }
+                }
+
 
 
             }
@@ -208,9 +218,19 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
                 View view4Live=view.findViewById(R.id.tv_is_live);
                 if(bean.live){
                     view4Live.setVisibility(View.VISIBLE);
+                    if(bean.liveState.equals("直播中")){
+                        tvDate.setText( "观看人数:"+bean.viewCount);
+                    }else if(bean.liveState.equals("未开始")){
+                        tvDate.setText("播放时间:"+date2Str(date,"yyyy-MM-dd / HH:mm"));
+                    }else if(bean.liveState.equals("点播")){
+                        tvDate.setText("观看次数:"+bean.viewCount+"／时长 "+bean.length);
+                    }
                 }else{
                     view4Live.setVisibility(View.GONE);
                 }
+
+
+
 
                 view.setTag(bean);
                 view.setOnClickListener(new View.OnClickListener() {
@@ -291,11 +311,11 @@ public class SecondFragmentV2 extends BaseLazyMainFragment implements BGARefresh
 		}
 
         if(bean!=null){
-//            if(bean.live){// 是否为直播
-            if(bean.id==631533){// 让第一个条数据 进行直播
+            if(bean.live){// 是否为直播
+//            if(bean.id==631533){// 让第一个条数据 进行直播
 				// 开始直播
                 Intent intent =new Intent();
-                String streamId="12345";// 这里视频聊天的窗口固定死
+                String streamId=bean.steamId;// 这里视频聊天的窗口固定死
                 Activity4Chat.getInstance(getActivity(),streamId,mGroupId);
 
 //                Settings mSettings = new Settings(getActivity());

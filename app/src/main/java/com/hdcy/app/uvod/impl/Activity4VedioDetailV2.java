@@ -32,7 +32,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import fm.jiecao.jcvideoplayer_lib.JCMediaPlayerListener;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -108,13 +110,94 @@ public class Activity4VedioDetailV2 extends SupportActivity {
 				Activity4VedioDetailV2.this.finish();
 			}
 		});
-		jcVideoPlayerStandard.view4Share.setOnClickListener(new View.OnClickListener() {
+
+		jcVideoPlayerStandard.tinyBackImageView.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View view) {
-				showToast("share  share share  share share  share ");
+			public void onClick(View v) {
+				Activity4VedioDetailV2.this.finish();
+			}
+		});
+		
+		jcVideoPlayerStandard.view4Back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Activity4VedioDetailV2.this.finish();
 			}
 		});
 
+
+
+
+
+		JCVideoPlayerManager.setListener(new JCMediaPlayerListener() {
+			@Override
+			public void onPrepared() {
+
+			}
+
+			@Override
+			public void onCompletion() {
+
+			}
+
+			@Override
+			public void onAutoCompletion() {
+
+			}
+
+			@Override
+			public void onBufferingUpdate(int percent) {
+
+			}
+
+			@Override
+			public void onSeekComplete() {
+
+			}
+
+			@Override
+			public void onError(int what, int extra) {
+
+			}
+
+			@Override
+			public void onInfo(int what, int extra) {
+
+			}
+
+			@Override
+			public void onVideoSizeChanged() {
+
+			}
+
+			@Override
+			public void goBackThisListener() {
+				showToast("goBackThisListener");
+			}
+
+			@Override
+			public boolean goToOtherListener() {
+
+				showToast("goToOtherListener");
+
+				return false;
+			}
+
+			@Override
+			public void autoFullscreenLeft() {
+
+			}
+
+			@Override
+			public void autoFullscreenRight() {
+
+			}
+
+			@Override
+			public void autoQuitFullscreen() {
+
+			}
+		});
 
 		mTab = (TabLayout) this.findViewById(R.id.uvod_tab);
 		mViewPager = (ViewPager) this.findViewById(R.id.uvod_viewPager);

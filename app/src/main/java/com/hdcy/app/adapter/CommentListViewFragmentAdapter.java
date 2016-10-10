@@ -200,6 +200,7 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
                     holder.lv_replys.setAdapter(replysAdapter);
                     replysAdapter.addItemNum(replysList.size());
                     replysAdapter.notifyDataSetChanged();
+                    holder.tv_more.setVisibility(View.GONE);
                 }
             });
         }else {
@@ -297,7 +298,7 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
         private TextView tv_name, tv_praise_count, tv_time, tv_comment_content;
         private ListView lv_replys;
         private LinearLayout ly_sub_replys,layout_root;
-        private TextView tv_more;
+        private LinearLayout tv_more;
 
         private Object tag;
 
@@ -321,7 +322,7 @@ public class CommentListViewFragmentAdapter extends BaseAdapter {
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             ly_sub_replys = (LinearLayout) itemView.findViewById(R.id.ly_sub_reply);
             lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
-            tv_more = (TextView)itemView.findViewById(R.id.tv_more);
+            tv_more = (LinearLayout) itemView.findViewById(R.id.tv_more);
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 
         }

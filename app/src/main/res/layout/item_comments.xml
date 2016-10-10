@@ -145,17 +145,31 @@
             android:paddingLeft="@dimen/main_margin_left"
             android:paddingBottom="48px"
             android:paddingTop="24px" />
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_more"
+            android:visibility="visible"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70px"
+            android:textSize="15sp"
+            android:textColor="@color/main_font_gray_2"
+            android:text="查看更多评论"
+            />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/comment_nav_right_arrow"/>
+            </LinearLayout>
 
 
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/tv_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150px"
-        android:text="显示更多"
-        android:visibility="visible"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"

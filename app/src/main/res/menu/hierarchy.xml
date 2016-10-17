@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_hierarchy"
-        android:title="栈视图"
+        android:title="分享图"
         android:icon="@drawable/nav_menu_share"
         app:showAsAction="ifRoom"/>
 </menu>

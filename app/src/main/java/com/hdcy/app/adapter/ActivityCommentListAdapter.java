@@ -129,7 +129,6 @@ public class ActivityCommentListAdapter extends BaseAdapter {
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
             ly_sub_replys = (LinearLayout) itemView.findViewById(R.id.ly_sub_reply);
             lv_replys = (ListView) itemView.findViewById(R.id.lv_replys);
-
             tv_comment_content = (TextView) itemView.findViewById(R.id.tv_comment_content);
 
         }

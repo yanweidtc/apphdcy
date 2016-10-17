@@ -198,7 +198,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
      * 设置属性，监听等
      */
     protected void setUpView() {
-        titleBar.setTitle(toChatUsername);
+//        titleBar.setTitle(toChatUsername);
+        titleBar.setTitle("聊天室");
         if (chatType == EaseConstant.CHATTYPE_SINGLE) { // 单聊
             // 设置标题
             if(EaseUserUtils.getUserInfo(toChatUsername) != null){
@@ -248,6 +249,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
                 }
             }
         });
+        titleBar.setTitle("直播间");
+        titleBar.getRightLayout().setVisibility(View.GONE);
 
         setRefreshLayoutListener();
         
